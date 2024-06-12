@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="${fml_version_range}"
+license="All Rights Reserved"
+issueTrackerURL=""
+displayURL=""
+logoFile="dtn_icon.png"
+[[mods]] #mandatory
+    modId="dtnpaletteofpaws"
+    version="${file.jarVersion}"
+    updateJSONURL=""
+    displayName="DTN's Palette Of Paws"
+    credits=""
+    authors="dashiedev, mashxp"
+    description="   Every Paws is a Note in the Grand Wolf Concerto!"
+[[dependencies.dtnpaletteofpaws]] #optional
+    modId="forge"
+    mandatory=true
+    versionRange="${forge_version_range}" #mandatory
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.dtnpaletteofpaws]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
