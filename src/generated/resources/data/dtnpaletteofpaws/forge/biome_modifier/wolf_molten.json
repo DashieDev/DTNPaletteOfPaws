@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:basalt_deltas",
+  "spawners": {
+    "type": "dtnpaletteofpaws:wolf",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 20
+  }
+}
