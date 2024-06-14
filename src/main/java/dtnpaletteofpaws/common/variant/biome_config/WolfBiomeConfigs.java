@@ -23,6 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class WolfBiomeConfigs {
     
     public static void bootstrap(BootstapContext<WolfBiomeConfig> ctx) {
+        register(ctx, WolfVariants.CHERRY.get(), Biomes.CHERRY_GROVE);
         register(ctx, WolfVariants.LEMONY_LIME.get(), Biomes.BEACH, Blocks.SAND);
         register(ctx, WolfVariants.HIMALAYAN_SALT.get(), Biomes.JAGGED_PEAKS);
         register(ctx, WolfVariants.BAMBOO.get(), List.of(Biomes.BAMBOO_JUNGLE, Biomes.JUNGLE));
