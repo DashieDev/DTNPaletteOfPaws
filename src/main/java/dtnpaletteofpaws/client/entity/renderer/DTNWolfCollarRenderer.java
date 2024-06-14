@@ -3,7 +3,7 @@ package dtnpaletteofpaws.client.entity.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import dtnpaletteofpaws.client.entity.DTNWolfModel;
+import dtnpaletteofpaws.client.entity.model.DTNWolfModel;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

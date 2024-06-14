@@ -2,6 +2,7 @@ package dtnpaletteofpaws.common.variant;
 
 import java.util.Optional;
 
+import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
@@ -13,13 +14,19 @@ public class WolfVariant {
     private final ResourceLocation wildTextureLoc;
     private final String translationKey;
     private Optional<ResourceLocation> glowingOverlay;
+    private Optional<ResourceLocation> wildGlowingOverlay;
     private boolean fireImmune;
+    private boolean fallImmune;
     
-    private WolfVariant(ResourceLocation name) {
-        this.id = name;
-        this.textureLoc = createTextureLoc(name);
-        this.wildTextureLoc = createWildTextureLoc(name);
-        this.translationKey = createTranslationKey(name);
+    public WolfVariant(Props props) {
+        this.id = props.name;
+        this.textureLoc = createTextureLoc(props.name);
+        this.wildTextureLoc = createWildTextureLoc(props.name);
+        this.translationKey = createTranslationKey(props.name);
+        this.glowingOverlay = props.glowingOverlay;
+        this.wildGlowingOverlay = props.glowingOverlay_wild;
+        this.fireImmune = props.fireImmune;
+        this.fallImmune = props.fallImmune;
     }
 
     private static ResourceLocation createTextureLoc(ResourceLocation name) {
@@ -50,7 +57,9 @@ public class WolfVariant {
         return this.translationKey;
     }
 
-    public Optional<ResourceLocation> glowingOverlay() {
+    public Optional<ResourceLocation> glowingOverlay(boolean wild) {
+        if (wild)
+            return this.wildGlowingOverlay;
         return this.glowingOverlay;
     }
 
@@ -58,41 +67,48 @@ public class WolfVariant {
         return this.fireImmune;
     }
 
-    public static Builder builder(String name) {
-        return new Builder(Util.getResource(name));
+    public boolean fallImmune() {
+        return this.fallImmune;
     }
 
-    public static Builder builder(ResourceLocation name) {
-        return new Builder(name);
+    public void tickWolf(DTNWolf wolf) {}
+
+    public static Props props(String name) {
+        return new Props(Util.getResource(name));
     }
 
-    public static class Builder {
+    public static Props builder(ResourceLocation name) {
+        return new Props(name);
+    }
+
+    public static class Props {
         
         private final ResourceLocation name;
         private boolean fireImmune;
+        private boolean fallImmune;
         private Optional<ResourceLocation> glowingOverlay = Optional.empty();
+        private Optional<ResourceLocation> glowingOverlay_wild = Optional.empty();
 
-        private Builder(ResourceLocation name) {
+        private Props(ResourceLocation name) {
             this.name = name;
         }
         
-        public Builder fireImmune() {
+        public Props fireImmune() {
             this.fireImmune = true;
             return this;
         }
 
-        public Builder glowingOverlay(ResourceLocation overlay) {
-            if (overlay == null)
-                return this;
-            this.glowingOverlay = Optional.of(overlay);
+        public Props fallImmune() {
+            this.fallImmune = true;
             return this;
         }
 
-        public WolfVariant build() {
-            var ret = new WolfVariant(name);
-            ret.glowingOverlay = this.glowingOverlay;
-            ret.fireImmune = this.fireImmune;
-            return ret;
+        public Props glowingOverlay(ResourceLocation overlay, ResourceLocation wild_overlay) {
+            if (overlay == null)
+                return this;
+            this.glowingOverlay = Optional.of(overlay);
+            this.glowingOverlay_wild = Optional.of(wild_overlay);
+            return this;
         }
 
     }

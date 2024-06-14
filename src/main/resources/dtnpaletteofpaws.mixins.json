@@ -1,0 +1,16 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "dtnpaletteofpaws.common.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "NaturalSpawnerMixin"
+    ],
+    "client": [
+    ],
+    "server": [],
+    "injectors": {
+      "defaultRequire": 1
+    },
+    "refmap": "dtnpaletteofpaws.refmap.json"
+}

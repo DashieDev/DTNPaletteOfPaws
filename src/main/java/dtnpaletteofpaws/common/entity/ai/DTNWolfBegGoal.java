@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
-public class DedicatedWolfBegGoal extends Goal {
+public class DTNWolfBegGoal extends Goal {
     
     private final DTNWolf wolf;
     @Nullable
@@ -24,7 +24,7 @@ public class DedicatedWolfBegGoal extends Goal {
     private int lookTime;
     private final TargetingConditions begTargeting;
 
-    public DedicatedWolfBegGoal(DTNWolf p_25063_, float p_25064_) {
+    public DTNWolfBegGoal(DTNWolf p_25063_, float p_25064_) {
         this.wolf = p_25063_;
         this.level = p_25063_.level();
         this.lookDistance = p_25064_;

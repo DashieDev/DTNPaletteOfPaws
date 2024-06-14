@@ -5,14 +5,16 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import dtnpaletteofpaws.PawsEntityTypes;
-import dtnpaletteofpaws.PawsRegistries;
-import dtnpaletteofpaws.PawsSerializers;
+import dtnpaletteofpaws.DTNEntityTypes;
+import dtnpaletteofpaws.DTNRegistries;
+import dtnpaletteofpaws.DTNSerializers;
 import dtnpaletteofpaws.WolfVariants;
-import dtnpaletteofpaws.common.entity.ai.DedicatedWolfBegGoal;
+import dtnpaletteofpaws.common.entity.ai.*;
+import dtnpaletteofpaws.common.entity.ai.nav.*;
 import dtnpaletteofpaws.common.lib.Constants.EntityState;
 import dtnpaletteofpaws.common.network.WolfShakingPacket;
 import dtnpaletteofpaws.common.network.data.WolfShakingData;
+import dtnpaletteofpaws.common.util.WolfSpawnUtil;
 import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import dtnpaletteofpaws.common.variant.WolfVariant;
 import net.minecraft.core.BlockPos;
@@ -29,9 +31,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -49,6 +54,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -61,17 +67,21 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 
 public class DTNWolf extends TamableAnimal {
         
     private static final EntityDataAccessor<Boolean> BEGGING = SynchedEntityData.defineId(DTNWolf.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> COLLAR_COLOR = SynchedEntityData.defineId(DTNWolf.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<WolfVariant> VARIANT = SynchedEntityData.defineId(DTNWolf.class, PawsSerializers.DTN_WOLF_VARIANT);
+    private static final EntityDataAccessor<WolfVariant> VARIANT = SynchedEntityData.defineId(DTNWolf.class, DTNSerializers.DTN_WOLF_VARIANT);
 
     private float percentDecreasePerHealthLost;
     private float maxHealth0;
@@ -94,20 +104,20 @@ public class DTNWolf extends TamableAnimal {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(VARIANT, WolfVariants.MOLTEN_WOLF.get());
+        entityData.define(VARIANT, WolfVariantUtil.getDefault());
         entityData.define(BEGGING, false);
         entityData.define(COLLAR_COLOR, DyeColor.RED.getId());
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new DTNWolfFloatGoal(this));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0, true));
         this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
         this.goalSelector.addGoal(7, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0));
-        this.goalSelector.addGoal(9, new DedicatedWolfBegGoal(this, 8.0F));
+        this.goalSelector.addGoal(9, new DTNWolfBegGoal(this, 8.0F));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
@@ -193,6 +203,8 @@ public class DTNWolf extends TamableAnimal {
             this.maxHealth0 = this.getMaxHealth();
             this.percentDecreasePerHealthLost = 1 / this.maxHealth0;
         }
+
+        this.getVariant().tickWolf(this);
     }
 
     @Override
@@ -200,6 +212,70 @@ public class DTNWolf extends TamableAnimal {
         super.aiStep();
 
         updateDogBeginShake();
+
+        if (this.fireImmune()) {
+            this.floatHellhound(this);
+        }
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        return new DTNWolfPathNavigation(this, level);
+    }
+
+    @Override
+    public float getPathfindingMalus(BlockPathTypes type) {
+        switch (type) {
+        default:
+            break;
+        case WATER:
+        case WATER_BORDER:
+            // if (shouldDogOmitWaterPathWeight())
+            //     return 0;
+            break;
+        case LAVA:
+        case DAMAGE_FIRE:
+        case DANGER_FIRE:
+            if (fireImmune())
+                return 0;
+            break;
+        // case DOOR_WOOD_CLOSED:
+        //     if (this.canDogPassGate())
+        //         return 8;
+        //     break;
+        case DANGER_POWDER_SNOW:
+        case POWDER_SNOW:
+            return -1;
+        }
+        return super.getPathfindingMalus(type);
+    }
+
+    @Override
+    public boolean canStandOnFluid(FluidState state) {
+        if (this.fireImmune() && state.is(FluidTags.LAVA))
+            return true;
+
+        return super.canStandOnFluid(state);
+    }
+
+    private void floatHellhound(DTNWolf dog) {
+        if (this.level().isClientSide)
+            return;
+        if (!dog.isInLava()) return;
+        var collisioncontext = CollisionContext.of(dog);
+        if (collisioncontext.isAbove(LiquidBlock.STABLE_SHAPE, 
+            dog.blockPosition(), true) 
+            && !dog.level().getFluidState(dog.blockPosition().above()).is(FluidTags.LAVA)) {
+            dog.setOnGround(true);
+        } else {
+            dog.setDeltaMovement(dog.getDeltaMovement().add(0.0D, 0.085D, 0.0D));
+        }
+    }
+
+    public boolean shouldDogBlockFloat() {
+        if (fireImmune() && isInLava())
+            return true;
+        return false;
     }
 
     private void updateDogBeginShake() {
@@ -702,7 +778,7 @@ public class DTNWolf extends TamableAnimal {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putByte("CollarColor", (byte)this.getCollarColor().getId());
-        compound.putString("variant", PawsRegistries.DTN_WOLF_VARIANT.get().getKey(getVariant()).toString());
+        compound.putString("variant", DTNRegistries.DTN_WOLF_VARIANT.get().getKey(getVariant()).toString());
     }
 
     @Override
@@ -717,7 +793,7 @@ public class DTNWolf extends TamableAnimal {
 
     @Nullable
     public DTNWolf getBreedOffspring(ServerLevel p_149088_, AgeableMob p_149089_) {
-        DTNWolf wolf = PawsEntityTypes.DTNWOLF.get().create(p_149088_);
+        DTNWolf wolf = DTNEntityTypes.DTNWOLF.get().create(p_149088_);
         if (wolf != null && p_149089_ instanceof DTNWolf wolf1) {
             if (this.random.nextBoolean()) {
                 wolf.setVariant(this.getVariant());
@@ -771,24 +847,46 @@ public class DTNWolf extends TamableAnimal {
 
     @Override
     public boolean fireImmune() {
-        return this.getVariant().fireImmune();
+        return this.getVariant().fireImmune() || super.fireImmune();
     }
 
+    @Override
+    public boolean causeFallDamage(float distance, float modifier, DamageSource source) {
+        if (this.getVariant().fallImmune())
+            return false;
+
+        return super.causeFallDamage(distance, modifier, source);
+    }
 
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroup, @Nullable CompoundTag tag) {
-        Holder<Biome> holder = levelAccessor.getBiome(this.blockPosition());
-        WolfVariant variant;
-        if (spawnGroup instanceof WolfPackData wolf$wolfpackdata) {
-            variant = wolf$wolfpackdata.variant;
+        
+        WolfPackData wolf_spawn_group = null;
+        if (spawnGroup instanceof WolfPackData wolf_group) {
+            wolf_spawn_group = wolf_group;
         } else {
-            variant = WolfVariantUtil.getSpawnVariant(holder);
-            spawnGroup = new WolfPackData(variant);
+            wolf_spawn_group = initializeGroupData(levelAccessor);
+        }
+        
+        WolfVariant variant;
+        if (wolf_spawn_group == null) {
+            variant = WolfVariantUtil.getDefaultForSpawn(levelAccessor);
+        } else {
+            variant = wolf_spawn_group.variant;
         }
 
         this.setVariant(variant);
-        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnGroup, tag);
+        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, wolf_spawn_group, tag);
+    }
+
+    private WolfPackData initializeGroupData(ServerLevelAccessor levelAccessor) {
+        var holder = levelAccessor.getBiome(this.blockPosition());
+        var variant_optional = WolfVariantUtil.getSpawnVariant(levelAccessor.registryAccess(), holder, this.getRandom());
+        if (!variant_optional.isPresent())
+            return null;
+        var variant = variant_optional.get();
+        return new WolfPackData(variant);
     }
 
     @Override
@@ -796,8 +894,19 @@ public class DTNWolf extends TamableAnimal {
         return 8;
     }
     
-    public static boolean checkWolfSpawnRules() {
-        return true;
+    public static boolean checkWolfSpawnRulesDefault(EntityType<DTNWolf> type, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
+        boolean default_condition = 
+            level.getBlockState(pos.below()).is(BlockTags.WOLVES_SPAWNABLE_ON)
+            && isBrightEnoughToSpawn(level, pos);
+        return default_condition;
+    }
+
+    @Override
+    public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawn_type) {
+        if (WolfSpawnUtil.isNetherSpawn(level))
+            return true;
+
+        return super.checkSpawnRules(level, spawn_type);
     }
 
     public static class WolfPackData extends AgeableMob.AgeableMobGroupData {

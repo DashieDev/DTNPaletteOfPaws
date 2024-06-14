@@ -1,4 +1,4 @@
-package dtnpaletteofpaws.client.entity;
+package dtnpaletteofpaws.client.entity.model;
 
 import com.google.common.collect.ImmutableList;
 
@@ -123,12 +123,6 @@ public class DTNWolfModel extends ColorableAgeableListModel<DTNWolf> {
 
     public void translateBeggingDog(DTNWolf dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.realHead.zRot = dog.getBegAngle(partialTickTime) + dog.getShakeAngle(partialTickTime, 0.0F);
-    }
-
-    
-
-    public boolean useDefaultModelForAccessories() {
-        return false;
     }
 
     public static LayerDefinition createBodyLayer() {

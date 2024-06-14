@@ -3,7 +3,7 @@ package dtnpaletteofpaws.client.entity.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dtnpaletteofpaws.client.ClientSetup;
-import dtnpaletteofpaws.client.entity.DTNWolfModel;
+import dtnpaletteofpaws.client.entity.model.DTNWolfModel;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -15,6 +15,7 @@ public class DTNWolfRenderer extends MobRenderer<DTNWolf, DTNWolfModel> {
     public DTNWolfRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new DTNWolfModel(ctx.bakeLayer(ClientSetup.DTNWOLF)), 0.5F);
         //this.addLayer(new DedicatedWolfArmorRenderer(this, ctx));
+        this.addLayer(new DTNWolfGlowRenderer(this));
         this.addLayer(new DTNWolfCollarRenderer(this));
     }
 
