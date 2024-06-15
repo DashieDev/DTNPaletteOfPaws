@@ -66,8 +66,6 @@ public class DTNWolfSpawnPlacements {
         var check_pos = new BlockPos(x, inital_height, z);
         if (!world.dimensionType().hasCeiling())
             return check_pos;
- 
-        ChopinLogger.l("getting fixed TopNonCollidingPos for pos : " + x + " " + z);
 
         do {
             check_pos = check_pos.below();
