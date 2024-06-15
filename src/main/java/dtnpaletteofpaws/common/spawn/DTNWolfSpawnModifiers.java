@@ -33,6 +33,7 @@ public class DTNWolfSpawnModifiers {
         registerBirchWolfModifier(ctx);
         registerPistachioWolfModifier(ctx);
         registerGuacamoleWolfModifier(ctx);
+        registerYuzuWolfModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstapContext<BiomeModifier> ctx) {
@@ -126,6 +127,15 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_guacamole", 
             Biomes.MEADOW, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
+        );
+    }
+
+    private static void registerYuzuWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_yuzu", 
+            Biomes.SNOWY_BEACH, 
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );

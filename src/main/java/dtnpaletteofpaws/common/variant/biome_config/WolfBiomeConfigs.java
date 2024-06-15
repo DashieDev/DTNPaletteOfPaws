@@ -33,6 +33,7 @@ public class WolfBiomeConfigs {
         register(ctx, WolfVariants.BIRCH.get(), Biomes.BIRCH_FOREST);
         register(ctx, WolfVariants.PISTACHIO.get(), Biomes.MANGROVE_SWAMP, Blocks.MUD);
         register(ctx, WolfVariants.GUACAMOLE.get(), Biomes.MEADOW);
+        register(ctx, WolfVariants.YUZU.get(), Biomes.SNOWY_BEACH, Blocks.SAND);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
