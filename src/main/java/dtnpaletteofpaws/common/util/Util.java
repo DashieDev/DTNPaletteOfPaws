@@ -1,11 +1,15 @@
 package dtnpaletteofpaws.common.util;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
+
+import com.mojang.serialization.Codec;
 
 import dtnpaletteofpaws.common.lib.Constants;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 
 public class Util {
     
@@ -22,6 +26,10 @@ public class Util {
         var path = target.getPath();
         var new_path = modifier.apply(path);
         return new ResourceLocation(namespace, new_path);
+    }
+
+    public static <T> Codec<T> deferredCodec(Supplier<Codec<T>> value_sup) {
+        return ExtraCodecs.lazyInitializedCodec(value_sup);
     }
 
 }

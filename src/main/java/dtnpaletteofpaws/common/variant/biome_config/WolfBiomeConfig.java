@@ -9,6 +9,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dtnpaletteofpaws.DTNRegistries;
+import dtnpaletteofpaws.common.util.Util;
 import dtnpaletteofpaws.common.variant.WolfVariant;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -63,7 +64,8 @@ public class WolfBiomeConfig {
 
     public static final Codec<WolfBiomeConfig> CODEC = RecordCodecBuilder.create(
         builder -> builder.group(
-            DTNRegistries.DTN_WOLF_VARIANT.get().getCodec().listOf()
+            Util.deferredCodec(() -> DTNRegistries.DTN_WOLF_VARIANT.get().getCodec())
+                .listOf()
                 .optionalFieldOf("variants").forGetter(WolfBiomeConfig::variantsAsList),
             RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("biomes")
                 .forGetter(WolfBiomeConfig::biomes),
