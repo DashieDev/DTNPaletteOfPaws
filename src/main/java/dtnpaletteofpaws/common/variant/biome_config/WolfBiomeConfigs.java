@@ -78,14 +78,14 @@ public class WolfBiomeConfigs {
         var wolf_variant_id = variant_reg.getKey(wolf_variant);
         if (wolf_variant_id == null)
             return;
-        register(ctx, wolf_variant_id, biomes, spawnable_blocks);
+        register(ctx, List.of(wolf_variant), wolf_variant_id, biomes, spawnable_blocks);
     }
 
-    public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        ResourceLocation wolf_variant_id, HolderSet<Biome> biomes, List<Block> spawnable_blocks) {
+    public static void register(BootstapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,
+        ResourceLocation id, HolderSet<Biome> biomes, List<Block> spawnable_blocks) {
             
-        var res_key = ResourceKey.create(WolfBiomeConfigs.regKey(), wolf_variant_id);
-        var config = new WolfBiomeConfig(biomes, spawnable_blocks);
+        var res_key = ResourceKey.create(WolfBiomeConfigs.regKey(), id);
+        var config = new WolfBiomeConfig(variants, biomes, spawnable_blocks);
 
         ctx.register(res_key, config);
     }

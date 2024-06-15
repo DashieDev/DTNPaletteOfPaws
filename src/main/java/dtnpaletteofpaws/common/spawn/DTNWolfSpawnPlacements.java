@@ -5,6 +5,7 @@ import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.WolfSpawnUtil;
+import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -44,7 +45,7 @@ public class DTNWolfSpawnPlacements {
         var state_under = level.getBlockState(pos.below());
         var block_under = state_under.getBlock();
         var biome = level.getBiome(pos);
-        var extra_block_set = WolfSpawnUtil.getExtraSpawnableBlocksForBiome(level.registryAccess(), biome);
+        var extra_block_set = WolfVariantUtil.getExtraSpawnableBlocksForBiome(level.registryAccess(), biome);
         if (extra_block_set.contains(block_under))
             return true;
         return false;

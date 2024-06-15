@@ -32,17 +32,5 @@ public class WolfSpawnUtil {
         return true;
     }
 
-    public static Set<Block> getExtraSpawnableBlocksForBiome(RegistryAccess prov, Holder<Biome> biome) {
-        var config_reg = prov.registryOrThrow(WolfBiomeConfigs.regKey());
-        var spawnable_block_set = new HashSet<Block>();
-        var config_list = config_reg.holders()
-            .filter(x -> x.get().biomes().contains(biome))
-            .collect(Collectors.toList());
-        for (var config_holder : config_list) {
-            var block_list = config_holder.get().blocks();
-            spawnable_block_set.addAll(block_list);
-        }
-        return spawnable_block_set;
-    }
 
 }
