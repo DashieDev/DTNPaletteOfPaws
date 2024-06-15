@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.lib.Resources;
 import dtnpaletteofpaws.common.util.Util;
+import dtnpaletteofpaws.common.variant.CherryWolfVariant;
 import dtnpaletteofpaws.common.variant.MoltenWolfVariant;
 import dtnpaletteofpaws.common.variant.WolfVariant;
 import net.minecraftforge.registries.DeferredRegister;
@@ -15,7 +16,7 @@ public class WolfVariants {
     
     public static final DeferredRegister<WolfVariant> DTN_WOLF_VARIANT = DeferredRegister.create(DTNRegistries.Keys.DTN_WOLF_VARIANT, Constants.MOD_ID);
     
-    public static final Supplier<WolfVariant> CHERRY = register("cherry");
+    public static final Supplier<WolfVariant> CHERRY = register("cherry", CherryWolfVariant::new);
     public static final Supplier<WolfVariant> LEMONY_LIME = register("lemony_lime");
     public static final Supplier<WolfVariant> HIMALAYAN_SALT = register("himalayan_salt");
     public static final Supplier<WolfVariant> BAMBOO = register("bamboo");
