@@ -26,7 +26,8 @@ public class DTNRegistries {
     public static Supplier<IForgeRegistry<WolfVariant>> DTN_WOLF_VARIANT;
     
     public static void onNewRegistry(NewRegistryEvent event) {
-        DTN_WOLF_VARIANT = event.create(makeRegistry(Keys.DTN_WOLF_VARIANT, WolfVariant.class));
+        DTN_WOLF_VARIANT = event.create(makeRegistry(Keys.DTN_WOLF_VARIANT, WolfVariant.class)
+            .setDefaultKey(Util.getResource("birch")));
     }
 
     private static <T> RegistryBuilder<T> makeRegistry(final ResourceLocation rl, Class<T> type) {
