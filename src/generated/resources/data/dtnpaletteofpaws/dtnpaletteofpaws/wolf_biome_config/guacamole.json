@@ -1,3 +1,6 @@
 {
-  "biomes": "minecraft:meadow"
+  "biomes": "minecraft:meadow",
+  "variants": [
+    "dtnpaletteofpaws:guacamole"
+  ]
 }

@@ -2,5 +2,8 @@
   "biomes": "minecraft:mangrove_swamp",
   "blocks": [
     "minecraft:mud"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:pistachio"
   ]
 }

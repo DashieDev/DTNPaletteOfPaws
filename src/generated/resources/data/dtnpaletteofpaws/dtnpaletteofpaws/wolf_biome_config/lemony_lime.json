@@ -2,5 +2,8 @@
   "biomes": "minecraft:beach",
   "blocks": [
     "minecraft:sand"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:lemony_lime"
   ]
 }

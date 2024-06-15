@@ -2,5 +2,8 @@
   "biomes": "minecraft:snowy_beach",
   "blocks": [
     "minecraft:sand"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:yuzu"
   ]
 }

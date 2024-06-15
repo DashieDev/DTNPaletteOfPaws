@@ -1,3 +1,6 @@
 {
-  "biomes": "minecraft:cherry_grove"
+  "biomes": "minecraft:cherry_grove",
+  "variants": [
+    "dtnpaletteofpaws:cherry"
+  ]
 }

@@ -1,3 +1,6 @@
 {
-  "biomes": "minecraft:birch_forest"
+  "biomes": "minecraft:birch_forest",
+  "variants": [
+    "dtnpaletteofpaws:birch"
+  ]
 }
