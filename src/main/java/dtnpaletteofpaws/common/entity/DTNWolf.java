@@ -778,14 +778,14 @@ public class DTNWolf extends TamableAnimal {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putByte("CollarColor", (byte)this.getCollarColor().getId());
-        compound.putString("variant", DTNRegistries.DTN_WOLF_VARIANT.get().getKey(getVariant()).toString());
+        compound.putString("variant", WolfVariantUtil.variantToString(this.getVariant()));
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         var variant_str = compound.getString("variant");
-        this.setVariant(WolfVariantUtil.getOrDefault(variant_str));
+        this.setVariant(WolfVariantUtil.variantFromString(variant_str));
         if (compound.contains("CollarColor", 99)) {
             this.setCollarColor(DyeColor.byId(compound.getInt("CollarColor")));
         }

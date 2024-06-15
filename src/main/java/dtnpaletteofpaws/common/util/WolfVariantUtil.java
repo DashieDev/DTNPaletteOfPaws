@@ -26,7 +26,7 @@ public class WolfVariantUtil {
         return WolfVariants.BIRCH.get();
     }
     
-    public static WolfVariant getOrDefault(String id) {
+    public static WolfVariant variantFromString(String id) {
         var res = ResourceLocation.tryParse(id);
         if (res == null)
             return getDefault();
@@ -34,6 +34,14 @@ public class WolfVariantUtil {
         if (variant == null)
             variant = getDefault();
         return variant;
+    }
+
+    public static String variantToString(WolfVariant variant) {
+        var id = DTNRegistries.DTN_WOLF_VARIANT.get().getKey(variant);
+        if (id == null)
+            return DTNRegistries.DTN_WOLF_VARIANT.get().getKey(getDefault())
+                .toString();
+        return id.toString();
     }
 
     public static WolfVariant getDefaultForSpawn(ServerLevelAccessor s_level_accessor) {
