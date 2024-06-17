@@ -19,10 +19,8 @@ public class NaturalSpawnerMixin {
     private static void dtn_getTopNonCollidingPos(LevelReader level, EntityType<?> type, int x, int z, CallbackInfoReturnable<BlockPos> info) {
         if (type != DTNEntityTypes.DTNWOLF.get())
             return;
-        if (!level.dimensionType().hasCeiling())
-            return;
         
-        var pos = DTNWolfSpawnPlacements.getNetherSpawnTopNonCollidingPos(
+        var pos = DTNWolfSpawnPlacements.getDTNWolfTopNonCollidingPos(
             DTNEntityTypes.DTNWOLF.get(), level, x, z);
         
         info.setReturnValue(pos);

@@ -17,6 +17,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 
 public class DTNWolfSpawnPlacements {
@@ -56,30 +57,39 @@ public class DTNWolfSpawnPlacements {
     }
 
     /**
-     * To workaround the inconsistency of NaturalSpawnwer::getTopNonCollidingPos.
+     * Seperated getTopNonCollidingPos for DTNWolf for two reason
+     * 
+     * + To replicate the hardcoded ON_GROUND additional below pathfindable check.
+     * 
+     * + To workaround the inconsistency of NaturalSpawnwer::getTopNonCollidingPos.
      * The function returns the pos below the TopNonCollingPos for biome which hasCeling instead.
      * Which causes all of the further ON_GROUND spawn checks to fail despite valid spawn pos.
-     * This function simply shift the pos one up if biome hasCeiling so further checks will based on
-     * the actual TopNonCollidingPos.
+     * This function override the check solely for getting the pos for DTNWolf and 
+     * return the actual TopNonCollidingPos for hasCeiling dimensions.
      */
-    public static BlockPos getNetherSpawnTopNonCollidingPos(EntityType<DTNWolf> type, LevelReader world, int x, int z) {
+    public static BlockPos getDTNWolfTopNonCollidingPos(EntityType<DTNWolf> type, LevelReader world, int x, int z) {
         int inital_height = world.getHeight(SpawnPlacements.getHeightmapType(type), x, z);
         var check_pos = new BlockPos(x, inital_height, z);
-        if (!world.dimensionType().hasCeiling())
-            return check_pos;
-
-        do {
-            check_pos = check_pos.below();
-        } while(!world.getBlockState(check_pos).isAir());
-
-        var check_pos_below = check_pos.below();
-        while (check_pos_below.getY() > world.getMinBuildHeight() 
-            && world.getBlockState(check_pos_below).isAir()) {
-            check_pos = check_pos_below;
-            check_pos_below = check_pos.below();
+        if (!world.dimensionType().hasCeiling()) {
+            do {
+                check_pos = check_pos.below();
+            } while(!world.getBlockState(check_pos).isAir());
+    
+            var check_pos_below = check_pos.below();
+            while (check_pos_below.getY() > world.getMinBuildHeight() 
+                && world.getBlockState(check_pos_below).isAir()) {
+                check_pos = check_pos_below;
+                check_pos_below = check_pos.below();
+            }
         }
 
-        return check_pos.immutable();
+        var check_pos_below = check_pos.below();
+         if (world.getBlockState(check_pos_below)
+            .isPathfindable(world, check_pos_below, PathComputationType.LAND)) {
+            return check_pos_below;
+        }
+
+        return check_pos;
     }
 
 }
