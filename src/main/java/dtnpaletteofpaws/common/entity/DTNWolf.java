@@ -1,6 +1,6 @@
 package dtnpaletteofpaws.common.entity;
 
-import java.util.Optional;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -873,7 +873,7 @@ public class DTNWolf extends TamableAnimal {
         if (wolf_spawn_group == null) {
             variant = WolfVariantUtil.getDefaultForSpawn(levelAccessor);
         } else {
-            variant = wolf_spawn_group.variant;
+            variant = wolf_spawn_group.getWolfVariant(this.getRandom());
         }
 
         this.setVariant(variant);
@@ -882,11 +882,10 @@ public class DTNWolf extends TamableAnimal {
 
     private WolfPackData initializeGroupData(ServerLevelAccessor levelAccessor) {
         var holder = levelAccessor.getBiome(this.blockPosition());
-        var variant_optional = WolfVariantUtil.getSpawnVariant(levelAccessor.registryAccess(), holder, this.getRandom());
-        if (!variant_optional.isPresent())
+        var possible_variant = WolfVariantUtil.getPossibleSpawnVariants(levelAccessor.registryAccess(), holder);
+        if (possible_variant.isEmpty())
             return null;
-        var variant = variant_optional.get();
-        return new WolfPackData(variant);
+        return new WolfPackData(possible_variant);
     }
 
     @Override
@@ -911,11 +910,20 @@ public class DTNWolf extends TamableAnimal {
 
     public static class WolfPackData extends AgeableMob.AgeableMobGroupData {
 
-        public final WolfVariant variant;
+        public final List<WolfVariant> variants;
 
-        public WolfPackData(WolfVariant variant) {
+        private WolfPackData(List<WolfVariant> variants) {
             super(false);
-            this.variant = variant;
+            this.variants = variants;
+        }
+
+        public WolfVariant getWolfVariant(RandomSource random) {
+            if (this.variants.size() == 1) {
+                return this.variants.get(0);
+            }
+        
+            int r_index = random.nextInt(this.variants.size());
+            return this.variants.get(r_index);
         }
 
     }

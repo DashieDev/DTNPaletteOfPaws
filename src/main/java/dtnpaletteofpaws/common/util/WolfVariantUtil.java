@@ -87,17 +87,8 @@ public class WolfVariantUtil {
         return spawnable_block_set;
     }
 
-    public static Optional<WolfVariant> getSpawnVariant(RegistryAccess prov, Holder<Biome> biome, RandomSource random) {
-        var variant_list = getAllWolfVariantForBiome(prov, biome);
-
-        if (variant_list.isEmpty())
-            return Optional.empty();
-        
-        if (variant_list.size() == 1)
-            return Optional.of(variant_list.get(0));
-
-        int r_index = random.nextInt(variant_list.size());
-        return Optional.of(variant_list.get(r_index));
+    public static List<WolfVariant> getPossibleSpawnVariants(RegistryAccess prov, Holder<Biome> biome) {
+        return getAllWolfVariantForBiome(prov, biome);
     }
 
 }
