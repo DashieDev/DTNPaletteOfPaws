@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import dtnpaletteofpaws.DTNRegistries;
 import dtnpaletteofpaws.WolfVariants;
+import dtnpaletteofpaws.common.util.Util;
 import dtnpaletteofpaws.common.variant.WolfVariant;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -34,6 +35,13 @@ public class WolfBiomeConfigs {
         register(ctx, WolfVariants.PISTACHIO.get(), Biomes.MANGROVE_SWAMP, Blocks.MUD);
         register(ctx, WolfVariants.GUACAMOLE.get(), Biomes.MEADOW);
         register(ctx, WolfVariants.YUZU.get(), Biomes.SNOWY_BEACH, Blocks.SAND);
+        register(ctx, 
+            List.of(
+                WolfVariants.CAPPUCCINO.get(),
+                WolfVariants.LATTE.get(),
+                WolfVariants.MOCHA.get(),
+                WolfVariants.ESPRESSO.get()
+            ), Util.getResource("caffeine_pack_config"), Biomes.DARK_FOREST, List.of());
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
@@ -79,6 +87,15 @@ public class WolfBiomeConfigs {
         if (wolf_variant_id == null)
             return;
         register(ctx, List.of(wolf_variant), wolf_variant_id, biomes, spawnable_blocks);
+    }
+
+    public static void register(BootstapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,
+        ResourceLocation id, ResourceKey<Biome> biome, List<Block> spawnable_blocks) {
+            
+        var biome_reg = ctx.lookup(Registries.BIOME);
+        var biome_set = HolderSet.direct(biome_reg.getOrThrow(biome));
+
+        register(ctx, variants, id, biome_set, spawnable_blocks);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,

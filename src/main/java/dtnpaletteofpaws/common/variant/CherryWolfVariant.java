@@ -23,7 +23,7 @@ public class CherryWolfVariant extends WolfVariant {
         double dx = wolf.getX() - wolf.xo;
         double dz = wolf.getZ() - wolf.zo;
         var is_moving = dx * dx + dz * dz > (double)2.5000003E-7F;
-        if (is_moving) {
+        if (is_moving && wolf.getRandom().nextInt(3) == 0) {
             double d0 = (double)wolf.getX() + random.nextFloat() * (wolf.getBbWidth()/2);
             double d1 = (double)wolf.getY() + random.nextFloat() * (wolf.getBbHeight() * 0.8);
             double d2 = (double)wolf.getZ() + random.nextFloat() * (wolf.getBbWidth()/2);

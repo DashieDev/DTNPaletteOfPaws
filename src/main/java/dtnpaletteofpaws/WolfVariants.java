@@ -27,6 +27,10 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> GUACAMOLE = register("guacamole");
     public static final Supplier<WolfVariant> MOLTEN = register("molten", MoltenWolfVariant::new);
     public static final Supplier<WolfVariant> YUZU = register("yuzu");
+    public static final Supplier<WolfVariant> CAPPUCCINO = register("cappuccino");
+    public static final Supplier<WolfVariant> ESPRESSO = register("espresso");
+    public static final Supplier<WolfVariant> LATTE = register("latte");
+    public static final Supplier<WolfVariant> MOCHA = register("mocha");
 
     private static Supplier<WolfVariant> register(String name, Function<String, WolfVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);

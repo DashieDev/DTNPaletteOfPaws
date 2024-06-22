@@ -41,7 +41,7 @@ public class MoltenWolfVariant extends WolfVariant {
         double dx = wolf.getX() - wolf.xo;
         double dz = wolf.getZ() - wolf.zo;
         var is_moving = dx * dx + dz * dz > (double)2.5000003E-7F;
-        if (is_moving) {
+        if (is_moving && wolf.getRandom().nextInt(3) == 0) {
             int r = wolf.getRandom().nextInt(3);
             SimpleParticleType type = null;
             if (r == 0) 
