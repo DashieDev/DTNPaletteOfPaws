@@ -70,7 +70,7 @@ public class DTNWolfSpawnPlacements {
     public static BlockPos getDTNWolfTopNonCollidingPos(EntityType<DTNWolf> type, LevelReader world, int x, int z) {
         int inital_height = world.getHeight(SpawnPlacements.getHeightmapType(type), x, z);
         var check_pos = new BlockPos(x, inital_height, z);
-        if (!world.dimensionType().hasCeiling()) {
+        if (world.dimensionType().hasCeiling()) {
             do {
                 check_pos = check_pos.below();
             } while(!world.getBlockState(check_pos).isAir());
