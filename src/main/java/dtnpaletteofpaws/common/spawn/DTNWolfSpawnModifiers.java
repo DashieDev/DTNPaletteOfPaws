@@ -147,7 +147,7 @@ public class DTNWolfSpawnModifiers {
             ctx, "caffeine_pack", 
             Biomes.DARK_FOREST, 
             new MobSpawnSettings
-                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 4, 2, 4)
         );
     }
 
