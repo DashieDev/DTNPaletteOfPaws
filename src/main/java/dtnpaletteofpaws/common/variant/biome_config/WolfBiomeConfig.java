@@ -26,16 +26,18 @@ public class WolfBiomeConfig {
     private final Set<WolfVariant> variants;
     private final HolderSet<Biome> biomes;
     private final Set<Block> extraSpawnableBlocks;
+    private final boolean canSpawnInDark;
 
-    public WolfBiomeConfig(List<WolfVariant> variants, HolderSet<Biome> biomes, List<Block> blocks) {
+    public WolfBiomeConfig(List<WolfVariant> variants, HolderSet<Biome> biomes, List<Block> blocks, boolean canSpawnInDark) {
         this.variants = variants == null ? Set.of() : Set.copyOf(variants);
         this.biomes = biomes == null ? HolderSet.direct() : biomes;
         this.extraSpawnableBlocks = blocks == null ? Set.of()
             : Set.copyOf(blocks);
+        this.canSpawnInDark = canSpawnInDark;
     }
 
-    public WolfBiomeConfig(Optional<List<WolfVariant>> variants, HolderSet<Biome> biomes, Optional<List<Block>> blocks) {
-        this(variants.orElse(List.of()), biomes, blocks.orElse(List.of()));
+    public WolfBiomeConfig(Optional<List<WolfVariant>> variants, HolderSet<Biome> biomes, Optional<List<Block>> blocks, boolean canSpawnInDark) {
+        this(variants.orElse(List.of()), biomes, blocks.orElse(List.of()), canSpawnInDark);
     }
 
     public HolderSet<Biome> biomes() {
@@ -48,6 +50,10 @@ public class WolfBiomeConfig {
 
     public Set<WolfVariant> variants() {
         return this.variants;
+    }
+
+    public boolean canSpawnInDark() {
+        return this.canSpawnInDark;
     }
 
     public Optional<List<Block>> blocksAsList() {
@@ -70,7 +76,9 @@ public class WolfBiomeConfig {
             RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("biomes")
                 .forGetter(WolfBiomeConfig::biomes),
             ForgeRegistries.BLOCKS.getCodec().listOf()
-                .optionalFieldOf("blocks").forGetter(WolfBiomeConfig::blocksAsList)
+                .optionalFieldOf("blocks").forGetter(WolfBiomeConfig::blocksAsList),
+            Codec.BOOL.optionalFieldOf("can_spawn_in_dark", false)
+                .forGetter(WolfBiomeConfig::canSpawnInDark)
         )
         .apply(builder, WolfBiomeConfig::new)
     );

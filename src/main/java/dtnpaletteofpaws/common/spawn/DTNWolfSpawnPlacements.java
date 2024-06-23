@@ -1,11 +1,14 @@
 package dtnpaletteofpaws.common.spawn;
 
+import java.util.List;
+
 import dtnpaletteofpaws.ChopinLogger;
 import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.WolfSpawnUtil;
 import dtnpaletteofpaws.common.util.WolfVariantUtil;
+import dtnpaletteofpaws.common.variant.biome_config.WolfBiomeConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -36,18 +39,30 @@ public class DTNWolfSpawnPlacements {
     }
 
     public static boolean DTNWolfSpawnableOn(EntityType<DTNWolf> type, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
-        if (checkBasedOnExtraSpawnableBlocksForBiomes(level, spawn_type, pos))
-            return true;
-
-        return DTNWolf.checkWolfSpawnRulesDefault(type, level, spawn_type, pos, random);
+        var biome = level.getBiome(pos);
+        var configs = WolfVariantUtil.getAllWolfBiomeConfigForBiome(level.registryAccess(), biome);
+        boolean block_is_spawnable =
+            checkWolfSpawnableBlock(level, pos, configs);
+        if (!block_is_spawnable)
+            return false;
+        boolean light_condition =
+            WolfVariantUtil.checkCanSpawnInTheDarkForConfigs(configs)
+            || DTNWolf.checkWolfSpawnableLight(level, pos);
+        if (!light_condition)
+            return false;
+        return true;
     }
 
-    public static boolean checkBasedOnExtraSpawnableBlocksForBiomes(LevelAccessor level, MobSpawnType spawn_type, BlockPos pos) {
-        var state_under = level.getBlockState(pos.below());
-        var block_under = state_under.getBlock();
-        var biome = level.getBiome(pos);
-        var extra_block_set = WolfVariantUtil.getExtraSpawnableBlocksForBiome(level.registryAccess(), biome);
-        if (extra_block_set.contains(block_under))
+    public static boolean checkWolfSpawnableBlock(LevelAccessor level, BlockPos pos, List<WolfBiomeConfig> configs) {
+        if (checkBasedOnExtraSpawnableBlocksForBiomes(level, pos, configs))
+            return true;
+        return DTNWolf.checkWolfSpawnableBlockDefault(level, pos);
+    }
+
+    public static boolean checkBasedOnExtraSpawnableBlocksForBiomes(LevelAccessor level, BlockPos pos, List<WolfBiomeConfig> configs) {
+        var state_below = level.getBlockState(pos.below());
+        var extra_block_set = WolfVariantUtil.getExtraSpawnableBlocksForBiomeConfigs(configs);
+        if (extra_block_set.contains(state_below.getBlock()))
             return true;
         return false;
     }

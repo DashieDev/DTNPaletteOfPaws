@@ -24,28 +24,28 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class WolfBiomeConfigs {
     
     public static void bootstrap(BootstapContext<WolfBiomeConfig> ctx) {
-        register(ctx, WolfVariants.CHERRY.get(), Biomes.CHERRY_GROVE);
-        register(ctx, WolfVariants.LEMONY_LIME.get(), Biomes.BEACH, Blocks.SAND);
-        register(ctx, WolfVariants.HIMALAYAN_SALT.get(), Biomes.JAGGED_PEAKS);
-        register(ctx, WolfVariants.BAMBOO.get(), List.of(Biomes.BAMBOO_JUNGLE, Biomes.JUNGLE));
-        register(ctx, WolfVariants.CRIMSON.get(), Biomes.CRIMSON_FOREST, Blocks.CRIMSON_NYLIUM);
-        register(ctx, WolfVariants.WARPED.get(), Biomes.WARPED_FOREST, Blocks.WARPED_NYLIUM);
-        register(ctx, WolfVariants.MOLTEN.get(), Biomes.BASALT_DELTAS, Blocks.BASALT);
-        register(ctx, WolfVariants.BIRCH.get(), Biomes.BIRCH_FOREST);
-        register(ctx, WolfVariants.PISTACHIO.get(), Biomes.MANGROVE_SWAMP, Blocks.MUD);
-        register(ctx, WolfVariants.GUACAMOLE.get(), Biomes.MEADOW);
-        register(ctx, WolfVariants.YUZU.get(), Biomes.SNOWY_BEACH, Blocks.SAND);
+        register(ctx, WolfVariants.CHERRY.get(), Biomes.CHERRY_GROVE, false);
+        register(ctx, WolfVariants.LEMONY_LIME.get(), Biomes.BEACH, Blocks.SAND, false);
+        register(ctx, WolfVariants.HIMALAYAN_SALT.get(), Biomes.JAGGED_PEAKS, false);
+        register(ctx, WolfVariants.BAMBOO.get(), List.of(Biomes.BAMBOO_JUNGLE, Biomes.JUNGLE), false);
+        register(ctx, WolfVariants.CRIMSON.get(), Biomes.CRIMSON_FOREST, Blocks.CRIMSON_NYLIUM, true);
+        register(ctx, WolfVariants.WARPED.get(), Biomes.WARPED_FOREST, Blocks.WARPED_NYLIUM, true);
+        register(ctx, WolfVariants.MOLTEN.get(), Biomes.BASALT_DELTAS, Blocks.BASALT, true);
+        register(ctx, WolfVariants.BIRCH.get(), Biomes.BIRCH_FOREST, false);
+        register(ctx, WolfVariants.PISTACHIO.get(), Biomes.MANGROVE_SWAMP, Blocks.MUD, true);
+        register(ctx, WolfVariants.GUACAMOLE.get(), Biomes.MEADOW, false);
+        register(ctx, WolfVariants.YUZU.get(), Biomes.SNOWY_BEACH, Blocks.SAND, false);
         register(ctx, 
             List.of(
                 WolfVariants.CAPPUCCINO.get(),
                 WolfVariants.LATTE.get(),
                 WolfVariants.MOCHA.get(),
                 WolfVariants.ESPRESSO.get()
-            ), Util.getResource("caffeine_pack_config"), Biomes.DARK_FOREST, List.of());
+            ), Util.getResource("caffeine_pack_config"), Biomes.DARK_FOREST, List.of(), true);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        WolfVariant wolf_variant, List<ResourceKey<Biome>> biomes) {
+        WolfVariant wolf_variant, List<ResourceKey<Biome>> biomes, boolean can_spawn_in_dark) {
 
         var biome_reg = ctx.lookup(Registries.BIOME);
         var biome_holders_list = biomes.stream()
@@ -55,54 +55,55 @@ public class WolfBiomeConfigs {
             .collect(Collectors.toList());
         var biome_holder_set = HolderSet.direct(biome_holders_list);
         
-        register(ctx, wolf_variant, biome_holder_set, List.of());
+        register(ctx, wolf_variant, biome_holder_set, List.of(), can_spawn_in_dark);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        WolfVariant wolf_variant, ResourceKey<Biome> biome, Block block) {
+        WolfVariant wolf_variant, ResourceKey<Biome> biome, Block block, boolean can_spawn_in_dark) {
 
-        register(ctx, wolf_variant, biome, List.of(block));
+        register(ctx, wolf_variant, biome, List.of(block), can_spawn_in_dark);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        WolfVariant wolf_variant, ResourceKey<Biome> biome) {
+        WolfVariant wolf_variant, ResourceKey<Biome> biome, boolean can_spawn_in_dark) {
 
-        register(ctx, wolf_variant, biome, List.of());
+        register(ctx, wolf_variant, biome, List.of(), can_spawn_in_dark);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        WolfVariant wolf_variant, ResourceKey<Biome> biome, List<Block> spawnable_blocks) {
+        WolfVariant wolf_variant, ResourceKey<Biome> biome, List<Block> spawnable_blocks, boolean can_spawn_in_dark) {
 
         var biome_reg = ctx.lookup(Registries.BIOME);
         var biome_set = HolderSet.direct(biome_reg.getOrThrow(biome));
 
-        register(ctx, wolf_variant, biome_set, spawnable_blocks);
+        register(ctx, wolf_variant, biome_set, spawnable_blocks, can_spawn_in_dark);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        WolfVariant wolf_variant, HolderSet<Biome> biomes, List<Block> spawnable_blocks) {
+        WolfVariant wolf_variant, HolderSet<Biome> biomes, List<Block> spawnable_blocks,
+        boolean can_spawn_in_dark) {
         
         var variant_reg = DTNRegistries.DTN_WOLF_VARIANT.get();
         var wolf_variant_id = variant_reg.getKey(wolf_variant);
         if (wolf_variant_id == null)
             return;
-        register(ctx, List.of(wolf_variant), wolf_variant_id, biomes, spawnable_blocks);
+        register(ctx, List.of(wolf_variant), wolf_variant_id, biomes, spawnable_blocks, can_spawn_in_dark);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,
-        ResourceLocation id, ResourceKey<Biome> biome, List<Block> spawnable_blocks) {
+        ResourceLocation id, ResourceKey<Biome> biome, List<Block> spawnable_blocks, boolean can_spawn_in_dark) {
             
         var biome_reg = ctx.lookup(Registries.BIOME);
         var biome_set = HolderSet.direct(biome_reg.getOrThrow(biome));
 
-        register(ctx, variants, id, biome_set, spawnable_blocks);
+        register(ctx, variants, id, biome_set, spawnable_blocks, can_spawn_in_dark);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,
-        ResourceLocation id, HolderSet<Biome> biomes, List<Block> spawnable_blocks) {
+        ResourceLocation id, HolderSet<Biome> biomes, List<Block> spawnable_blocks, boolean can_spawn_in_dark) {
             
         var res_key = ResourceKey.create(WolfBiomeConfigs.regKey(), id);
-        var config = new WolfBiomeConfig(variants, biomes, spawnable_blocks);
+        var config = new WolfBiomeConfig(variants, biomes, spawnable_blocks, can_spawn_in_dark);
 
         ctx.register(res_key, config);
     }

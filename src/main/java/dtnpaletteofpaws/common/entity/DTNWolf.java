@@ -893,11 +893,12 @@ public class DTNWolf extends TamableAnimal {
         return 8;
     }
     
-    public static boolean checkWolfSpawnRulesDefault(EntityType<DTNWolf> type, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
-        boolean default_condition = 
-            level.getBlockState(pos.below()).is(BlockTags.WOLVES_SPAWNABLE_ON)
-            && isBrightEnoughToSpawn(level, pos);
-        return default_condition;
+    public static boolean checkWolfSpawnableBlockDefault(LevelAccessor level, BlockPos pos) {
+        return level.getBlockState(pos.below()).is(BlockTags.WOLVES_SPAWNABLE_ON);
+    }
+
+    public static boolean checkWolfSpawnableLight(LevelAccessor level, BlockPos pos) {
+        return isBrightEnoughToSpawn(level, pos);
     }
 
     @Override

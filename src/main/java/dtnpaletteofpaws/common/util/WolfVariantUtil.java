@@ -77,14 +77,21 @@ public class WolfVariantUtil {
         return new ArrayList<>(variant_list);
     }
 
-    public static Set<Block> getExtraSpawnableBlocksForBiome(RegistryAccess prov, Holder<Biome> biome) {
-        var config_list = getAllWolfBiomeConfigForBiome(prov, biome);
+    public static Set<Block> getExtraSpawnableBlocksForBiomeConfigs(List<WolfBiomeConfig> configs) {
         var spawnable_block_set = new HashSet<Block>();
-        for (var config : config_list) {
+        for (var config : configs) {
             var block_list = config.blocks();
             spawnable_block_set.addAll(block_list);
         }
         return spawnable_block_set;
+    }
+
+    public static boolean checkCanSpawnInTheDarkForConfigs(List<WolfBiomeConfig> configs) {
+        for (var config : configs) {
+            if (config.canSpawnInDark())
+                return true;
+        }
+        return false;
     }
 
     public static List<WolfVariant> getPossibleSpawnVariants(RegistryAccess prov, Holder<Biome> biome) {
