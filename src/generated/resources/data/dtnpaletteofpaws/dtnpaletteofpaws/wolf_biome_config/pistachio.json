@@ -3,6 +3,7 @@
   "blocks": [
     "minecraft:mud"
   ],
+  "can_spawn_in_dark": true,
   "variants": [
     "dtnpaletteofpaws:pistachio"
   ]

@@ -3,6 +3,7 @@
   "blocks": [
     "minecraft:crimson_nylium"
   ],
+  "can_spawn_in_dark": true,
   "variants": [
     "dtnpaletteofpaws:crimson"
   ]

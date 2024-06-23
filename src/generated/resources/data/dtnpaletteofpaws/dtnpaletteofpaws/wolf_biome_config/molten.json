@@ -3,6 +3,7 @@
   "blocks": [
     "minecraft:basalt"
   ],
+  "can_spawn_in_dark": true,
   "variants": [
     "dtnpaletteofpaws:molten"
   ]
