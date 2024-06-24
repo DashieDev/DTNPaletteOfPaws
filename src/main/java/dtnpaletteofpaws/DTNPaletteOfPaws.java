@@ -1,6 +1,7 @@
 package dtnpaletteofpaws;
 
 import dtnpaletteofpaws.client.ClientSetup;
+import dtnpaletteofpaws.client.data.DTNItemModelProvider;
 import dtnpaletteofpaws.common.data.DTNDataRegistriesProvider;
 import dtnpaletteofpaws.common.event.EventHandler;
 import dtnpaletteofpaws.common.lib.Constants;
@@ -33,6 +34,7 @@ public class DTNPaletteOfPaws {
         WolfVariants.DTN_WOLF_VARIANT.register(mod_event_bus);
         DTNEntityTypes.ENTITIES.register(mod_event_bus);
         DTNSerializers.SERIALIZERS.register(mod_event_bus);
+        DTNItems.ITEM.register(mod_event_bus);
         mod_event_bus.addListener(DTNEntityTypes::addEntityAttributes);
         mod_event_bus.addListener(DTNWolfSpawnPlacements::onRegisterSpawnPlacements);
         mod_event_bus.addListener(this::commonSetup);
@@ -53,6 +55,12 @@ public class DTNPaletteOfPaws {
 
     public void onGatherData(final GatherDataEvent event) {
         DTNDataRegistriesProvider.start(event);
+        if (event.includeClient()) {
+            var gen = event.getGenerator();
+            var file_helper = event.getExistingFileHelper();
+            var pack_output = gen.getPackOutput();
+            gen.addProvider(true, new DTNItemModelProvider(pack_output, file_helper));
+        }
     }
 
 }
