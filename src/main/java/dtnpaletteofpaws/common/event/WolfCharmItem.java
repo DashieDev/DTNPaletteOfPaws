@@ -54,7 +54,7 @@ public class WolfCharmItem extends Item {
             context.getPlayer(), spawn_pos, MobSpawnType.SPAWN_EGG, 
             upward_collision, false);
         
-        if (!(entity instanceof DTNWolf wolf))
+        if (entity == null)
             return InteractionResult.SUCCESS;
 
         stack.shrink(1);
