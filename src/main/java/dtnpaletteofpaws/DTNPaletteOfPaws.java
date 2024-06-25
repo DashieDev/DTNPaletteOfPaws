@@ -7,6 +7,7 @@ import dtnpaletteofpaws.common.event.EventHandler;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.network.PacketHandler;
 import dtnpaletteofpaws.common.spawn.DTNWolfSpawnPlacements;
+import dtnpaletteofpaws.dtn_support.DTNSupportEntry;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -47,10 +48,13 @@ public class DTNPaletteOfPaws {
             mod_event_bus.addListener(ClientSetup::setupEntityRenderers);
             mod_event_bus.addListener(ClientSetup::registerLayerDefinitions);
         }
+
+        DTNSupportEntry.start(mod_event_bus, forge_event_bus);
     }
 
     public void commonSetup(final FMLCommonSetupEvent event) {
         PacketHandler.init();
+        DTNSupportEntry.startCommonSetup();
     }
 
     public void onGatherData(final GatherDataEvent event) {

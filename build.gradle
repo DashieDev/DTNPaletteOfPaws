@@ -58,11 +58,16 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    flatDir {
+        dir 'libs'
+    }
 }
+
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    compileOnly "blank:DoggyTalentsNext-1.20.1:1.18.19-beta1"
 }
 
 jar {

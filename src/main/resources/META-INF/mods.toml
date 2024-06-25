@@ -25,3 +25,10 @@ logoFile="dtn_icon.png"
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.dtnpaletteofpaws]] #optional
+    modId="doggytalents"
+    mandatory=false
+    versionRange="[1.18.19,)" #mandatory
+    ordering="NONE"
+    side="BOTH"

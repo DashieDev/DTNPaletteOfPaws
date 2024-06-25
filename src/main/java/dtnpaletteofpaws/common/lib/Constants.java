@@ -7,6 +7,7 @@ public class Constants {
 
     public static final String MOD_ID = "dtnpaletteofpaws";
     public static final String MOD_NAME = "DTN's Palette of Paws";
+    public static final String DTN_MOD_ID = "doggytalents";
 
     // Network
     public static final ResourceLocation CHANNEL_NAME = Util.getResource("channel");
