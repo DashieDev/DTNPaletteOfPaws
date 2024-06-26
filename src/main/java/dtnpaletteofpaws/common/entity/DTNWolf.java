@@ -658,6 +658,9 @@ public class DTNWolf extends TamableAnimal {
         if (this.isTame())
             return InteractionResult.PASS;
 
+        if (this.level().isClientSide)
+            return InteractionResult.SUCCESS;
+            
         stack.shrink(1);
 
         if (this.random.nextInt(3) == 0) {
