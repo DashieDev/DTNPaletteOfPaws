@@ -9,6 +9,7 @@ import dtnpaletteofpaws.common.lib.Resources;
 import dtnpaletteofpaws.common.util.Util;
 import dtnpaletteofpaws.common.variant.CherryWolfVariant;
 import dtnpaletteofpaws.common.variant.MoltenWolfVariant;
+import dtnpaletteofpaws.common.variant.WitheredSoulWolfVariant;
 import dtnpaletteofpaws.common.variant.WolfVariant;
 import net.minecraftforge.registries.DeferredRegister;
 
@@ -31,6 +32,7 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> ESPRESSO = register("espresso");
     public static final Supplier<WolfVariant> LATTE = register("latte");
     public static final Supplier<WolfVariant> MOCHA = register("mocha");
+    public static final Supplier<WolfVariant> WITHERED_SOUL = register("withered_soul", WitheredSoulWolfVariant::new);
 
     private static Supplier<WolfVariant> register(String name, Function<String, WolfVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);

@@ -42,6 +42,7 @@ public class WolfBiomeConfigs {
                 WolfVariants.MOCHA.get(),
                 WolfVariants.ESPRESSO.get()
             ), Util.getResource("caffeine_pack_config"), Biomes.DARK_FOREST, List.of(), true);
+        register(ctx, WolfVariants.WITHERED_SOUL.get(), Biomes.SOUL_SAND_VALLEY, List.of(Blocks.SOUL_SAND, Blocks.SOUL_SOIL), true);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 

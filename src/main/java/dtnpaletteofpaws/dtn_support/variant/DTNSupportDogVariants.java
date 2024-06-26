@@ -1,6 +1,7 @@
 package dtnpaletteofpaws.dtn_support.variant;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import doggytalents.DoggyRegistries;
@@ -17,6 +18,12 @@ public class DTNSupportDogVariants {
     public static final Supplier<DogVariant> ESPRESSO = register("espresso");
     public static final Supplier<DogVariant> LATTE = register("latte");
     public static final Supplier<DogVariant> MOCHA = register("mocha");
+    public static final Supplier<DogVariant> WITHERED_SOUL = register("withered_soul", WitheredSoulDogVariant::new);
+
+    private static Supplier<DogVariant> register(String name, Function<String, DogVariant> variant_creator) {
+        var captured_variant = variant_creator.apply(name);
+        return DOG_VARIANT.register(name, () -> captured_variant);
+    }
 
     private static Supplier<DogVariant> register(String name) {
         return register(name, p -> {});

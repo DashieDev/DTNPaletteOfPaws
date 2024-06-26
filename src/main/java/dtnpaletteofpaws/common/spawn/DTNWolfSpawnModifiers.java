@@ -35,6 +35,7 @@ public class DTNWolfSpawnModifiers {
         registerGuacamoleWolfModifier(ctx);
         registerYuzuWolfModifier(ctx);
         registerCaffeinePackModifier(ctx);
+        registerWitheredSoulWolfModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstapContext<BiomeModifier> ctx) {
@@ -148,6 +149,15 @@ public class DTNWolfSpawnModifiers {
             Biomes.DARK_FOREST, 
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 4, 2, 4)
+        );
+    }
+
+    private static void registerWitheredSoulWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_withered_soul", 
+            Biomes.SOUL_SAND_VALLEY, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
 
