@@ -2,6 +2,7 @@ package dtnpaletteofpaws.common.variant;
 
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.lib.Resources;
+import dtnpaletteofpaws.common.util.RandomUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.sounds.SoundEvents;
@@ -31,9 +32,9 @@ public class MoltenWolfVariant extends WolfVariant {
         var random = wolf.getRandom();
         var level = wolf.level();
         if (random.nextInt(100) == 0) {
-            double d0 = (double)wolf.getX() + random.nextFloat() * (wolf.getBbWidth()/2);
+            double d0 = (double)wolf.getX() + RandomUtil.nextFloatRemapped(random) * (wolf.getBbWidth()/2);
             double d1 = (double)wolf.getY() + random.nextFloat() * (wolf.getBbHeight());
-            double d2 = (double)wolf.getZ() + random.nextFloat() * (wolf.getBbWidth()/2);
+            double d2 = (double)wolf.getZ() + RandomUtil.nextFloatRemapped(random) * (wolf.getBbWidth()/2);
             level.addParticle(ParticleTypes.LAVA, d0, d1, d2, 0.0D, 0.0D, 0.0D);
             level.playLocalSound(d0, d1, d2, SoundEvents.LAVA_POP, SoundSource.AMBIENT, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, false);
         }
@@ -49,9 +50,9 @@ public class MoltenWolfVariant extends WolfVariant {
             else
                 type = ParticleTypes.LANDING_LAVA;
             if (type != null) {
-                double d0 = (double)wolf.getX() + random.nextFloat() * (wolf.getBbWidth()/2);
+                double d0 = (double)wolf.getX() + RandomUtil.nextFloatRemapped(random) * (wolf.getBbWidth()/2);
                 double d1 = (double)wolf.getY() + random.nextFloat() * (wolf.getBbHeight() * 0.8);
-                double d2 = (double)wolf.getZ() + random.nextFloat() * (wolf.getBbWidth()/2);
+                double d2 = (double)wolf.getZ() + RandomUtil.nextFloatRemapped(random) * (wolf.getBbWidth()/2);
                 level.addParticle(type, d0, d1, d2, 0.0D, 0.0D, 0.0D);
             }
             
