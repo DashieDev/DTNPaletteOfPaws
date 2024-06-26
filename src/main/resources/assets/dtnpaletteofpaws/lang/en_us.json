@@ -1,4 +1,10 @@
 {
     "entity.dtnpaletteofpaws.wolf": "Wolf",
-    "item.dtnpaletteofpaws.wolf_charm": "Wolf Charm"
+    "item.dtnpaletteofpaws.wolf_charm": "Wolf Charm",
+
+    "dtnpaletteofpaws.variant.cappuccino": "Cappuccino",
+    "dtnpaletteofpaws.variant.espresso": "Espresso",
+    "dtnpaletteofpaws.variant.latte": "Latte",
+    "dtnpaletteofpaws.variant.mocha": "Mocha",
+    "dtnpaletteofpaws.variant.withered_soul": "Withered Soul"
 }
