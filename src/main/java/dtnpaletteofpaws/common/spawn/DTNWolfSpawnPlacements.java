@@ -2,6 +2,8 @@ package dtnpaletteofpaws.common.spawn;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import dtnpaletteofpaws.ChopinLogger;
 import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.common.entity.DTNWolf;
@@ -15,19 +17,34 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnPlacementType;
+import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
+import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
 
 public class DTNWolfSpawnPlacements {
     
-    public static final SpawnPlacements.Type DTN_WOLF_SPAWN_TYPE
-        = SpawnPlacements.Type.create(Constants.MOD_ID + "_DTN_WOLF_SPAWN_TYPE", 
-        DTNWolfSpawnPlacements::spawnPlacementTypeCheck);
+    // public static final SpawnPlacements.Type DTN_WOLF_SPAWN_TYPE
+    //     = SpawnPlacements.Type.create(Constants.MOD_ID + "_DTN_WOLF_SPAWN_TYPE", 
+    //     DTNWolfSpawnPlacements::spawnPlacementTypeCheck);
+    //1.21+
+    public static final SpawnPlacementType DTN_WOLF_SPAWN_TYPE
+        = new SpawnPlacementType() {
+
+            @Override
+            public boolean isSpawnPositionOk(LevelReader level, BlockPos pos,
+                    @Nullable EntityType<?> type) {
+                return spawnPlacementTypeCheck(level, pos, type);
+            }
+            
+        };
+       
+    //
 
     public static void onRegisterSpawnPlacements(SpawnPlacementRegisterEvent event) {
         event.register(
@@ -68,7 +85,7 @@ public class DTNWolfSpawnPlacements {
     }
 
     public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, EntityType<?> type) {
-        return NaturalSpawner.canSpawnAtBody(SpawnPlacements.Type.ON_GROUND, world, pos, type);
+        return SpawnPlacementTypes.ON_GROUND.isSpawnPositionOk(world, pos, type);
     }
 
     /**
@@ -100,7 +117,7 @@ public class DTNWolfSpawnPlacements {
 
         var check_pos_below = check_pos.below();
          if (world.getBlockState(check_pos_below)
-            .isPathfindable(world, check_pos_below, PathComputationType.LAND)) {
+            .isPathfindable(PathComputationType.LAND)) {
             return check_pos_below;
         }
 

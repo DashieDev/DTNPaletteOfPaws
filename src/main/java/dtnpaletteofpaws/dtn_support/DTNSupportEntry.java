@@ -1,8 +1,8 @@
 package dtnpaletteofpaws.dtn_support;
 
 import dtnpaletteofpaws.common.lib.Constants;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 
 public class DTNSupportEntry {
 

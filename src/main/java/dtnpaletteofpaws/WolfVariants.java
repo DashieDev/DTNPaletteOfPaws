@@ -11,7 +11,7 @@ import dtnpaletteofpaws.common.variant.CherryWolfVariant;
 import dtnpaletteofpaws.common.variant.MoltenWolfVariant;
 import dtnpaletteofpaws.common.variant.WitheredSoulWolfVariant;
 import dtnpaletteofpaws.common.variant.WolfVariant;
-import net.minecraftforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class WolfVariants {
     

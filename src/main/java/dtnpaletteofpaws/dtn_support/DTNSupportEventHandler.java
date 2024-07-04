@@ -16,10 +16,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class DTNSupportEventHandler {
     
@@ -98,7 +97,7 @@ public class DTNSupportEventHandler {
         if (dog == null) {
             throw new IllegalStateException("Creator function for the dog returned \"null\"");
         }
-        dog.setTame(true);
+        dog.setTame(true, true);
         dog.setOwnerUUID(owner.getUUID());
         dog.maxHealth();
         dog.setOrderedToSit(false);
@@ -109,7 +108,7 @@ public class DTNSupportEventHandler {
         dog.setYRot(wolf.yBodyRot);
 
         var wolf_collar_color = wolf.getCollarColor();
-        var color = Util.srgbArrayToInt(wolf_collar_color.getTextureDiffuseColors());
+        var color = (wolf_collar_color.getTextureDiffuseColor());
         var dog_collar = DoggyAccessories.DYEABLE_COLLAR.get()
             .create(color);
         if (dog_collar != null)
@@ -147,10 +146,10 @@ public class DTNSupportEventHandler {
     }
 
     private static void migrateWolfArmor(DTNWolf wolf, Dog dog) {
-        // if (!wolf.hasArmor())
-        //     return;
-        // var armor_stack = wolf.getBodyArmorItem().copyWithCount(1);
-        // dog.setWolfArmor(armor_stack);
+        if (!wolf.hasWolfArmor())
+            return;
+        var armor_stack = wolf.getBodyArmorItem().copyWithCount(1);
+        dog.setWolfArmor(armor_stack);
         return;
     }
 

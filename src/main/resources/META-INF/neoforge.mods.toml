@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="${fml_version_range}"
+loaderVersion="${neofml_version_range}"
 license="All Rights Reserved"
 issueTrackerURL=""
 displayURL=""
@@ -13,9 +13,9 @@ logoFile="dtn_icon.png"
     authors="dashiedev, mashxp"
     description="   Every Paws is a Note in the Grand Wolf Concerto!"
 [[dependencies.dtnpaletteofpaws]] #optional
-    modId="forge"
+    modId="neoforge"
     mandatory=true
-    versionRange="${forge_version_range}" #mandatory
+    versionRange="${neoforge_version_range}" #mandatory
     ordering="NONE"
     side="BOTH"
 
@@ -32,3 +32,6 @@ logoFile="dtn_icon.png"
     versionRange="[1.18.19,)" #mandatory
     ordering="NONE"
     side="BOTH"
+
+[[mixins]]
+config = "dtnpaletteofpaws.mixins.json"

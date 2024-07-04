@@ -8,7 +8,7 @@ import doggytalents.DoggyRegistries;
 import doggytalents.common.variant.DogVariant;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.Util;
-import net.minecraftforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class DTNSupportDogVariants {
     

@@ -7,22 +7,22 @@ import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.common.util.Util;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.ForgeBiomeModifiers;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.common.world.BiomeModifiers;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class DTNWolfSpawnModifiers {
     
-    public static void bootstrap(BootstapContext<BiomeModifier> ctx) {
+    public static void bootstrap(BootstrapContext<BiomeModifier> ctx) {
         registerWolfModifier(ctx);
     }
 
-    private static void registerWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerCherryWolfModifier(ctx);
         registerLemonyLimeWolfModifier(ctx);
         registerHimalayanSaltWolfModifier(ctx);
@@ -38,7 +38,7 @@ public class DTNWolfSpawnModifiers {
         registerWitheredSoulWolfModifier(ctx);
     }
 
-    private static void registerCherryWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_cherry", 
             Biomes.CHERRY_GROVE, 
@@ -47,7 +47,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerLemonyLimeWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerLemonyLimeWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_lemony_lime", 
             Biomes.BEACH, 
@@ -56,7 +56,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerHimalayanSaltWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerHimalayanSaltWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_himalayan_salt", 
             Biomes.JAGGED_PEAKS, 
@@ -65,7 +65,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerBambooWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerBambooWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_bamboo", 
             Biomes.JUNGLE, 
@@ -80,7 +80,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerCrimsonWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerCrimsonWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_crimson", 
             Biomes.CRIMSON_FOREST, 
@@ -89,7 +89,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerWarpedWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerWarpedWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_warped", 
             Biomes.WARPED_FOREST, 
@@ -98,7 +98,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerMoltenWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerMoltenWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_molten", 
             Biomes.BASALT_DELTAS, 
@@ -107,7 +107,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerBirchWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerBirchWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_birch", 
             Biomes.BIRCH_FOREST, 
@@ -116,7 +116,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerPistachioWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerPistachioWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_pistachio", 
             Biomes.MANGROVE_SWAMP, 
@@ -125,7 +125,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerGuacamoleWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerGuacamoleWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_guacamole", 
             Biomes.MEADOW, 
@@ -134,7 +134,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerYuzuWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerYuzuWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_yuzu", 
             Biomes.SNOWY_BEACH, 
@@ -143,7 +143,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerCaffeinePackModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerCaffeinePackModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "caffeine_pack", 
             Biomes.DARK_FOREST, 
@@ -152,7 +152,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerWitheredSoulWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerWitheredSoulWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_withered_soul", 
             Biomes.SOUL_SAND_VALLEY, 
@@ -161,17 +161,17 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerSingleSpawnModifier(BootstapContext<BiomeModifier> ctx,
+    private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
         String name, ResourceKey<Biome> biome, MobSpawnSettings.SpawnerData spawner_data) {
         
         registerSingleSpawnModifier(ctx, name, List.of(biome), spawner_data);
     }
 
-    private static void registerSingleSpawnModifier(BootstapContext<BiomeModifier> ctx,
+    private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
         String name, List<ResourceKey<Biome>> biomes, MobSpawnSettings.SpawnerData spawner_data) {
         
         var spawn_id = ResourceKey.create(
-            ForgeRegistries.Keys.BIOME_MODIFIERS, 
+            NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
             Util.getResource(name));
         
         var biome_reg = ctx.lookup(Registries.BIOME);
@@ -183,7 +183,7 @@ public class DTNWolfSpawnModifiers {
         if (biome_holders.isEmpty())
             return;
         var spawn_biomes = HolderSet.direct(biome_holders);
-        var spawn_modifier = ForgeBiomeModifiers.AddSpawnsBiomeModifier
+        var spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
             .singleSpawn(spawn_biomes, spawner_data);
         
         ctx.register(spawn_id, spawn_modifier);

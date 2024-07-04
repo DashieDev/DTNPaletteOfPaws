@@ -35,7 +35,7 @@ public class WolfVariantUtil {
         var res = ResourceLocation.tryParse(id);
         if (res == null)
             return getDefault();
-        var variant = DTNRegistries.DTN_WOLF_VARIANT.get().getValue(res);
+        var variant = DTNRegistries.DTN_WOLF_VARIANT.get().get(res);
         if (variant == null)
             variant = getDefault();
         return variant;

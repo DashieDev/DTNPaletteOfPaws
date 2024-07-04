@@ -2,7 +2,7 @@ package dtnpaletteofpaws.dtn_support;
 
 import dtnpaletteofpaws.dtn_support.variant.DTNDogVariantMapping;
 import dtnpaletteofpaws.dtn_support.variant.DTNSupportDogVariants;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.IEventBus;
 
 public class DTNSupportSetup {
     
