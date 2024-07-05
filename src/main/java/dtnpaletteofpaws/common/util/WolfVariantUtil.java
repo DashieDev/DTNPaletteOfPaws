@@ -66,17 +66,6 @@ public class WolfVariantUtil {
         return filtered_config;
     }
 
-    public static List<WolfVariant> getAllWolfVariantForBiome(RegistryAccess prov, Holder<Biome> biome) {
-        var filtered_config = getAllWolfBiomeConfigForBiome(prov, biome);
-        
-        var variant_list = new HashSet<WolfVariant>();
-        for (var config : filtered_config) {
-            variant_list.addAll(config.variants());
-        }
-
-        return new ArrayList<>(variant_list);
-    }
-
     public static Set<Block> getExtraSpawnableBlocksForBiomeConfigs(List<WolfBiomeConfig> configs) {
         var spawnable_block_set = new HashSet<Block>();
         for (var config : configs) {
@@ -94,8 +83,18 @@ public class WolfVariantUtil {
         return false;
     }
 
-    public static List<WolfVariant> getPossibleSpawnVariants(RegistryAccess prov, Holder<Biome> biome) {
-        return getAllWolfVariantForBiome(prov, biome);
+    public static List<WolfVariant> getPossibleSpawnVariants(RandomSource random, RegistryAccess prov, Holder<Biome> biome) {
+        var filtered_config = getAllWolfBiomeConfigForBiome(prov, biome);
+
+        if (filtered_config.isEmpty())
+            return List.of();
+        if (filtered_config.size() == 1)
+            return new ArrayList<>(filtered_config.get(0).variants());
+
+        int r = random.nextInt(filtered_config.size());
+        var selected_config = filtered_config.get(r);
+
+        return new ArrayList<>(selected_config.variants());
     }
 
 }
