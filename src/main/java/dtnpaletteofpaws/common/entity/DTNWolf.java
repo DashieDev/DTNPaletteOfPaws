@@ -888,7 +888,7 @@ public class DTNWolf extends TamableAnimal {
 
     public WolfPackData initializeGroupData(ServerLevelAccessor levelAccessor) {
         var holder = levelAccessor.getBiome(this.blockPosition());
-        var possible_variant = WolfVariantUtil.getPossibleSpawnVariants(levelAccessor.registryAccess(), holder);
+        var possible_variant = WolfVariantUtil.getPossibleSpawnVariants(this.getRandom(), levelAccessor.registryAccess(), holder);
         if (possible_variant.isEmpty())
             return null;
         return new WolfPackData(possible_variant);
