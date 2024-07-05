@@ -38,6 +38,7 @@ public class DTNPaletteOfPaws {
         DTNItems.ITEM.register(mod_event_bus);
         mod_event_bus.addListener(DTNEntityTypes::addEntityAttributes);
         mod_event_bus.addListener(DTNWolfSpawnPlacements::onRegisterSpawnPlacements);
+        mod_event_bus.addListener(DTNNetworkHandler::onRegisterPayloadEvent);
         mod_event_bus.addListener(this::commonSetup);
         mod_event_bus.addListener(this::onGatherData);
 
