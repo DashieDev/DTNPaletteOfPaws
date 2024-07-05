@@ -1,0 +1,11 @@
+{
+  "biomes": "minecraft:mushroom_fields",
+  "blocks": [
+    "minecraft:mycelium"
+  ],
+  "can_spawn_in_dark": true,
+  "variants": [
+    "dtnpaletteofpaws:brown_mushroom",
+    "dtnpaletteofpaws:red_mushroom"
+  ]
+}

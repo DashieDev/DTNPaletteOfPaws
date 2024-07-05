@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:mushroom_fields",
+  "spawners": {
+    "type": "dtnpaletteofpaws:wolf",
+    "maxCount": 4,
+    "minCount": 2,
+    "weight": 5
+  }
+}
