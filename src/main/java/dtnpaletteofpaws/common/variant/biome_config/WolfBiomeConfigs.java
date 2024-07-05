@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.checkerframework.checker.units.qual.m;
+
 import dtnpaletteofpaws.DTNRegistries;
 import dtnpaletteofpaws.WolfVariants;
 import dtnpaletteofpaws.common.util.Util;
@@ -42,6 +44,11 @@ public class WolfBiomeConfigs {
                 WolfVariants.ESPRESSO.get()
             ), Util.getResource("caffeine_pack_config"), Biomes.DARK_FOREST, List.of(), true);
         register(ctx, WolfVariants.WITHERED_SOUL.get(), Biomes.SOUL_SAND_VALLEY, List.of(Blocks.SOUL_SAND, Blocks.SOUL_SOIL), true);
+        register(ctx, List.of(
+            WolfVariants.MUSHROOM_BROWN.get(),
+            WolfVariants.MUSHROOM_RED.get()
+        ), Util.getResource("mushroom_pack_config"), Biomes.MUSHROOM_FIELDS, List.of(Blocks.MYCELIUM), true);
+        register(ctx, WolfVariants.BONITO_FLAKES.get(), Biomes.DESERT, List.of(Blocks.SAND), false);
     }
 
     public static void register(BootstrapContext<WolfBiomeConfig> ctx, 

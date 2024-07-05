@@ -36,6 +36,8 @@ public class DTNWolfSpawnModifiers {
         registerYuzuWolfModifier(ctx);
         registerCaffeinePackModifier(ctx);
         registerWitheredSoulWolfModifier(ctx);
+        registerMushroomPackModifier(ctx);
+        registerBonitoFlakesWolfModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
@@ -156,6 +158,24 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_withered_soul", 
             Biomes.SOUL_SAND_VALLEY, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
+        );
+    }
+
+    private static void registerMushroomPackModifier(BootstrapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "mushroom_pack", 
+            Biomes.MUSHROOM_FIELDS, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 5, 2, 4)
+        );
+    }
+
+    private static void registerBonitoFlakesWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_bonito_flakes", 
+            Biomes.DESERT, 
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
