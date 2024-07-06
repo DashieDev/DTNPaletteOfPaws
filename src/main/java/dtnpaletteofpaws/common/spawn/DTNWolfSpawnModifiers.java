@@ -37,8 +37,7 @@ public class DTNWolfSpawnModifiers {
         registerCaffeinePackModifier(ctx);
         registerWitheredSoulWolfModifier(ctx);
         registerMushroomPackModifier(ctx);
-        registerBonitoFlakesWolfModifier(ctx);
-        registerKombuWolfModifier(ctx);
+        registerDesertSuiteModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstapContext<BiomeModifier> ctx) {
@@ -148,7 +147,7 @@ public class DTNWolfSpawnModifiers {
 
     private static void registerCaffeinePackModifier(BootstapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
-            ctx, "caffeine_pack", 
+            ctx, "dark_forest_suite", 
             Biomes.DARK_FOREST, 
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 4, 2, 4)
@@ -173,18 +172,9 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerBonitoFlakesWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerDesertSuiteModifier(BootstapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
-            ctx, "wolf_bonito_flakes", 
-            Biomes.DESERT, 
-            new MobSpawnSettings
-                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
-        );
-    }
-
-    private static void registerKombuWolfModifier(BootstapContext<BiomeModifier> ctx) {
-        registerSingleSpawnModifier(
-            ctx, "wolf_kombu", 
+            ctx, "desert_suite", 
             Biomes.DESERT, 
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
