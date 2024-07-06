@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:desert",
+  "blocks": [
+    "minecraft:sand"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:kombu"
+  ]
+}
