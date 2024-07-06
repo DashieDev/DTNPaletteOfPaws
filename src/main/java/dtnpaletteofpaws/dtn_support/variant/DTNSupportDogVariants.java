@@ -19,6 +19,9 @@ public class DTNSupportDogVariants {
     public static final Supplier<DogVariant> LATTE = register("latte", 0xff9b7f66);
     public static final Supplier<DogVariant> MOCHA = register("mocha", 0xff5d2b00);
     public static final Supplier<DogVariant> WITHERED_SOUL = register("withered_soul", WitheredSoulDogVariant::new);
+    public static final Supplier<DogVariant> MUSHROOM_RED = register("red_mushroom", 0xffc02624);
+    public static final Supplier<DogVariant> MUSHROOM_BROWN = register("brown_mushroom", 0xff997453);
+    public static final Supplier<DogVariant> BONITO_FLAKES = register("bonito_flakes", 0xffcb805e);
 
     private static Supplier<DogVariant> register(String name, Function<String, DogVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);
