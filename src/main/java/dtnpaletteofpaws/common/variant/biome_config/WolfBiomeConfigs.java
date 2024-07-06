@@ -50,6 +50,7 @@ public class WolfBiomeConfigs {
             WolfVariants.MUSHROOM_RED.get()
         ), Util.getResource("mushroom_pack_config"), Biomes.MUSHROOM_FIELDS, List.of(Blocks.MYCELIUM), true);
         register(ctx, WolfVariants.BONITO_FLAKES.get(), Biomes.DESERT, List.of(Blocks.SAND), false);
+        register(ctx, WolfVariants.KOMBU.get(), Biomes.DESERT, List.of(Blocks.SAND), false);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
