@@ -78,7 +78,7 @@ public class DTNWolfSpawnModifiers {
             ctx, "wolf_bamboo_dedicated", 
             Biomes.BAMBOO_JUNGLE,
             new MobSpawnSettings
-                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 60, 1, 1)
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 60, 1, 3)
         );
     }
 
