@@ -1,7 +1,7 @@
 {
-  "biomes": "minecraft:desert",
+  "biomes": "minecraft:wooded_badlands",
   "blocks": [
-    "minecraft:sand"
+    "minecraft:red_sand"
   ],
   "variants": [
     "dtnpaletteofpaws:bonito_flakes"

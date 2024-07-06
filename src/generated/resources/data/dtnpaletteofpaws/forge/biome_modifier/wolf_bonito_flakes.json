@@ -1,6 +1,6 @@
 {
   "type": "forge:add_spawns",
-  "biomes": "minecraft:desert",
+  "biomes": "minecraft:wooded_badlands",
   "spawners": {
     "type": "dtnpaletteofpaws:wolf",
     "maxCount": 1,
