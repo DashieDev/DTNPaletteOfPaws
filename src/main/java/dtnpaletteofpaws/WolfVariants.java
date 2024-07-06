@@ -36,6 +36,7 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> MUSHROOM_RED = register("red_mushroom");
     public static final Supplier<WolfVariant> MUSHROOM_BROWN = register("brown_mushroom");
     public static final Supplier<WolfVariant> BONITO_FLAKES = register("bonito_flakes");
+    public static final Supplier<WolfVariant> KOMBU = register("kombu");
 
     private static Supplier<WolfVariant> register(String name, Function<String, WolfVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);
