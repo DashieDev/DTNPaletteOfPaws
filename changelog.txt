@@ -9,6 +9,19 @@ Update List Key
 
  
 
-1.0 - 27th June 2024
-
+**1.0 - 27th June 2024**
 The birth of the DTNPoP.
+
+**1.1 - 8th July 2024**
+New Wolf Variants:
++ The Fungi Suite:
+    + Mushroom Pack [ Red Mushroom, Brown Mushroom ]
+    + Shitake
+    + Enoki
++ Kombu (Seaweed)
++ Bonito Flakes
++ The Gelato Suite:
+    + Chocolate
+    + Strawberry
+    + Vanilla
+# Increase Bamboo Wolf spawn pack
