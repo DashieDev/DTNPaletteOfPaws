@@ -23,6 +23,11 @@ public class DTNSupportDogVariants {
     public static final Supplier<DogVariant> MUSHROOM_BROWN = register("brown_mushroom", 0xff997453);
     public static final Supplier<DogVariant> BONITO_FLAKES = register("bonito_flakes", 0xffcb805e);
     public static final Supplier<DogVariant> KOMBU = register("kombu", 0xff36491d);
+    public static final Supplier<DogVariant> SHITAKE = register("shitake", 0xff2d2624);
+    public static final Supplier<DogVariant> ENOKI = register("enoki", 0xffe0c89e);
+    public static final Supplier<DogVariant> VANILLA = register("vanilla", 0xfff1e8b6);
+    public static final Supplier<DogVariant> STRAWBERRY = register("strawberry", 0xffed8395);
+    public static final Supplier<DogVariant> CHOCOLATE = register("chocolate", 0xff533124);
 
     private static Supplier<DogVariant> register(String name, Function<String, DogVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);

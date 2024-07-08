@@ -50,6 +50,13 @@ public class WolfBiomeConfigs {
         ), Util.getResource("mushroom_pack_config"), Biomes.MUSHROOM_FIELDS, List.of(Blocks.MYCELIUM), true);
         register(ctx, WolfVariants.BONITO_FLAKES.get(), Biomes.WOODED_BADLANDS, List.of(Blocks.RED_SAND), false);
         register(ctx, WolfVariants.KOMBU.get(), Biomes.DESERT, List.of(Blocks.SAND), false);
+        register(ctx, WolfVariants.SHITAKE.get(), Biomes.DARK_FOREST, true);
+        register(ctx, WolfVariants.ENOKI.get(), Biomes.DESERT, false);
+        register(ctx, List.of(
+            WolfVariants.CHOCOLATE.get(),
+            WolfVariants.STRAWBERRY.get(),
+            WolfVariants.VANILLA.get()
+        ), Util.getResource("gelato_suite"), Biomes.SNOWY_PLAINS, List.of(), true);
     }
 
     public static void register(BootstrapContext<WolfBiomeConfig> ctx, 

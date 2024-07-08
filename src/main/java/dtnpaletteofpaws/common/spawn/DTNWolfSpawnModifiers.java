@@ -39,6 +39,7 @@ public class DTNWolfSpawnModifiers {
         registerMushroomPackModifier(ctx);
         registerDesertSuiteModifier(ctx);
         registerBonitoFlakesWolfModifier(ctx);
+        registerGelatoSuiteModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
@@ -188,6 +189,15 @@ public class DTNWolfSpawnModifiers {
             Biomes.WOODED_BADLANDS, 
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
+        );
+    }
+
+    private static void registerGelatoSuiteModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "gelato_suite", 
+            Biomes.SNOWY_PLAINS, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 3)
         );
     }
 
