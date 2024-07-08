@@ -183,7 +183,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerBonitoFlakesWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerBonitoFlakesWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_bonito_flakes", 
             Biomes.WOODED_BADLANDS, 
@@ -192,7 +192,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerGelatoSuiteModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerGelatoSuiteModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "gelato_suite", 
             Biomes.SNOWY_PLAINS, 
@@ -201,7 +201,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerSingleSpawnModifier(BootstapContext<BiomeModifier> ctx,
+    private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
         String name, ResourceKey<Biome> biome, MobSpawnSettings.SpawnerData spawner_data) {
         
         registerSingleSpawnModifier(ctx, name, List.of(biome), spawner_data);
