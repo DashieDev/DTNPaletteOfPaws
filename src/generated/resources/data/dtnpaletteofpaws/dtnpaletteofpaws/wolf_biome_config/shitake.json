@@ -1,0 +1,7 @@
+{
+  "biomes": "minecraft:dark_forest",
+  "can_spawn_in_dark": true,
+  "variants": [
+    "dtnpaletteofpaws:shitake"
+  ]
+}
