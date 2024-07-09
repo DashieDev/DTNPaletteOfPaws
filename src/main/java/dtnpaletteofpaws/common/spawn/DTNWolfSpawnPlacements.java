@@ -25,7 +25,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
 public class DTNWolfSpawnPlacements {
     
@@ -46,12 +46,12 @@ public class DTNWolfSpawnPlacements {
        
     //
 
-    public static void onRegisterSpawnPlacements(SpawnPlacementRegisterEvent event) {
+    public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         event.register(
             DTNEntityTypes.DTNWOLF.get(), DTN_WOLF_SPAWN_TYPE,
             Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
             DTNWolfSpawnPlacements::DTNWolfSpawnableOn,
-            SpawnPlacementRegisterEvent.Operation.OR
+            RegisterSpawnPlacementsEvent.Operation.OR
         );
     }
 
