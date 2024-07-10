@@ -58,6 +58,18 @@ public class WolfBiomeConfigs {
             WolfVariants.STRAWBERRY.get(),
             WolfVariants.VANILLA.get()
         ), Util.getResource("gelato_suite"), Biomes.SNOWY_PLAINS, List.of(), true);
+
+
+        //Vanilla
+        register(ctx, WolfVariants.PALE.get(), Biomes.TAIGA, Blocks.GRASS_BLOCK, false);
+        register(ctx, WolfVariants.WOOD.get(), Biomes.FOREST, Blocks.GRASS_BLOCK, false);
+        register(ctx, WolfVariants.ASHEN.get(), Biomes.SNOWY_TAIGA, Blocks.GRASS_BLOCK, false);
+        register(ctx, WolfVariants.BLACK.get(), Biomes.OLD_GROWTH_PINE_TAIGA, Blocks.GRASS_BLOCK, false);
+        register(ctx, WolfVariants.CHESTNUT.get(), Biomes.OLD_GROWTH_SPRUCE_TAIGA, Blocks.GRASS_BLOCK, false);
+        register(ctx, WolfVariants.RUSTY.get(), Biomes.SPARSE_JUNGLE, Blocks.GRASS_BLOCK, false);
+        register(ctx, WolfVariants.SPOTTED.get(), Biomes.SAVANNA_PLATEAU, Blocks.GRASS_BLOCK, false);
+        register(ctx, WolfVariants.STRIPED.get(), Biomes.WOODED_BADLANDS, Blocks.GRASS_BLOCK, false);
+        register(ctx, WolfVariants.SNOWY.get(), Biomes.GROVE, Blocks.GRASS_BLOCK, false);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 

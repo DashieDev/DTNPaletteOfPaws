@@ -40,6 +40,17 @@ public class DTNWolfSpawnModifiers {
         registerDesertSuiteModifier(ctx);
         registerBonitoFlakesWolfModifier(ctx);
         registerGelatoSuiteModifier(ctx);
+
+        //Vanilla
+        registerPaleWolfModifier(ctx);
+        registerWoodsWolfModifier(ctx);
+        registerAshenWolfModifier(ctx);
+        registerBlackWolfModifier(ctx);
+        registerChestnutWolfModifier(ctx);
+        registerRustyWolfModifier(ctx);
+        registerSpottedWolfModifier(ctx);
+        registerStripedWolfModifier(ctx);
+        registerSnowyWolfModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstapContext<BiomeModifier> ctx) {
@@ -200,6 +211,81 @@ public class DTNWolfSpawnModifiers {
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 3)
         );
     }
+
+    // Vanilla
+    private static void registerPaleWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_pale", 
+            Biomes.TAIGA, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 8, 4, 4)
+        );
+    }
+    private static void registerWoodsWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_woods", 
+            Biomes.FOREST, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 5, 4, 4)
+        );
+    }
+    private static void registerAshenWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_ashen", 
+            Biomes.SNOWY_TAIGA, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 4, 4)
+        );
+    }
+    private static void registerBlackWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_black", 
+            Biomes.OLD_GROWTH_PINE_TAIGA, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 8, 2, 4)
+        );
+    }
+    private static void registerChestnutWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_chestnut", 
+            Biomes.OLD_GROWTH_SPRUCE_TAIGA, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 8, 2, 4)
+        );
+    }
+    private static void registerRustyWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_rusty", 
+            Biomes.SPARSE_JUNGLE, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 8, 2, 4)
+        );
+    }
+    private static void registerSpottedWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_spotted", 
+            Biomes.SAVANNA_PLATEAU, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 8, 4, 8)
+        );
+    }
+    private static void registerStripedWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_striped", 
+            Biomes.WOODED_BADLANDS, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 2, 4, 8)
+        );
+    }
+    private static void registerSnowyWolfModifier(BootstapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_snowy", 
+            Biomes.GROVE, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
+        );
+    }
+
 
     private static void registerSingleSpawnModifier(BootstapContext<BiomeModifier> ctx,
         String name, ResourceKey<Biome> biome, MobSpawnSettings.SpawnerData spawner_data) {

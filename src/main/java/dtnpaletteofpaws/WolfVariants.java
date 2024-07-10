@@ -45,6 +45,20 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> STRAWBERRY = register("strawberry");
     public static final Supplier<WolfVariant> CHOCOLATE = register("chocolate");
 
+
+    //Vanilla
+    public static final Supplier<WolfVariant> PALE = register("pale");
+    public static final Supplier<WolfVariant> WOOD = register("woods");
+    public static final Supplier<WolfVariant> ASHEN = register("ashen");
+    public static final Supplier<WolfVariant> BLACK = register("black");
+    public static final Supplier<WolfVariant> CHESTNUT = register("chestnut");
+    public static final Supplier<WolfVariant> RUSTY = register("rusty");
+    public static final Supplier<WolfVariant> SPOTTED = register("spotted");
+    public static final Supplier<WolfVariant> STRIPED = register("striped");
+    public static final Supplier<WolfVariant> SNOWY = register("snowy");
+
+
+
     private static Supplier<WolfVariant> register(String name, Function<String, WolfVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);
         return DTN_WOLF_VARIANT.register(name, () -> captured_variant);
