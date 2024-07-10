@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:wooded_badlands",
+  "blocks": [
+    "minecraft:grass_block"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:striped"
+  ]
+}

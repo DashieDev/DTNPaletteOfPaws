@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:savanna_plateau",
+  "blocks": [
+    "minecraft:grass_block"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:spotted"
+  ]
+}

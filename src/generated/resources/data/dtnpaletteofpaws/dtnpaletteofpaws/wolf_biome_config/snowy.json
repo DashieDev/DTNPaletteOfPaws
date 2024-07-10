@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:grove",
+  "blocks": [
+    "minecraft:grass_block"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:snowy"
+  ]
+}

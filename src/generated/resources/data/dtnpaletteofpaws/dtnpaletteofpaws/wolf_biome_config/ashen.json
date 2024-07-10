@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:snowy_taiga",
+  "blocks": [
+    "minecraft:grass_block"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:ashen"
+  ]
+}

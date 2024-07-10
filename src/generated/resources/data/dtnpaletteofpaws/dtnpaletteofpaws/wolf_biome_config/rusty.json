@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:sparse_jungle",
+  "blocks": [
+    "minecraft:grass_block"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:rusty"
+  ]
+}

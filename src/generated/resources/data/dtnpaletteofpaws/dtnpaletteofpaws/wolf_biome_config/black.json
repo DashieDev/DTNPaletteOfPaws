@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:old_growth_pine_taiga",
+  "blocks": [
+    "minecraft:grass_block"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:black"
+  ]
+}
