@@ -25,3 +25,8 @@ New Wolf Variants:
     + Strawberry
     + Vanilla
 # Increase Bamboo Wolf spawn pack
+
+**1.2 - 26th July 2024**
++ Withered Soul Wolves may Love Burns petter a bit.
++ Fix crimson texture
++ Glowing Crimson and Warped.
