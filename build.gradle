@@ -1,8 +1,7 @@
 plugins {
     id 'eclipse'
-    id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
-    id 'org.spongepowered.mixin' version '0.7.+'
+	id 'fabric-loom' version '1.5-SNAPSHOT'
+	id 'maven-publish'
 }
 
 version = '1.2'
@@ -18,39 +17,32 @@ sourceSets {
     }
 }
 
-minecraft {
+repositories {
 
-    mappings channel: 'official', version: '1.20.1'
+    // Add repositories to retrieve artifacts from in here.
+	// You should only use this when depending on other mods because
+	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
+	// for more information about repositories.
+    maven {
+        name = "Fuzs Mod Resources"
+        url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+    }
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+}
 
+loom {
+	accessWidenerPath = file("src/main/resources/dtnpaletteofpaws.accesswidener")
     runs {
-        client {
-            taskName 'dtnpaletteofpaws_client'
-            workingDirectory file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                dtnpaletteofpaws.sources((SourceSet[]) [sourceSets.main])
-            }
-        }
-
-        server {
-            taskName 'dtnpaletteofpaws_server'
-            workingDirectory file('run-server')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                dtnpaletteofpaws.sources((SourceSet[]) [sourceSets.main])
-            }
-        }
-
-        data {
-            taskName 'dtnpaletteofpaws_data'
-            workingDirectory file('run')
-            property 'forge.logging.console.level', 'debug'
-            args '--mod', 'dtnpaletteofpaws', '--all', '--output', '"' + file('src/generated/resources/') + '"', '--existing', '"' + sourceSets.main.resources.srcDirs[0] + '"'
-            mods {
-                dtnpaletteofpaws.sources((SourceSet[]) [sourceSets.main])
-            }
+        // This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
+        datagen {
+            inherit server
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/fabric_generated/resources")}"
+            vmArg "-Dfabric-api.datagen.modid=dtnpaletteofpaws"
+ 
+            runDir "build/datagen"
         }
     }
 }
@@ -63,11 +55,26 @@ repositories {
     }
 }
 
-
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    compileOnly "blank:DoggyTalentsNext-1.20.1:1.18.25"
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.officialMojangMappings()
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
+
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	// Uncomment the following line to enable the deprecated Fabric API modules. 
+	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
+
+	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
+
+	implementation 'javax.inject:javax.inject:1'
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    
+    compileOnly "blank:DoggyTalentsNext[Fabric]-1.20.1:1.18.25"
 }
 
 jar {
@@ -94,7 +101,11 @@ tasks.named("processResources") {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
-mixin {
-    add sourceSets.main, "dtnpaletteofpaws.refmap.json"
-    config 'dtnpaletteofpaws.mixins.json'
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
 }
+    

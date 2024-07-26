@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "dtnpaletteofpaws",
+  "version": "${version}",
+
+  "name": "DTN's Palette Of Paws",
+  "description": "Every Paws is a Note in the Grand Wolf Concerto!",
+  "authors": [
+    "DashieDev",
+    "MashXP"
+  ],
+  "contact": {
+    "homepage": "https://legacy.curseforge.com/minecraft/mc-mods/doggy-talents-next"
+  },
+
+  "accessWidener" : "dtnpaletteofpaws.accesswidener",
+
+  "license": "GNU LGPLv3",
+  "icon": "assets/dtnpaletteofpaws/dtn_icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dtnpaletteofpaws.DTNPaletteOfPawsEntry"
+    ],
+    "client": [
+      "dtnpaletteofpaws.DTNPaletteOfPawsEntryClient"
+    ],
+    "fabric-datagen": [
+      "dtnpaletteofpaws.DTNPaletteOfPawsEntryData"
+    ]
+  },
+
+  "depends": {
+    "fabricloader": ">=0.15.7",
+    "fabric-api": "*",
+    "minecraft": "~1.20",
+    "java": ">=17",
+    "doggytalents": ">=1.18.21"
+  },
+  "suggests": {
+    "another-mod": "*"
+  },
+
+  "mixins": [
+    "dtnpaletteofpaws.mixins.json"
+  ]
+}
