@@ -21,6 +21,7 @@ public class WitheredSoulDogVariant extends DogVariant implements IDogAlteration
             )
             .customTranslation(Constants.MOD_ID + ".variant." + name)
             .guiColor(0xff01a7ac)
+            .burnsPetter()
         );
     }
 
