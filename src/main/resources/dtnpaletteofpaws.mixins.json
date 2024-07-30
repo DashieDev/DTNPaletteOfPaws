@@ -4,13 +4,13 @@
     "package": "dtnpaletteofpaws.common.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-        "NaturalSpawnerMixin"
+        "NaturalSpawnerMixin",
+        "Minecraft_UtilMixin"
     ],
     "client": [
     ],
     "server": [],
     "injectors": {
       "defaultRequire": 1
-    },
-    "refmap": "dtnpaletteofpaws.refmap.json"
+    }
 }

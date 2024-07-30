@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import dtnpaletteofpaws.ChopinLogger;
 import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.common.spawn.DTNWolfSpawnPlacements;
 import dtnpaletteofpaws.common.spawn.DTNWolfVariantsFabricSpawn;
@@ -31,7 +32,8 @@ public class NaturalSpawnerMixin {
         info.setReturnValue(pos);
     }
 
-    @Inject(method = "isSpawnPositionOk(Lnet/minecraft/world/entity/SpawnPlacements/Type;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntityType;)Z", at = @At(value = "HEAD"), cancellable = true)
+    //Fabric
+    @Inject(at = @At(value = "HEAD"), cancellable = true, method = "isSpawnPositionOk")
     private static void dtn_isSpawnPositionOk(SpawnPlacements.Type type, LevelReader levelReader, BlockPos blockPos, @Nullable EntityType<?> entityType, CallbackInfoReturnable<Boolean> info) {
         if (entityType != DTNEntityTypes.DTNWOLF.get())
             return;
