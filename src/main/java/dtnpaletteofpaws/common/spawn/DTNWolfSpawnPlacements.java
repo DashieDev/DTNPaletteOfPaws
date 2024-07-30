@@ -21,21 +21,17 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
-
 public class DTNWolfSpawnPlacements {
     
-    public static final SpawnPlacements.Type DTN_WOLF_SPAWN_TYPE
-        = SpawnPlacements.Type.create(Constants.MOD_ID + "_DTN_WOLF_SPAWN_TYPE", 
-        DTNWolfSpawnPlacements::spawnPlacementTypeCheck);
+    // public static final SpawnPlacements.Type DTN_WOLF_SPAWN_TYPE
+    //     = SpawnPlacements.Type.create(Constants.MOD_ID + "_DTN_WOLF_SPAWN_TYPE", 
+    //     DTNWolfSpawnPlacements::spawnPlacementTypeCheck);
 
-    public static void onRegisterSpawnPlacements(SpawnPlacementRegisterEvent event) {
-        event.register(
-            DTNEntityTypes.DTNWOLF.get(), DTN_WOLF_SPAWN_TYPE,
-            Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-            DTNWolfSpawnPlacements::DTNWolfSpawnableOn,
-            SpawnPlacementRegisterEvent.Operation.OR
-        );
+    public static void init() {
+        SpawnPlacements.register(DTNEntityTypes.DTNWOLF.get(), 
+            SpawnPlacements.Type.ON_GROUND, 
+            Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, 
+            DTNWolfSpawnPlacements::DTNWolfSpawnableOn);   
     }
 
     public static boolean DTNWolfSpawnableOn(EntityType<DTNWolf> type, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
@@ -68,7 +64,7 @@ public class DTNWolfSpawnPlacements {
     }
 
     public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, EntityType<?> type) {
-        return NaturalSpawner.canSpawnAtBody(SpawnPlacements.Type.ON_GROUND, world, pos, type);
+        return DTNWolfVariantsFabricSpawn.isSpawnPositionOk_imitate(SpawnPlacements.Type.ON_GROUND, world, pos, type);
     }
 
     /**

@@ -1,9 +1,10 @@
 package dtnpaletteofpaws.common.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
+
+import dtnpaletteofpaws.common.forge_imitate.ForgeNetworkHandler.NetworkEvent;
 
 public interface IPacket<D> {
 

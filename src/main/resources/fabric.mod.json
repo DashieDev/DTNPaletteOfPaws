@@ -28,6 +28,9 @@
     ],
     "fabric-datagen": [
       "dtnpaletteofpaws.DTNPaletteOfPawsEntryData"
+    ],
+    "doggytalents.post_init": [
+      "dtnpaletteofpaws.DTNPostInitEntry"
     ]
   },
 
@@ -36,7 +39,7 @@
     "fabric-api": "*",
     "minecraft": "~1.20",
     "java": ">=17",
-    "doggytalents": ">=1.18.21"
+    "doggytalents": ">=1.18.26"
   },
   "suggests": {
     "another-mod": "*"

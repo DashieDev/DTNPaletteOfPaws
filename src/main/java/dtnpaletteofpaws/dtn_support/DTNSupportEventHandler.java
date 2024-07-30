@@ -10,24 +10,20 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.event.PlayerInteractEvent;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.dtn_support.variant.DTNDogVariantMapping;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-
 public class DTNSupportEventHandler {
     
-    public static void registerSelf(IEventBus forge_event_bus) {
-        forge_event_bus.register(new DTNSupportEventHandler());
-    }
+    // public static void registerSelf(IEventBus forge_event_bus) {
+    //     forge_event_bus.register(new DTNSupportEventHandler());
+    // }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onWolfRightClickWithTreat(final PlayerInteractEvent.EntityInteract event) {
         var level = event.getLevel();
         var stack = event.getItemStack();

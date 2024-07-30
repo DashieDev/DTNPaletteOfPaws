@@ -1,8 +1,9 @@
 package dtnpaletteofpaws.common.network;
 
 import dtnpaletteofpaws.DTNPaletteOfPaws;
+import dtnpaletteofpaws.common.forge_imitate.PacketDistributor;
+import dtnpaletteofpaws.common.network.data.FabricWolfVariantSyncData;
 import dtnpaletteofpaws.common.network.data.WolfShakingData;
-import net.minecraftforge.network.PacketDistributor;
 
 public class PacketHandler {
 
@@ -10,6 +11,7 @@ public class PacketHandler {
 
     public static void init() {
         registerPacket(new WolfShakingPacket(), WolfShakingData.class);
+        registerPacket(new FabricWolfVariantSyncPacket(), FabricWolfVariantSyncData.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {

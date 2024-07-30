@@ -1,12 +1,12 @@
 package dtnpaletteofpaws.client;
 
+import doggytalents.forge_imitate.event.client.EntityRenderersEvent;
 import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.client.entity.model.DTNWolfModel;
 import dtnpaletteofpaws.client.entity.renderer.DTNWolfRenderer;
 import dtnpaletteofpaws.common.lib.Constants;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 
 public class ClientSetup {
     

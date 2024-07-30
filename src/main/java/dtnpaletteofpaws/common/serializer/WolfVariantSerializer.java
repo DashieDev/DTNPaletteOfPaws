@@ -9,12 +9,12 @@ public class WolfVariantSerializer implements EntityDataSerializer<WolfVariant> 
 
     @Override
     public void write(FriendlyByteBuf buf, WolfVariant value) {
-        buf.writeRegistryIdUnsafe(DTNRegistries.DTN_WOLF_VARIANT.get(), value);
+        buf.writeId(DTNRegistries.DTN_WOLF_VARIANT.get(), value);
     }
 
     @Override
     public WolfVariant read(FriendlyByteBuf buf) {
-        var ret = buf.readRegistryIdUnsafe(DTNRegistries.DTN_WOLF_VARIANT.get());
+        var ret = buf.readById(DTNRegistries.DTN_WOLF_VARIANT.get());
         return ret;
     }
 

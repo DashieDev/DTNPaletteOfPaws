@@ -14,12 +14,12 @@ import dtnpaletteofpaws.common.variant.WolfVariant;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class WolfBiomeConfig {
     
@@ -70,12 +70,12 @@ public class WolfBiomeConfig {
 
     public static final Codec<WolfBiomeConfig> CODEC = RecordCodecBuilder.create(
         builder -> builder.group(
-            Util.deferredCodec(() -> DTNRegistries.DTN_WOLF_VARIANT.get().getCodec())
+            Util.deferredCodec(() -> DTNRegistries.DTN_WOLF_VARIANT.get().byNameCodec())
                 .listOf()
                 .optionalFieldOf("variants").forGetter(WolfBiomeConfig::variantsAsList),
             RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("biomes")
                 .forGetter(WolfBiomeConfig::biomes),
-            ForgeRegistries.BLOCKS.getCodec().listOf()
+            BuiltInRegistries.BLOCK.byNameCodec().listOf()
                 .optionalFieldOf("blocks").forGetter(WolfBiomeConfig::blocksAsList),
             Codec.BOOL.optionalFieldOf("can_spawn_in_dark", false)
                 .forGetter(WolfBiomeConfig::canSpawnInDark)

@@ -6,13 +6,13 @@ import java.util.function.Supplier;
 
 import doggytalents.DoggyRegistries;
 import doggytalents.common.variant.DogVariant;
+import doggytalents.forge_imitate.registry.DeferredRegister;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.Util;
-import net.minecraftforge.registries.DeferredRegister;
 
 public class DTNSupportDogVariants {
     
-    public static final DeferredRegister<DogVariant> DOG_VARIANT = DeferredRegister.create(DoggyRegistries.Keys.DOG_VARIANT, Constants.MOD_ID);
+    public static final DeferredRegister<DogVariant> DOG_VARIANT = DeferredRegister.create(DoggyRegistries.DOG_VARIANT, Constants.MOD_ID);
 
     public static final Supplier<DogVariant> CAPPUCCINO = register("cappuccino", 0xffae7437);
     public static final Supplier<DogVariant> ESPRESSO = register("espresso", 0xff280d03);

@@ -11,6 +11,7 @@ import dtnpaletteofpaws.DTNSerializers;
 import dtnpaletteofpaws.WolfVariants;
 import dtnpaletteofpaws.common.entity.ai.*;
 import dtnpaletteofpaws.common.entity.ai.nav.*;
+import dtnpaletteofpaws.common.entity.fabric_helper.FabricWolfVariantSyncher;
 import dtnpaletteofpaws.common.lib.Constants.EntityState;
 import dtnpaletteofpaws.common.network.WolfShakingPacket;
 import dtnpaletteofpaws.common.network.data.WolfShakingData;
@@ -29,6 +30,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
@@ -81,7 +83,7 @@ public class DTNWolf extends TamableAnimal {
         
     private static final EntityDataAccessor<Boolean> BEGGING = SynchedEntityData.defineId(DTNWolf.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> COLLAR_COLOR = SynchedEntityData.defineId(DTNWolf.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<WolfVariant> VARIANT = SynchedEntityData.defineId(DTNWolf.class, DTNSerializers.DTN_WOLF_VARIANT);
+    //private static final EntityDataAccessor<WolfVariant> VARIANT = SynchedEntityData.defineId(DTNWolf.class, DTNSerializers.DTN_WOLF_VARIANT);
 
     private float percentDecreasePerHealthLost;
     private float maxHealth0;
@@ -104,7 +106,7 @@ public class DTNWolf extends TamableAnimal {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(VARIANT, WolfVariantUtil.getDefault());
+        //entityData.define(VARIANT, WolfVariantUtil.getDefault());
         entityData.define(BEGGING, false);
         entityData.define(COLLAR_COLOR, DyeColor.RED.getId());
     }
@@ -139,11 +141,11 @@ public class DTNWolf extends TamableAnimal {
     }
 
     public WolfVariant getVariant() {
-        return this.entityData.get(VARIANT);
+        return this.fabricWolfVariantSyncher.getVariant();
     }
 
     public void setVariant(WolfVariant variant) {
-        this.entityData.set(VARIANT, variant);
+        this.fabricWolfVariantSyncher.setVariant(variant);
     }
 
     public DyeColor getCollarColor() {
@@ -205,6 +207,9 @@ public class DTNWolf extends TamableAnimal {
         }
 
         this.getVariant().tickWolf(this);
+
+        //tick
+        this.fabricWolfVariantSyncher.tick();
     }
 
     @Override
@@ -559,7 +564,7 @@ public class DTNWolf extends TamableAnimal {
         
         if (this.level().isClientSide)
             return InteractionResult.SUCCESS;
-        var food_props = stack.getFoodProperties(this);
+        var food_props = stack.getItem().getFoodProperties();
         float nutrition = food_props != null ? (float)food_props.getNutrition() : 1.0F;
         this.heal(2.0F * nutrition);
         stack.shrink(1);
@@ -691,7 +696,7 @@ public class DTNWolf extends TamableAnimal {
     public boolean isFood(ItemStack stack) {
         //return stack.is(ItemTags.WOLF_FOOD);
         var item = stack.getItem();
-        return item.isEdible() && stack.getFoodProperties(this).isMeat();
+        return item.isEdible() && stack.getItem().getFoodProperties().isMeat();
     }
 
     private boolean canWolfArmorAbsorb(DamageSource p_331524_) {
@@ -705,7 +710,7 @@ public class DTNWolf extends TamableAnimal {
     }
 
     @Override
-    protected void hurtArmor(DamageSource source, float amount) {
+    public void hurtArmor(DamageSource source, float amount) {
         //this.doHurtEquipment(source, amount, new EquipmentSlot[]{EquipmentSlot.BODY});
     }
 
@@ -930,6 +935,16 @@ public class DTNWolf extends TamableAnimal {
             return this.variants.get(r_index);
         }
 
+    }
+
+
+    //Fabric
+    public final FabricWolfVariantSyncher fabricWolfVariantSyncher = new FabricWolfVariantSyncher(this);
+
+    @Override
+    public void startSeenByPlayer(ServerPlayer serverPlayer) {
+        super.startSeenByPlayer(serverPlayer);
+        fabricWolfVariantSyncher.onStartSeeingWolf(serverPlayer);
     }
 
 }

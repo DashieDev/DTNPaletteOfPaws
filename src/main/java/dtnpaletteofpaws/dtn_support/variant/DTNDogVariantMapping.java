@@ -45,6 +45,10 @@ public class DTNDogVariantMapping {
     }
 
     public static DogVariant getDTNWolf(WolfVariant variant) {
+        //Lazy Init in fabric
+        if (MAPPING == null)
+            init();
+
         return MAPPING.getOrDefault(variant, DogVariantUtil.getDefault());
     } 
 

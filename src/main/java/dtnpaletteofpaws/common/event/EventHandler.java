@@ -1,16 +1,15 @@
 package dtnpaletteofpaws.common.event;
 
+import doggytalents.forge_imitate.event.EntityJoinLevelEvent;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EventHandler {
     
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onEntitySpawn(final EntityJoinLevelEvent event) {
         Entity entity = event.getEntity();
         var level = entity.level();

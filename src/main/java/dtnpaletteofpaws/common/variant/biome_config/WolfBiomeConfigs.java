@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.checkerframework.checker.units.qual.m;
 
 import dtnpaletteofpaws.DTNRegistries;
 import dtnpaletteofpaws.WolfVariants;
@@ -21,7 +20,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class WolfBiomeConfigs {
     
