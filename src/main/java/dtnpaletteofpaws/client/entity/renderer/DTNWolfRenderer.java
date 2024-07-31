@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 
 public class DTNWolfRenderer extends MobRenderer<DTNWolf, DTNWolfModel> {
     
@@ -17,17 +18,18 @@ public class DTNWolfRenderer extends MobRenderer<DTNWolf, DTNWolfModel> {
         //this.addLayer(new DedicatedWolfArmorRenderer(this, ctx));
         this.addLayer(new DTNWolfGlowRenderer(this));
         this.addLayer(new DTNWolfCollarRenderer(this));
+        this.addLayer(new DTNWolfArmorRenderer(this, ctx));
     }
 
     public void render(DTNWolf wolf, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         if (wolf.isDogSoaked()) {
             float f = wolf.getShadingWhileWet(partialTicks);
-            this.model.setColor(f, f, f);
+            this.model.setColor(FastColor.ARGB32.colorFromFloat(1, f, f, f));
         }
 
         super.render(wolf, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         if (wolf.isDogSoaked()) {
-            this.model.setColor(1.0F, 1.0F, 1.0F);
+            this.model.setColor(0xffffffff);
         }
     }
 

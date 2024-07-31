@@ -26,11 +26,11 @@ public class DTNEntityTypes {
         .clientTrackingRange(16));
         //.setShouldReceiveVelocityUpdates(true));
 
-    private static <E extends Entity, T extends EntityType<E>> RegistryObject<EntityType<E>> register(final String name, final EntityType.EntityFactory<E> sup, final MobCategory classification, final Function<EntityType.Builder<E>, EntityType.Builder<E>> builder) {
+    private static <E extends Entity, T extends EntityType<E>> Supplier<EntityType<E>> register(final String name, final EntityType.EntityFactory<E> sup, final MobCategory classification, final Function<EntityType.Builder<E>, EntityType.Builder<E>> builder) {
         return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(Util.getResource(name).toString()));
     }
 
-    private static <E extends Entity, T extends EntityType<E>> RegistryObject<T> register(final String name, final Supplier<T> sup) {
+    private static <E extends Entity, T extends EntityType<E>> Supplier<T> register(final String name, final Supplier<T> sup) {
         return ENTITIES.register(name, sup);
     }
 

@@ -14,7 +14,11 @@ import net.minecraft.util.ExtraCodecs;
 public class Util {
     
     public static ResourceLocation getResource(String name) {
-        return new ResourceLocation(Constants.MOD_ID, name);
+        return ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
+    }
+
+    public static ResourceLocation getVanillaResource(String name) {
+        return ResourceLocation.withDefaultNamespace(name);
     }
 
     public static <T> ResourceKey<Registry<T>> getRegistryKey(Class<T> type, String name) {
@@ -25,11 +29,11 @@ public class Util {
         var namespace = target.getNamespace();
         var path = target.getPath();
         var new_path = modifier.apply(path);
-        return new ResourceLocation(namespace, new_path);
+        return ResourceLocation.fromNamespaceAndPath(namespace, new_path);
     }
 
-    public static <T> Codec<T> deferredCodec(Supplier<Codec<T>> value_sup) {
-        return ExtraCodecs.lazyInitializedCodec(value_sup);
-    }
+    // public static <T> Codec<T> deferredCodec(Supplier<Codec<T>> value_sup) {
+    //     return ExtraCodecs.lazyInitializedCodec(value_sup);
+    // }
 
 }

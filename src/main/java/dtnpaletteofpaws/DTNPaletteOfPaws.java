@@ -9,6 +9,7 @@ import dtnpaletteofpaws.common.data.DTNDataRegistriesProvider;
 import dtnpaletteofpaws.common.event.EventHandler;
 import dtnpaletteofpaws.common.forge_imitate.ForgeNetworkHandler;
 import dtnpaletteofpaws.common.lib.Constants;
+import dtnpaletteofpaws.common.network.DTNNetworkHandler;
 import dtnpaletteofpaws.common.network.PacketHandler;
 import dtnpaletteofpaws.common.spawn.DTNWolfSpawnPlacements;
 import dtnpaletteofpaws.common.spawn.DTNWolffSpawnEventHandler;

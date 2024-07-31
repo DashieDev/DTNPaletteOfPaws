@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import dtnpaletteofpaws.DTNItems;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.Util;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;

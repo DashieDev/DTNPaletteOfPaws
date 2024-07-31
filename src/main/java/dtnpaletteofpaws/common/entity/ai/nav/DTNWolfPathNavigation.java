@@ -13,10 +13,10 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FenceGateBlock;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
 public class DTNWolfPathNavigation extends GroundPathNavigation {
@@ -76,7 +76,7 @@ public class DTNWolfPathNavigation extends GroundPathNavigation {
 
         var nextNode = path.getNextNode();
         boolean is_first_fence_node = 
-            nextNode.type == BlockPathTypes.FENCE
+            nextNode.type == PathType.FENCE
             && path.getNextNodeIndex() == 0;
         if (!is_first_fence_node && dog.getPathfindingMalus(nextNode.type) < 0) {
             this.stop();
@@ -120,13 +120,13 @@ public class DTNWolfPathNavigation extends GroundPathNavigation {
     }
     
     @Override
-    protected boolean hasValidPathType(BlockPathTypes type) {
+    protected boolean hasValidPathType(PathType type) {
         if (dog.fireImmune()) {
-            if (type == BlockPathTypes.LAVA)
+            if (type == PathType.LAVA)
                 return true;
-            if (type == BlockPathTypes.DAMAGE_FIRE)
+            if (type == PathType.DAMAGE_FIRE)
                 return true;
-            if (type == BlockPathTypes.DANGER_FIRE)
+            if (type == PathType.DANGER_FIRE)
                 return true;
         }
         return super.hasValidPathType(type);

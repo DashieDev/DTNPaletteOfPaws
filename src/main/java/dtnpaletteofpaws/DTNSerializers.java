@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.serializer.WolfVariantSerializer;
 import dtnpaletteofpaws.common.variant.WolfVariant;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
 public class DTNSerializers {

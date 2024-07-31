@@ -15,7 +15,12 @@ import net.minecraft.resources.ResourceLocation;
 public class DTNRegistries {
 
     public static class Keys {
-        public static final ResourceLocation DTN_WOLF_VARIANT = Util.getResource("dtn_wolf_variant"); 
+        public static final ResourceKey<Registry<WolfVariant>> DTN_WOLF_VARIANT = regKey("dtn_wolf_variant");
+        
+        private static <T> ResourceKey<Registry<T>> regKey(String key) {
+            var rl = Util.getResource(key);
+            return ResourceKey.createRegistryKey(rl);
+        }
     }
 
     public static class DataKeys {

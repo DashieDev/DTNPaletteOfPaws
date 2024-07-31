@@ -44,6 +44,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Crackiness;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -64,6 +65,7 @@ import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
@@ -75,7 +77,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 
@@ -98,15 +100,15 @@ public class DTNWolf extends TamableAnimal {
 
     public DTNWolf(EntityType<? extends DTNWolf> p_30369_, Level p_30370_) {
         super(p_30369_, p_30370_);
-        this.setTame(false);
-        this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
+        this.setTame(false, true);
+        this.setPathfindingMalus(PathType.POWDER_SNOW, -1.0F);
+        this.setPathfindingMalus(PathType.DANGER_POWDER_SNOW, -1.0F);
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        //entityData.define(VARIANT, WolfVariantUtil.getDefault());
+        entityData.define(VARIANT, WolfVariantUtil.getDefault());
         entityData.define(BEGGING, false);
         entityData.define(COLLAR_COLOR, DyeColor.RED.getId());
     }
@@ -116,7 +118,7 @@ public class DTNWolf extends TamableAnimal {
         this.goalSelector.addGoal(1, new DTNWolfFloatGoal(this));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0, true));
-        this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
+        this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F));
         this.goalSelector.addGoal(7, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(9, new DTNWolfBegGoal(this, 8.0F));
@@ -181,8 +183,8 @@ public class DTNWolf extends TamableAnimal {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        //return this.canWolfArmorAbsorb(source) ? SoundEvents.WOLF_ARMOR_DAMAGE : SoundEvents.WOLF_HURT;
-        return SoundEvents.WOLF_HURT;
+        return this.canWolfArmorAbsorb(source) ? SoundEvents.WOLF_ARMOR_DAMAGE : SoundEvents.WOLF_HURT;
+        //return SoundEvents.WOLF_HURT;
     }
 
     @Override
@@ -229,7 +231,7 @@ public class DTNWolf extends TamableAnimal {
     }
 
     @Override
-    public float getPathfindingMalus(BlockPathTypes type) {
+    public float getPathfindingMalus(PathType type) {
         switch (type) {
         default:
             break;
@@ -508,7 +510,7 @@ public class DTNWolf extends TamableAnimal {
         return new Vec3(0.0D, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);
     }
 
-    //@Override
+    @Override
     protected void applyTamingSideEffects() {
         if (this.isTame()) {
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(40.0);
@@ -518,11 +520,12 @@ public class DTNWolf extends TamableAnimal {
         }
     }
 
-    @Override
-    public void setTame(boolean tame) {
-        super.setTame(tame);
-        applyTamingSideEffects();
-    }
+    // @Override
+    // public void setTame(boolean tame, boolean update) {
+    //     super.setTame(tame, update);
+    //     if (update) 
+    //     applyTamingSideEffects();
+    // }
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
@@ -564,8 +567,8 @@ public class DTNWolf extends TamableAnimal {
         
         if (this.level().isClientSide)
             return InteractionResult.SUCCESS;
-        var food_props = stack.getItem().getFoodProperties();
-        float nutrition = food_props != null ? (float)food_props.getNutrition() : 1.0F;
+        var food_props = stack.getFoodProperties(this);
+        float nutrition = food_props != null ? (float)food_props.nutrition() : 1.0F;
         this.heal(2.0F * nutrition);
         stack.shrink(1);
         return InteractionResult.SUCCESS;
@@ -591,70 +594,70 @@ public class DTNWolf extends TamableAnimal {
     }
 
     private InteractionResult handleSetWolfArmor(Player player, ItemStack stack) {
-        // if (!stack.is(Items.WOLF_ARMOR))
-        //     return InteractionResult.PASS;
-        // if (this.hasWolfArmor())
-        //     return InteractionResult.PASS;
-        // if (!this.isTame())
-        //     return InteractionResult.PASS;
-        // if (!this.isOwnedBy(player))
-        //     return InteractionResult.PASS;
+        if (!stack.is(Items.WOLF_ARMOR))
+            return InteractionResult.PASS;
+        if (this.hasWolfArmor())
+            return InteractionResult.PASS;
+        if (!this.isTame())
+            return InteractionResult.PASS;
+        if (!this.isOwnedBy(player))
+            return InteractionResult.PASS;
 
-        // if (this.level().isClientSide)
-        //     return InteractionResult.SUCCESS;
-        // this.setBodyArmorItem(stack.copyWithCount(1));
-        // stack.consume(1, player);
-        // return InteractionResult.SUCCESS;
-        return InteractionResult.PASS;
+        if (this.level().isClientSide)
+            return InteractionResult.SUCCESS;
+        this.setBodyArmorItem(stack.copyWithCount(1));
+        stack.consume(1, player);
+        return InteractionResult.SUCCESS;
+        //return InteractionResult.PASS;
     }
 
     private InteractionResult handleRepairWolfArmor(Player player, ItemStack stack) {
-        // if (!DogUtil.isScute(stack))
-        //     return InteractionResult.PASS;
-        // if (!this.hasWolfArmor())
-        //     return InteractionResult.PASS;
-        // if (!this.isTame())
-        //     return InteractionResult.PASS;
-        // if (!this.isOwnedBy(player))
-        //     return InteractionResult.PASS;
+        if (!ArmorMaterials.ARMADILLO.value().repairIngredient().get().test(stack))
+            return InteractionResult.PASS;
+        if (!this.hasWolfArmor())
+            return InteractionResult.PASS;
+        if (!this.isTame())
+            return InteractionResult.PASS;
+        if (!this.isOwnedBy(player))
+            return InteractionResult.PASS;
         
-        // var wolf_armor = getBodyArmorItem();
-        // if (!wolf_armor.isDamaged())
-        //     return InteractionResult.PASS;
+        var wolf_armor = getBodyArmorItem();
+        if (!wolf_armor.isDamaged())
+            return InteractionResult.PASS;
 
         
-        // if (this.level().isClientSide)
-        //     return InteractionResult.SUCCESS;
-        // stack.shrink(1);
-        // this.playSound(SoundEvents.WOLF_ARMOR_REPAIR);
-        // int repair_val = DogUtil.getWolfArmorRepairVal(wolf_armor);
-        // int new_damage_val = wolf_armor.getDamageValue() - repair_val;
-        // if (new_damage_val < 0) new_damage_val = 0;
-        // wolf_armor.setDamageValue(new_damage_val);
-        // return InteractionResult.SUCCESS;
-        return InteractionResult.PASS;
+        if (this.level().isClientSide)
+            return InteractionResult.SUCCESS;
+        stack.shrink(1);
+        this.playSound(SoundEvents.WOLF_ARMOR_REPAIR);
+        int repair_val = (int)(stack.getMaxDamage() * 0.125f);
+        int new_damage_val = wolf_armor.getDamageValue() - repair_val;
+        if (new_damage_val < 0) new_damage_val = 0;
+        wolf_armor.setDamageValue(new_damage_val);
+        return InteractionResult.SUCCESS;
+        // return InteractionResult.PASS;
     }
 
     private InteractionResult handleUnsetWolfArmor(Player player, ItemStack stack, InteractionHand hand) {
-        // if (!stack.is(Items.SHEARS))
-        //     return InteractionResult.PASS;
-        // if (!this.hasWolfArmor())
-        //     return InteractionResult.PASS;
-        // if (!this.isTame())
-        //     return InteractionResult.PASS;
-        // if (!this.isOwnedBy(player))
-        //     return InteractionResult.PASS;
+        if (!stack.is(Items.SHEARS))
+            return InteractionResult.PASS;
+        if (!this.hasWolfArmor())
+            return InteractionResult.PASS;
+        if (!this.isTame())
+            return InteractionResult.PASS;
+        if (!this.isOwnedBy(player))
+            return InteractionResult.PASS;
 
-        // if (this.level().isClientSide)
-        //     return InteractionResult.SUCCESS;
-        // stack.hurtAndBreak(1, player, getSlotForHand(hand));
-        // this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
+        if (this.level().isClientSide)
+            return InteractionResult.SUCCESS;
+        stack.hurtAndBreak(1, player, getSlotForHand(hand));
+        this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
 
-        // var wolf_armor0 = this.getBodyArmorItem();
-        // this.setBodyArmorItem(ItemStack.EMPTY);
-        // this.spawnAtLocation(wolf_armor0);
-        // return InteractionResult.SUCCESS;
-        return InteractionResult.PASS;
+        var wolf_armor0 = this.getBodyArmorItem();
+        this.setBodyArmorItem(ItemStack.EMPTY);
+        this.spawnAtLocation(wolf_armor0);
+        return InteractionResult.SUCCESS;
+        //return InteractionResult.PASS;
     }
 
     private InteractionResult handleTameWolf(Player player, ItemStack stack) {
@@ -694,35 +697,35 @@ public class DTNWolf extends TamableAnimal {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        //return stack.is(ItemTags.WOLF_FOOD);
-        var item = stack.getItem();
-        return item.isEdible() && stack.getItem().getFoodProperties().isMeat();
+        return stack.is(ItemTags.WOLF_FOOD);
+        //var item = stack.getItem();
+        //return item.isEdible() && stack.getFoodProperties(this).isMeat();
     }
 
     private boolean canWolfArmorAbsorb(DamageSource p_331524_) {
-        //return this.hasWolfArmor() && !p_331524_.is(DamageTypeTags.BYPASSES_WOLF_ARMOR);
-        return false;
+        return this.hasWolfArmor() && !p_331524_.is(DamageTypeTags.BYPASSES_WOLF_ARMOR);
+        //return false;
     }
 
     public boolean hasWolfArmor() {
-        //return !this.getBodyArmorItem().isEmpty();
-        return false;
+        return !this.getBodyArmorItem().isEmpty();
+        //return false;
     }
 
     @Override
-    public void hurtArmor(DamageSource source, float amount) {
-        //this.doHurtEquipment(source, amount, new EquipmentSlot[]{EquipmentSlot.BODY});
+    protected void hurtArmor(DamageSource source, float amount) {
+        this.doHurtEquipment(source, amount, new EquipmentSlot[]{EquipmentSlot.BODY});
     }
 
-    @Override
-    public boolean doHurtTarget(Entity p_30372_) {
-        boolean flag = p_30372_.hurt(this.damageSources().mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
-        if (flag) {
-            this.doEnchantDamageEffects(this, p_30372_);
-        }
+    // @Override
+    // public boolean doHurtTarget(Entity p_30372_) {
+    //     boolean flag = p_30372_.hurt(this.damageSources().mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
+    //     if (flag) {
+    //         this.doEnchantDamageEffects(this, p_30372_);
+    //     }
 
-        return flag;
-    }
+    //     return flag;
+    // }
 
     @Override
     public boolean hurt(DamageSource p_30386_, float p_30387_) {
@@ -745,34 +748,34 @@ public class DTNWolf extends TamableAnimal {
     }
 
     private boolean mayWolfArmorAbsorb(DamageSource source, float amount) {
-        // if (!canWolfArmorAbsorb(source))
-        //     return false;
+        if (!canWolfArmorAbsorb(source))
+            return false;
 
-        // var wolf_armor_stack = this.getBodyArmorItem();
-        // var damage_val0 = wolf_armor_stack.getDamageValue();
-        // var damage_max0 = wolf_armor_stack.getMaxDamage();
-        // wolf_armor_stack.hurtAndBreak(Mth.ceil(amount), this, EquipmentSlot.BODY);
+        var wolf_armor_stack = this.getBodyArmorItem();
+        var damage_val0 = wolf_armor_stack.getDamageValue();
+        var damage_max0 = wolf_armor_stack.getMaxDamage();
+        wolf_armor_stack.hurtAndBreak(Mth.ceil(amount), this, EquipmentSlot.BODY);
         
-        // this.playWolfArmorCrackSound(useItem, damage_val0, damage_max0);
-        // return true;
-        return false;
+        this.playWolfArmorCrackSound(useItem, damage_val0, damage_max0);
+        return true;
+        //return false;
     }
 
     private void playWolfArmorCrackSound(ItemStack wolf_armor_stack, int damage_val0, int damage_max0) {
-        // var crackiness0 = Crackiness.WOLF_ARMOR.byDamage(damage_val0, damage_max0);
-        // var crackiness = Crackiness.WOLF_ARMOR.byDamage(wolf_armor_stack);
+        var crackiness0 = Crackiness.WOLF_ARMOR.byDamage(damage_val0, damage_max0);
+        var crackiness = Crackiness.WOLF_ARMOR.byDamage(wolf_armor_stack);
         
-        // if (crackiness == crackiness0)
-        //     return;
+        if (crackiness == crackiness0)
+            return;
 
-        // this.playSound(SoundEvents.WOLF_ARMOR_CRACK);
-        // if (this.level() instanceof ServerLevel sLevel) {
-        //     sLevel.sendParticles(
-        //         new ItemParticleOption(ParticleTypes.ITEM, Items.ARMADILLO_SCUTE.getDefaultInstance()),
-        //         this.getX(), this.getY() + 1.0, this.getZ(),
-        //         20,   0.2, 0.1, 0.2,   0.1
-        //     );
-        // }
+        this.playSound(SoundEvents.WOLF_ARMOR_CRACK);
+        if (this.level() instanceof ServerLevel sLevel) {
+            sLevel.sendParticles(
+                new ItemParticleOption(ParticleTypes.ITEM, Items.ARMADILLO_SCUTE.getDefaultInstance()),
+                this.getX(), this.getY() + 1.0, this.getZ(),
+                20,   0.2, 0.1, 0.2,   0.1
+            );
+        }
     }
 
     @Override
@@ -811,7 +814,7 @@ public class DTNWolf extends TamableAnimal {
 
             if (this.isTame()) {
                 wolf.setOwnerUUID(this.getOwnerUUID());
-                wolf.setTame(true);
+                wolf.setTame(true, true);
                 if (this.random.nextBoolean()) {
                     wolf.setCollarColor(this.getCollarColor());
                 } else {
@@ -868,7 +871,7 @@ public class DTNWolf extends TamableAnimal {
 
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroup, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroup) {
         
         WolfPackData wolf_spawn_group = null;
         if (spawnGroup instanceof WolfPackData wolf_group) {
@@ -885,7 +888,7 @@ public class DTNWolf extends TamableAnimal {
         }
 
         this.setVariant(variant);
-        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, wolf_spawn_group, tag);
+        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, wolf_spawn_group);
     }
 
     public WolfPackData initializeGroupData(ServerLevelAccessor levelAccessor) {
