@@ -22,7 +22,7 @@ import net.minecraft.world.level.material.FluidState;
 
 public class DTNWolfVariantsFabricSpawn {
 
-    public static boolean isSpawnPositionOk_imitate(SpawnPlacements.Type type, LevelReader level, BlockPos pos, EntityType<?> entity_type) {
+    public static boolean isSpawnPositionOk_imitate(SpawnPlacements type, LevelReader level, BlockPos pos, EntityType<?> entity_type) {
         if (!level.getWorldBorder().isWithinBounds(pos)) {
             return false;
         }

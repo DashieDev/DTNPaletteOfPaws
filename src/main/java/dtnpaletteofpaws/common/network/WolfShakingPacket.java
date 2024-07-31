@@ -3,13 +3,12 @@ package dtnpaletteofpaws.common.network;
 import java.util.function.Supplier;
 
 import dtnpaletteofpaws.common.entity.DTNWolf;
-import dtnpaletteofpaws.common.forge_imitate.ForgeNetworkHandler.NetworkEvent.Context;
-import dtnpaletteofpaws.common.forge_imitate.PacketDistributor;
 import dtnpaletteofpaws.common.network.data.WolfShakingData;
 import dtnpaletteofpaws.common.network.data.WolfShakingData.State;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
+import dtnpaletteofpaws.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
 public class WolfShakingPacket implements IPacket<WolfShakingData> {
     @Override

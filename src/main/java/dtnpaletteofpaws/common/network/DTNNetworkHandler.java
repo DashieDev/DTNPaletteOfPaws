@@ -12,17 +12,17 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Maps;
 
-import dtnpaletteofpaws.common.lib.Constants;
-import dtnpaletteofpaws.common.network.PacketDistributor.PacketTarget;
 import dtnpaletteofpaws.common.util.Util;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.neoforge.network.handling.IPayloadHandler;
+import dtnpaletteofpaws.common.lib.Constants;
+import dtnpaletteofpaws.common.network.DTNNetworkHandler.NetworkEvent.Context;
+import dtnpaletteofpaws.common.network.PacketDistributor.PacketTarget;
 
 public class DTNNetworkHandler {
 
@@ -33,7 +33,17 @@ public class DTNNetworkHandler {
     private static Map<Integer, PacketCodec<?>> PACKET_MAP = Maps.newHashMap(); 
     private static Map<Class<?>, Integer> DATACLASS_ID_MAP = Maps.newHashMap();
 
-    public static void init() {}
+    public static void init() {
+        StreamCodec
+            <FriendlyByteBuf, DTNNetworkPayload<?>> 
+            rw_stream_codec = 
+            StreamCodec.of(DTNNetworkHandler::toBuf, DTNNetworkHandler::fromBuf);
+
+        PayloadTypeRegistry.playC2S().register(CHANNEL_ID, rw_stream_codec);
+        PayloadTypeRegistry.playS2C().register(CHANNEL_ID, rw_stream_codec);
+
+        ServerPlayNetworking.registerGlobalReceiver(CHANNEL_ID, DTNNetworkHandler::handlePayloadServer);
+    }
 
     public static synchronized <D> void registerMessage(int id, Class<D> dataClass, 
         BiConsumer<D, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, D> decoder, 
@@ -75,7 +85,7 @@ public class DTNNetworkHandler {
             this.messageConsumer = messageConsumer;
         }
 
-        public void consume(T data, NetworkEvent.Context ctx) {
+        public void consume(T data, Context ctx) {
             this.messageConsumer.accept(data, () -> ctx);
         }
 
@@ -92,47 +102,29 @@ public class DTNNetworkHandler {
     public static class NetworkEvent {
         public static class Context {
             
-            private final IPayloadContext wrapped_ctx;
-
-            public Context(IPayloadContext ctx) {
-                this.wrapped_ctx = ctx;
-            }
+            private @Nullable ServerPlayer sender;
+            private boolean isClientRecipent = false;
             
             public void enqueueWork(Runnable runnable) {
-                wrapped_ctx.enqueueWork(runnable);
+                //Fabric garanteed on proper run thread.
+                runnable.run();
             }
 
             public @Nullable ServerPlayer getSender() {
-                if (isServerRecipent())
-                    return (ServerPlayer) this.wrapped_ctx.player();
-                return null;
+                return this.sender;
             }
 
             public boolean isClientRecipent() {
-                return !isServerRecipent();
+                return this.isClientRecipent;
             }
 
             public boolean isServerRecipent() {
-                return this.wrapped_ctx.flow() == PacketFlow.SERVERBOUND;
+                return !this.isClientRecipent;
             }
 
-            public void setPacketHandled(boolean x) {}
+            public void setPacketHandled(boolean val) {}
 
         }
-    }
-
-    public static void onRegisterPayloadEvent(RegisterPayloadHandlersEvent event) {
-        var registerer = event.registrar(Constants.PROTOCOL_VERSION);
-        
-        StreamCodec
-            <FriendlyByteBuf, DTNNetworkPayload<?>> 
-            rw_stream_codec = 
-            StreamCodec.of(DTNNetworkHandler::toBuf, DTNNetworkHandler::fromBuf);
-        
-        IPayloadHandler<DTNNetworkPayload<?>> payload_handler = 
-            DTNNetworkHandler::handlePayload;
-
-        registerer.commonBidirectional(CHANNEL_ID, rw_stream_codec, payload_handler);
     }
 
     private static final DTNNetworkPayload<Object> ERROR_DATA = new DTNNetworkPayload<Object>(null, null);
@@ -180,13 +172,27 @@ public class DTNNetworkHandler {
         payload.codec.encode(buf, payload.data);
     }
 
-    private static void handlePayload(DTNNetworkPayload<?> payload, IPayloadContext context) {
+    private static void handlePayloadServer(DTNNetworkPayload<?> payload, ServerPlayNetworking.Context context) {
+        var ctx = new NetworkEvent.Context();
+        ctx.sender = context.player();
+        ctx.isClientRecipent = false;
+        handlePayloadContext(payload, ctx);
+    }
+
+    public static void handlePayloadClient(DTNNetworkPayload<?> payload) {
+        var ctx = new NetworkEvent.Context();
+        ctx.sender = null;
+        ctx.isClientRecipent = true;
+        handlePayloadContext(payload, ctx);
+    }
+
+    private static void handlePayloadContext(DTNNetworkPayload<?> payload, NetworkEvent.Context ctx) {
         if (payload == ERROR_DATA
             || payload.data == null || payload.codec == null) {
             LOGGER.error("Recieved error data!");
             return;
         }
-        var ctx = new NetworkEvent.Context(context);
+
         handleForCodec(payload, ctx);
     }
 
@@ -194,7 +200,7 @@ public class DTNNetworkHandler {
         payload.codec.consume(payload.data, ctx);
     }
 
-    private static class DTNNetworkPayload<T> implements CustomPacketPayload {
+    public static class DTNNetworkPayload<T> implements CustomPacketPayload {
 
         private final T data;
         private final PacketCodec<T> codec;

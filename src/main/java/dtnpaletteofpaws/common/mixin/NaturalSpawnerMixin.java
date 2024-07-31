@@ -33,12 +33,12 @@ public class NaturalSpawnerMixin {
     }
 
     //Fabric
-    @Inject(at = @At(value = "HEAD"), cancellable = true, method = "isSpawnPositionOk")
-    private static void dtn_isSpawnPositionOk(SpawnPlacements.Type type, LevelReader levelReader, BlockPos blockPos, @Nullable EntityType<?> entityType, CallbackInfoReturnable<Boolean> info) {
-        if (entityType != DTNEntityTypes.DTNWOLF.get())
-            return;
-        var ret = DTNWolfSpawnPlacements.spawnPlacementTypeCheck(levelReader, blockPos, entityType);
-        info.setReturnValue(ret);
-    }
+    // @Inject(at = @At(value = "HEAD"), cancellable = true, method = "isSpawnPositionOk")
+    // private static void dtn_isSpawnPositionOk(SpawnPlacements type, LevelReader levelReader, BlockPos blockPos, @Nullable EntityType<?> entityType, CallbackInfoReturnable<Boolean> info) {
+    //     if (entityType != DTNEntityTypes.DTNWOLF.get())
+    //         return;
+    //     var ret = DTNWolfSpawnPlacements.spawnPlacementTypeCheck(levelReader, blockPos, entityType);
+    //     info.setReturnValue(ret);
+    // }
 
 }

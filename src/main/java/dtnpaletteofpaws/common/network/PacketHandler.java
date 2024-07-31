@@ -1,7 +1,6 @@
 package dtnpaletteofpaws.common.network;
 
 import dtnpaletteofpaws.DTNPaletteOfPaws;
-import dtnpaletteofpaws.common.forge_imitate.PacketDistributor;
 import dtnpaletteofpaws.common.network.data.FabricWolfVariantSyncData;
 import dtnpaletteofpaws.common.network.data.WolfShakingData;
 

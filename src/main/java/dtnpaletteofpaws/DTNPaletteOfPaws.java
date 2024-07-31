@@ -7,7 +7,6 @@ import dtnpaletteofpaws.client.ClientSetup;
 import dtnpaletteofpaws.client.data.DTNItemModelProvider;
 import dtnpaletteofpaws.common.data.DTNDataRegistriesProvider;
 import dtnpaletteofpaws.common.event.EventHandler;
-import dtnpaletteofpaws.common.forge_imitate.ForgeNetworkHandler;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.network.DTNNetworkHandler;
 import dtnpaletteofpaws.common.network.PacketHandler;
@@ -20,7 +19,7 @@ public class DTNPaletteOfPaws {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID);
 
-    public static final ForgeNetworkHandler HANDLER = new ForgeNetworkHandler();
+    //public static final ForgeNetworkHandler HANDLER = new ForgeNetworkHandler();
             
     
     public static void init() {

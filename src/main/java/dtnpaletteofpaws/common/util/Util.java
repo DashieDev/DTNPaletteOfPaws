@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import com.mojang.serialization.Codec;
 
+import dtnpaletteofpaws.common.forge_imitate.ForgeCodecs;
 import dtnpaletteofpaws.common.lib.Constants;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -32,8 +33,8 @@ public class Util {
         return ResourceLocation.fromNamespaceAndPath(namespace, new_path);
     }
 
-    // public static <T> Codec<T> deferredCodec(Supplier<Codec<T>> value_sup) {
-    //     return ExtraCodecs.lazyInitializedCodec(value_sup);
-    // }
+    public static <T> Codec<T> deferredCodec(Supplier<Codec<T>> value_sup) {
+        return new ForgeCodecs.DefferedCodec<>(value_sup);
+    }
 
 }

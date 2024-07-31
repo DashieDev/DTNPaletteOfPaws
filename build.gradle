@@ -1,14 +1,14 @@
 plugins {
     id 'eclipse'
-	id 'fabric-loom' version '1.5-SNAPSHOT'
+	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
 }
 
 version = '1.2'
 group = 'com.github.dashiedev'
-archivesBaseName = "DTNPaletteOfPaws[Fabric]-1.20.1"
+archivesBaseName = "DTNPaletteOfPaws[Fabric]-1.21"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 
 sourceSets {
@@ -61,7 +61,7 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
+    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:21.0.5"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
@@ -74,7 +74,7 @@ dependencies {
 	implementation 'javax.inject:javax.inject:1'
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
     
-    compileOnly "blank:DoggyTalentsNext[Fabric]-1.20.1:1.18.27"
+    compileOnly "blank:DoggyTalentsNext[Fabric]-1.21:1.18.27"
 }
 
 jar {

@@ -1,23 +1,33 @@
 package dtnpaletteofpaws.common.network;
 
+import java.util.Collection;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 
 public class PacketDistributor<T> {
 
     public static PacketDistributor<Void> SERVER = new PacketDistributor<>(new ToServerPacketTarget());
+    public static PacketDistributor<Entity> TRACKING_ENTITY = new PacketDistributor<>(
+        new ToClientPacketTarget<Entity>(PlayerLookup::tracking));
     public static PacketDistributor<ServerPlayer> PLAYER = new PacketDistributor<>(
         new ToClientSinglePacketTarget()
     );
 
-    public static PacketDistributor<Entity> TRACKING_ENTITY
-        = new PacketDistributor<>(new ToClientTrackingEntityTarget());
-    public static PacketDistributor<Entity> TRACKING_ENTITY_AND_SELF
-        = new PacketDistributor<>(new ToClientTrackingEntityAndSelfTarget());
-    
+    //TO DO
+    public static PacketDistributor<Entity> TRACKING_ENTITY_AND_SELF = new PacketDistributor<>(
+        new ToClientPacketTarget<Entity>(PlayerLookup::tracking));
+
     private PacketTarget<T> defaultTarget;
     
     PacketDistributor(PacketTarget<T> target) {
@@ -47,21 +57,31 @@ public class PacketDistributor<T> {
 
     }
 
-    public static class ToServerPacketTarget extends PacketTarget<Void> {
+    public static class ToClientPacketTarget<T> extends PacketTarget<T> {
         
-        public ToServerPacketTarget() {
-            this.type = Type.TO_SERVER;
+        private final Function<T, Collection<ServerPlayer>> playerListSup;
+        private T arg;
+
+        public ToClientPacketTarget(Function<T, Collection<ServerPlayer>> playerListSup) {
+            this.type = Type.TO_CLIENT;
+            this.playerListSup = playerListSup;
         }
 
         @Override
         public void sendPacket(CustomPacketPayload payload) {
-            net.neoforged.neoforge.network.PacketDistributor.sendToServer(payload);
+            var playerList = playerListSup.apply(arg);
+            for (var player : playerList) {
+                ServerPlayNetworking.send(player, payload);
+            }
         }
 
         @Override
-        public PacketTarget<Void> acceptArg(Void arg) {
-            return this;
+        public PacketTarget<T> acceptArg(T arg) {
+            var ret = new ToClientPacketTarget<T>(this.playerListSup);
+            ret.arg = arg;
+            return ret;
         }
+
     }
 
     public static class ToClientSinglePacketTarget extends PacketTarget<ServerPlayer> {
@@ -74,9 +94,7 @@ public class PacketDistributor<T> {
 
         @Override
         public void sendPacket(CustomPacketPayload payload) {
-            if (arg == null)
-                return;
-            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(arg, payload);
+            ServerPlayNetworking.send(arg, payload);
         }
 
         @Override
@@ -88,54 +106,26 @@ public class PacketDistributor<T> {
 
     }
 
-    public static class ToClientTrackingEntityTarget extends PacketTarget<Entity> {
+    public static class ToServerPacketTarget extends PacketTarget<Void> {
 
-        private Entity arg;
-
-        public ToClientTrackingEntityTarget() {
-            this.type = Type.TO_CLIENT;
+        private final Consumer<CustomPacketPayload> clientSender = 
+            (p) -> {
+                ClientPlayNetworking.send(p);
+            };
+        
+        public ToServerPacketTarget() {
+            this.type = Type.TO_SERVER;
         }
 
         @Override
         public void sendPacket(CustomPacketPayload payload) {
-            if (arg == null)
-                return;
-            net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntity(arg, payload);
+            clientSender.accept(payload);
         }
 
         @Override
-        public PacketTarget<Entity> acceptArg(Entity arg) {
-            var ret = new ToClientTrackingEntityTarget();
-            ret.arg = arg;
-            return ret;
+        public PacketTarget<Void> acceptArg(Void arg) {
+            return this;
         }
-        
     }
-
-    public static class ToClientTrackingEntityAndSelfTarget extends PacketTarget<Entity> {
-
-        private Entity arg;
-
-        public ToClientTrackingEntityAndSelfTarget() {
-            this.type = Type.TO_CLIENT;
-        }
-
-        @Override
-        public void sendPacket(CustomPacketPayload payload) {
-            if (arg == null)
-                return;
-            net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(arg, payload);
-        }
-
-        @Override
-        public PacketTarget<Entity> acceptArg(Entity arg) {
-            var ret = new ToClientTrackingEntityAndSelfTarget();
-            ret.arg = arg;
-            return ret;
-        }
-        
-    }
-
-    
 
 }

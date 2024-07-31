@@ -4,7 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.function.Supplier;
 
-import dtnpaletteofpaws.common.forge_imitate.ForgeNetworkHandler.NetworkEvent;
+import dtnpaletteofpaws.common.network.DTNNetworkHandler.NetworkEvent;
 
 public interface IPacket<D> {
 

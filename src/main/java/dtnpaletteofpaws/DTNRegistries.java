@@ -34,8 +34,8 @@ public class DTNRegistries {
     }
 
     private static <T> Supplier<Registry<T>> makeRegistry(
-        final ResourceLocation key, Class<T> type, ResourceLocation defaultKey) {
-        var ret =  FabricRegistryBuilder.createDefaulted(ResourceKey.<T>createRegistryKey(key), defaultKey)
+        final ResourceKey<Registry<T>> key, Class<T> type, ResourceLocation defaultKey) {
+        var ret =  FabricRegistryBuilder.createDefaulted(key, defaultKey)
             .attribute(RegistryAttribute.SYNCED)
             .buildAndRegister();
         return () -> ret;

@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import dtnpaletteofpaws.DTNRegistries;
 import dtnpaletteofpaws.DTNSerializers;
 import dtnpaletteofpaws.common.entity.DTNWolf;
-import dtnpaletteofpaws.common.forge_imitate.ForgeNetworkHandler.NetworkEvent.Context;
+import dtnpaletteofpaws.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import dtnpaletteofpaws.common.network.data.FabricWolfVariantSyncData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;

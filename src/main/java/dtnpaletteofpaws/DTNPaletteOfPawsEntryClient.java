@@ -2,8 +2,8 @@ package dtnpaletteofpaws;
 
 import doggytalents.forge_imitate.event.client.EntityRenderersEvent;
 import dtnpaletteofpaws.common.forge_imitate.ClientEventHandlerRegisterer;
-import dtnpaletteofpaws.common.forge_imitate.ForgeNetworkHandlerClient;
 import dtnpaletteofpaws.common.forge_imitate.ModEventCallbacksRegistry;
+import dtnpaletteofpaws.common.network.DTNNetworkHandlerClient;
 import net.fabricmc.api.ClientModInitializer;
 
 public class DTNPaletteOfPawsEntryClient implements ClientModInitializer {
@@ -12,7 +12,7 @@ public class DTNPaletteOfPawsEntryClient implements ClientModInitializer {
     public void onInitializeClient() {
         ClientEventHandlerRegisterer.init();
         fireModelLayersRegistration();
-        ForgeNetworkHandlerClient.initClient();
+        DTNNetworkHandlerClient.initClient();
     }
 
     private static void fireModelLayersRegistration() {

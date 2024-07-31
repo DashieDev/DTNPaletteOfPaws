@@ -46,7 +46,7 @@ public class DTNWolfSpawnPlacements {
 
     public static void init() {
         SpawnPlacements.register(DTNEntityTypes.DTNWOLF.get(), 
-            SpawnPlacements.Type.ON_GROUND, 
+            DTN_WOLF_SPAWN_TYPE, 
             Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, 
             DTNWolfSpawnPlacements::DTNWolfSpawnableOn);   
     }

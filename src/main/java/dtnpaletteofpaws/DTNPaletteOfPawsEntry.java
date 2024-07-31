@@ -2,8 +2,8 @@ package dtnpaletteofpaws;
 
 import doggytalents.forge_imitate.event.EntityAttributeCreationEvent;
 import dtnpaletteofpaws.common.forge_imitate.EventHandlerRegisterer;
-import dtnpaletteofpaws.common.forge_imitate.ForgeNetworkHandler;
 import dtnpaletteofpaws.common.forge_imitate.ModEventCallbacksRegistry;
+import dtnpaletteofpaws.common.network.DTNNetworkHandler;
 import dtnpaletteofpaws.common.network.PacketHandler;
 import dtnpaletteofpaws.common.spawn.DTNWolfSpawnPlacements;
 import dtnpaletteofpaws.common.spawn.DTNWolfVariantsFabricSpawn;
@@ -21,7 +21,7 @@ public class DTNPaletteOfPawsEntry implements ModInitializer {
         EventHandlerRegisterer.init();
         DTNWolfVariantsFabricSpawn.init();
         fireAttributeEvent();
-        ForgeNetworkHandler.init();
+        DTNNetworkHandler.init();
         DTNPaletteOfPaws.init();
         PacketHandler.init();
         DTNWolfSpawnPlacements.init();

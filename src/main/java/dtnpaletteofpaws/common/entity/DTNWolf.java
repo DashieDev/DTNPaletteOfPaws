@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import doggytalents.common.util.ItemUtil;
 import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.DTNRegistries;
 import dtnpaletteofpaws.DTNSerializers;
@@ -106,11 +107,11 @@ public class DTNWolf extends TamableAnimal {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        entityData.define(VARIANT, WolfVariantUtil.getDefault());
-        entityData.define(BEGGING, false);
-        entityData.define(COLLAR_COLOR, DyeColor.RED.getId());
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        //builder.define(VARIANT, WolfVariantUtil.getDefault());
+        builder.define(BEGGING, false);
+        builder.define(COLLAR_COLOR, DyeColor.RED.getId());
     }
 
     @Override
@@ -567,7 +568,7 @@ public class DTNWolf extends TamableAnimal {
         
         if (this.level().isClientSide)
             return InteractionResult.SUCCESS;
-        var food_props = stack.getFoodProperties(this);
+        var food_props = ItemUtil.food(stack);
         float nutrition = food_props != null ? (float)food_props.nutrition() : 1.0F;
         this.heal(2.0F * nutrition);
         stack.shrink(1);
@@ -713,7 +714,7 @@ public class DTNWolf extends TamableAnimal {
     }
 
     @Override
-    protected void hurtArmor(DamageSource source, float amount) {
+    public void hurtArmor(DamageSource source, float amount) {
         this.doHurtEquipment(source, amount, new EquipmentSlot[]{EquipmentSlot.BODY});
     }
 
