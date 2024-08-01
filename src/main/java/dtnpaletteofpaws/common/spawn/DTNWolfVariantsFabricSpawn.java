@@ -76,6 +76,7 @@ public class DTNWolfVariantsFabricSpawn {
         registerDesertSuiteModifier();
         registerBonitoFlakesWolfModifier();
         registerGelatoSuiteModifier();
+        registerWalnutWolfModifier();
     }
 
     private static void registerCherryWolfModifier() {
@@ -165,4 +166,8 @@ public class DTNWolfVariantsFabricSpawn {
             MobCategory.CREATURE, DTNEntityTypes.DTNWOLF.get(), 1, 1, 3);
     }
 
+    private static void registerWalnutWolfModifier() {
+        BiomeModifications.addSpawn(selectForKey(Biomes.OLD_GROWTH_SPRUCE_TAIGA),
+            MobCategory.CREATURE, DTNEntityTypes.DTNWOLF.get(), 1, 1, 3);
+    }
 }

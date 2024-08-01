@@ -41,7 +41,7 @@ public class DTNDogVariantMapping {
             .put(WolfVariants.STRAWBERRY.get(), DTNSupportDogVariants.STRAWBERRY.get())
             .put(WolfVariants.CHOCOLATE.get(), DTNSupportDogVariants.CHOCOLATE.get())
             .put(WolfVariants.VANILLA.get(), DTNSupportDogVariants.VANILLA.get())
-            .put(WolfVariants.WALLNUT.get(), DTNSupportDogVariants.WALLNUT.get())
+            .put(WolfVariants.WALNUT.get(), DTNSupportDogVariants.WALNUT.get())
             .build();
     }
 
