@@ -40,7 +40,7 @@ public class DTNWolfSpawnModifiers {
         registerDesertSuiteModifier(ctx);
         registerBonitoFlakesWolfModifier(ctx);
         registerGelatoSuiteModifier(ctx);
-        registerWallnutWolfModifier(ctx);
+        registerWalnutWolfModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
@@ -202,9 +202,9 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerWallnutWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerWalnutWolfModifier(BootstapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
-            ctx, "wolf_wallnut", 
+            ctx, "wolf_walnut", 
             Biomes.OLD_GROWTH_SPRUCE_TAIGA, 
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 3)
