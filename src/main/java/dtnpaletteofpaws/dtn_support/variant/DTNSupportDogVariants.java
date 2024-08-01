@@ -28,6 +28,7 @@ public class DTNSupportDogVariants {
     public static final Supplier<DogVariant> VANILLA = register("vanilla", 0xfff1e8b6);
     public static final Supplier<DogVariant> STRAWBERRY = register("strawberry", 0xffed8395);
     public static final Supplier<DogVariant> CHOCOLATE = register("chocolate", 0xff533124);
+    public static final Supplier<DogVariant> WALLNUT = register("wallnut", 0xffb88755);
 
     private static Supplier<DogVariant> register(String name, Function<String, DogVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);
