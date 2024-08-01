@@ -56,6 +56,7 @@ public class WolfBiomeConfigs {
             WolfVariants.STRAWBERRY.get(),
             WolfVariants.VANILLA.get()
         ), Util.getResource("gelato_suite"), Biomes.SNOWY_PLAINS, List.of(), true);
+        register(ctx, WolfVariants.WALLNUT.get(), Biomes.OLD_GROWTH_SPRUCE_TAIGA, false);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
