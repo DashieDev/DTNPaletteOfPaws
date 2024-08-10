@@ -82,6 +82,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.neoforged.neoforge.fluids.FluidType;
 
 public class DTNWolf extends TamableAnimal {
         
@@ -266,20 +267,20 @@ public class DTNWolf extends TamableAnimal {
         return super.getPathfindingMalus(type);
     }
 
-    public BlockPathTypes inferType(BlockPathTypes type) {
+    public PathType inferType(PathType type) {
         if (this.fireImmune()) {
-            if (type == BlockPathTypes.DANGER_FIRE) {
-                return BlockPathTypes.WALKABLE;
+            if (type == PathType.DANGER_FIRE) {
+                return PathType.WALKABLE;
             }
-            if (type == BlockPathTypes.LAVA) {
-                return BlockPathTypes.BLOCKED;
+            if (type == PathType.LAVA) {
+                return PathType.BLOCKED;
             }
         }
         if (
             this.canBreatheUnderwater()
         ) {
-            if (type == BlockPathTypes.WATER)
-                return BlockPathTypes.WALKABLE;
+            if (type == PathType.WATER)
+                return PathType.WALKABLE;
         }
         return type;
     }
@@ -325,8 +326,8 @@ public class DTNWolf extends TamableAnimal {
     }
     
     @Override
-    public boolean canBreatheUnderwater() {
-        return this.getVariant().swimUnderwater();
+    public boolean canDrownInFluidType(FluidType type) {
+        return !this.getVariant().swimUnderwater();
     }
 
     private void updateDogBeginShake() {
@@ -979,30 +980,30 @@ public class DTNWolf extends TamableAnimal {
         this.isDogFollowingSomeone = val;
     }
 
-    public void setAttributeModifier(Attribute attribute, UUID modifierUUID, BiFunction<DTNWolf, UUID, AttributeModifier> modifierGenerator) {
+    public void setAttributeModifier(Holder<Attribute> attribute, ResourceLocation modifierLoc, BiFunction<DTNWolf, ResourceLocation, AttributeModifier> modifierGenerator) {
         var attributeInst = this.getAttribute(attribute);
 
-        var currentModifier = attributeInst.getModifier(modifierUUID);
+        var currentModifier = attributeInst.getModifier(modifierLoc);
 
         // Remove modifier if it exists
         if (currentModifier != null) {
 
             // Use UUID version as it is more efficient since
             // getModifier would need to be called again
-            attributeInst.removeModifier(modifierUUID);
+            attributeInst.removeModifier(modifierLoc);
         }
 
-        var newModifier = modifierGenerator.apply(this, modifierUUID);
+        var newModifier = modifierGenerator.apply(this, modifierLoc);
 
         if (newModifier != null) {
             attributeInst.addTransientModifier(newModifier);
         }
     }
 
-    public void removeAttributeModifier(Attribute attribute, UUID modifierUUID) {
+    public void removeAttributeModifier(Holder<Attribute> attribute, ResourceLocation modifierLoc) {
         var attrib = this.getAttribute(attribute);
         if (attrib == null) return;
-        attrib.removeModifier(modifierUUID);
+        attrib.removeModifier(modifierLoc);
     }
 
     @Nullable
