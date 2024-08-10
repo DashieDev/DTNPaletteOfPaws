@@ -1,6 +1,9 @@
 package dtnpaletteofpaws.common.entity;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,8 +53,11 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -94,11 +100,18 @@ public class DTNWolf extends TamableAnimal {
     private float timeWolfIsShaking;
     private float prevTimeWolfIsShaking;
 
+    private final MoveControl defaultMoveControl;
+    private final PathNavigation defaultPathNavigation;
+
+    private final DTNWolfSwimmingManager swimmingManager = new DTNWolfSwimmingManager(this);
+
     public DTNWolf(EntityType<? extends DTNWolf> p_30369_, Level p_30370_) {
         super(p_30369_, p_30370_);
         this.setTame(false);
         this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
+        this.defaultMoveControl = this.moveControl;
+        this.defaultPathNavigation = this.navigation;
     }
 
     @Override
@@ -114,7 +127,7 @@ public class DTNWolf extends TamableAnimal {
         this.goalSelector.addGoal(1, new DTNWolfFloatGoal(this));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0, true));
-        this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
+        this.goalSelector.addGoal(6, new DTNWolfFollwOwnerGoal(this, 1.0D, 10.0F, 2.0F));
         this.goalSelector.addGoal(7, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(9, new DTNWolfBegGoal(this, 8.0F));
@@ -216,6 +229,9 @@ public class DTNWolf extends TamableAnimal {
         if (this.fireImmune()) {
             this.floatHellhound(this);
         }
+        if (!this.level().isClientSide && this.getVariant().swimUnderwater()) {
+            this.swimmingManager.tickServer();
+        }
     }
 
     @Override
@@ -230,8 +246,8 @@ public class DTNWolf extends TamableAnimal {
             break;
         case WATER:
         case WATER_BORDER:
-            // if (shouldDogOmitWaterPathWeight())
-            //     return 0;
+            if (shouldDogOmitWaterPathWeight())
+                return 0;
             break;
         case LAVA:
         case DAMAGE_FIRE:
@@ -248,6 +264,34 @@ public class DTNWolf extends TamableAnimal {
             return -1;
         }
         return super.getPathfindingMalus(type);
+    }
+
+    public BlockPathTypes inferType(BlockPathTypes type) {
+        if (this.fireImmune()) {
+            if (type == BlockPathTypes.DANGER_FIRE) {
+                return BlockPathTypes.WALKABLE;
+            }
+            if (type == BlockPathTypes.LAVA) {
+                return BlockPathTypes.BLOCKED;
+            }
+        }
+        if (
+            this.canBreatheUnderwater()
+        ) {
+            if (type == BlockPathTypes.WATER)
+                return BlockPathTypes.WALKABLE;
+        }
+        return type;
+    }
+    
+    private boolean shouldDogOmitWaterPathWeight() {
+        if (isDogFollowingSomeone())
+            return true;
+        if (!this.isInWater())
+            return false;
+        if (this.canBreatheUnderwater())
+            return true;
+        return false;
     }
 
     @Override
@@ -275,7 +319,14 @@ public class DTNWolf extends TamableAnimal {
     public boolean shouldDogBlockFloat() {
         if (fireImmune() && isInLava())
             return true;
+        if (this.isDogSwimming())
+            return true;
         return false;
+    }
+    
+    @Override
+    public boolean canBreatheUnderwater() {
+        return this.getVariant().swimUnderwater();
     }
 
     private void updateDogBeginShake() {
@@ -859,6 +910,99 @@ public class DTNWolf extends TamableAnimal {
             return false;
 
         return super.causeFallDamage(distance, modifier, source);
+    }
+
+    public void setNavigation(PathNavigation p) {
+        if (this.navigation == p) return;
+        this.navigation.stop();
+        this.navigation = p;
+    }
+
+    //TODO try to replicate the bug and check if moveControl.haveWantedPosition using debug magic
+    public void setMoveControl(MoveControl m) {
+        breakMoveControl();
+
+        this.moveControl = m;
+    }
+
+    public void breakMoveControl() {
+        /*
+         * Force the MoveControl To Reset :
+         * this will set the dog's wanted Position to his current Position
+         * which will cause the moveControl to halt movement and reset in the 
+         * next tick(). 
+         * And then immediately update the moveControl by calling tick() so 
+         * that everything is resolved before anything else.
+         */
+        this.moveControl.setWantedPosition(
+            this.getX(), 
+            this.getY(), 
+            this.getZ(), 1.0
+        );
+        this.moveControl.tick();
+
+        //Also reset jump just to be sure.
+        this.setJumping(false);
+
+        //Also reset accelerations just to be sure.
+        this.setSpeed(0.0F);
+        this.setXxa(0.0F);
+        this.setYya(0.0F);
+        this.setZza(0.0F);
+    }
+
+    public void resetNavigation() {
+        this.setNavigation(defaultPathNavigation);
+    };
+
+    public void resetMoveControl() {
+        this.setMoveControl(defaultMoveControl);
+    };
+
+    private boolean isDogSwimming = false;
+
+    public void setDogSwimming(boolean val) {
+        this.isDogSwimming = val;
+    }
+
+    public boolean isDogSwimming() {
+        return this.isDogSwimming;
+    }
+
+    private boolean isDogFollowingSomeone;
+
+    public boolean isDogFollowingSomeone() {
+        return isDogFollowingSomeone;    
+    }
+
+    public void setDogFollowingSomeone(boolean val) {
+        this.isDogFollowingSomeone = val;
+    }
+
+    public void setAttributeModifier(Attribute attribute, UUID modifierUUID, BiFunction<DTNWolf, UUID, AttributeModifier> modifierGenerator) {
+        var attributeInst = this.getAttribute(attribute);
+
+        var currentModifier = attributeInst.getModifier(modifierUUID);
+
+        // Remove modifier if it exists
+        if (currentModifier != null) {
+
+            // Use UUID version as it is more efficient since
+            // getModifier would need to be called again
+            attributeInst.removeModifier(modifierUUID);
+        }
+
+        var newModifier = modifierGenerator.apply(this, modifierUUID);
+
+        if (newModifier != null) {
+            attributeInst.addTransientModifier(newModifier);
+        }
+    }
+
+    public void removeAttributeModifier(Attribute attribute, UUID modifierUUID) {
+        var attrib = this.getAttribute(attribute);
+        if (attrib == null) return;
+        attrib.removeModifier(modifierUUID);
     }
 
     @Nullable
