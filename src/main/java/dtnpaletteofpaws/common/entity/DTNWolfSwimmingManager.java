@@ -8,13 +8,13 @@ import dtnpaletteofpaws.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraftforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 public class DTNWolfSwimmingManager {
     
     private final DTNWolf dog;
 
-    private static final UUID SWIM_BOOST_ID = UUID.fromString("46fb9ec1-2d52-4c2c-aa5c-789269fb00d2");
+    private static final ResourceLocation SWIM_BOOST_ID = Util.getResource("swim_boost");
     private DTNWolfSwimMoveControl moveControl_water;
     private DTNWolfWaterBoundNavigation navigator_water;
     private boolean swimming = false;
@@ -57,13 +57,13 @@ public class DTNWolfSwimmingManager {
     }
 
     private void applySwimAttributes(DTNWolf dog){
-        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID, (dd, u) -> 
-            new AttributeModifier(u, "DTN Wolf Swimming Boost", 4, Operation.ADDITION)
+        dog.setAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID, (dd, u) -> 
+            new AttributeModifier(u, 4, Operation.ADD_VALUE)
         );
     }
 
     private void removeSwimAttributes(DTNWolf dog) {
-        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID);
+        dog.removeAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID);
     }
     
     private void startSwimming(DTNWolf dog) {
