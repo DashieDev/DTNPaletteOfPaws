@@ -29,7 +29,7 @@ logoFile="dtn_icon.png"
 [[dependencies.dtnpaletteofpaws]] #optional
     modId="doggytalents"
     mandatory=false
-    versionRange="[1.18.21,)" #mandatory
+    versionRange="[1.18.29,)" #mandatory
     ordering="NONE"
     side="BOTH"
 
