@@ -202,7 +202,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerWalnutWolfModifier(BootstapContext<BiomeModifier> ctx) {
+    private static void registerWalnutWolfModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_walnut", 
             Biomes.OLD_GROWTH_SPRUCE_TAIGA, 

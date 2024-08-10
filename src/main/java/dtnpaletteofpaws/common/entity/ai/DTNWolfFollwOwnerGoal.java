@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
 import java.util.EnumSet;
@@ -163,16 +163,16 @@ public class DTNWolfFollwOwnerGoal extends Goal {
     }
 
     public static boolean isTeleportSafeBlock(DTNWolf dog, BlockPos pos, @Nullable LivingEntity owner) {
-        var pathnodetype = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), pos.mutable());
+        var pathnodetype = WalkNodeEvaluator.getPathTypeStatic(dog, pos.mutable());
         boolean alterationWalkable = false;
         var infer_type = dog.inferType(pathnodetype);
-        if (infer_type == BlockPathTypes.WALKABLE)
+        if (infer_type == PathType.WALKABLE)
             alterationWalkable = true;
         
-        if (dog.fireImmune() && pathnodetype == BlockPathTypes.OPEN
+        if (dog.fireImmune() && pathnodetype == PathType.OPEN
             && dog.level().getFluidState(pos.below()).is(FluidTags.LAVA))
             alterationWalkable = true;
-        if (pathnodetype != BlockPathTypes.WALKABLE && !alterationWalkable) {
+        if (pathnodetype != PathType.WALKABLE && !alterationWalkable) {
             return false;
         } else {
             var blockpos = pos.subtract(dog.blockPosition());
