@@ -17,6 +17,7 @@ public class WolfVariant {
     private Optional<ResourceLocation> wildGlowingOverlay;
     private boolean fireImmune;
     private boolean fallImmune;
+    private boolean swimUnderwater;
     
     public WolfVariant(Props props) {
         this.id = props.name;
@@ -27,6 +28,7 @@ public class WolfVariant {
         this.wildGlowingOverlay = props.glowingOverlay_wild;
         this.fireImmune = props.fireImmune;
         this.fallImmune = props.fallImmune;
+        this.swimUnderwater = props.swimUnderwater;
     }
 
     private static ResourceLocation createTextureLoc(ResourceLocation name) {
@@ -71,6 +73,10 @@ public class WolfVariant {
         return this.fallImmune;
     }
 
+    public boolean swimUnderwater() {
+        return this.swimUnderwater;
+    }
+
     public void tickWolf(DTNWolf wolf) {}
 
     public static Props props(String name) {
@@ -86,6 +92,7 @@ public class WolfVariant {
         private final ResourceLocation name;
         private boolean fireImmune;
         private boolean fallImmune;
+        private boolean swimUnderwater;
         private Optional<ResourceLocation> glowingOverlay = Optional.empty();
         private Optional<ResourceLocation> glowingOverlay_wild = Optional.empty();
 
@@ -100,6 +107,11 @@ public class WolfVariant {
 
         public Props fallImmune() {
             this.fallImmune = true;
+            return this;
+        }
+
+        public Props swimUnderwater() {
+            this.swimUnderwater = true;
             return this;
         }
 
