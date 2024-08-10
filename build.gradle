@@ -51,7 +51,7 @@ repositories {
 
 dependencies {
     implementation 'net.neoforged:neoforge:21.0.78-beta'
-    compileOnly "blank:DoggyTalentsNext-1.21:1.18.25"
+    compileOnly "blank:DoggyTalentsNext-1.21.1:1.18.29"
 }
 
 jar {
