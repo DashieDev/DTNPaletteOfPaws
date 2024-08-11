@@ -279,7 +279,7 @@ public class DTNWolf extends TamableAnimal {
             }
         }
         if (
-            this.canBreatheUnderwater()
+            this.getVariant().swimUnderwater()
         ) {
             if (type == PathType.WATER)
                 return PathType.WALKABLE;
@@ -292,7 +292,7 @@ public class DTNWolf extends TamableAnimal {
             return true;
         if (!this.isInWater())
             return false;
-        if (this.canBreatheUnderwater())
+        if (this.getVariant().swimUnderwater())
             return true;
         return false;
     }
