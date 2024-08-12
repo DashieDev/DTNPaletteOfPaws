@@ -58,7 +58,7 @@ public class DTNWolfSwimmingManager {
 
     private void applySwimAttributes(DTNWolf dog){
         dog.setAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID, (dd, u) -> 
-            new AttributeModifier(u, 4, Operation.ADD_VALUE)
+            new AttributeModifier(u, 7, Operation.ADD_VALUE)
         );
     }
 
