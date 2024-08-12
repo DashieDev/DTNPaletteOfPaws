@@ -24,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.Tags.Fluids;
 
 public class WolfVariantUtil {
 
@@ -49,11 +50,20 @@ public class WolfVariantUtil {
         return id.toString();
     }
 
-    public static WolfVariant getDefaultForSpawn(ServerLevelAccessor s_level_accessor) {
+    public static WolfVariant getDefaultForSpawn(DTNWolf wolf, ServerLevelAccessor s_level_accessor) {
         var level = s_level_accessor.getLevel();
         if (level != null && level.dimension().equals(Level.NETHER))
             return WolfVariants.MOLTEN.get();
+        if (checkWaterSpawn(s_level_accessor, wolf))
+            return WolfVariants.KOMBU.get();
+        
         return getDefault();
+    }
+
+    private static boolean checkWaterSpawn(ServerLevelAccessor s_level_accessor, DTNWolf wolf) {
+        var pos = wolf.blockPosition();
+        var below_state = s_level_accessor.getFluidState(pos.below());
+        return below_state.is(Fluids.WATER);
     }
 
     public static List<WolfBiomeConfig> getAllWolfBiomeConfigForBiome(RegistryAccess prov, Holder<Biome> biome) {

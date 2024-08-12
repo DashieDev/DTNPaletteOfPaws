@@ -1,6 +1,7 @@
 package dtnpaletteofpaws.common.spawn;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import dtnpaletteofpaws.ChopinLogger;
 import dtnpaletteofpaws.DTNEntityTypes;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
@@ -68,8 +70,31 @@ public class DTNWolfSpawnPlacements {
     }
 
     public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, EntityType<?> type) {
-        return NaturalSpawner.canSpawnAtBody(SpawnPlacements.Type.ON_GROUND, world, pos, type);
+        if (SpawnPlacementTypes.ON_GROUND.isSpawnPositionOk(world, pos, type))
+            return true;
+        if (checkPossibleWaterSpawn(world, pos, type))
+            return true;
+            
+        return false;
     }
+
+    private static boolean checkPossibleWaterSpawn(LevelReader world, BlockPos pos, EntityType<?> type) {
+        var state = world.getBlockState(pos);
+        if (!state.isAir())
+            return false;
+        var pos_below = pos.below();
+        var water_spawnable_below = SpawnPlacementTypes.IN_WATER.isSpawnPositionOk(world, pos_below, type);
+        if (!water_spawnable_below)
+            return false;
+        var biome = world.getBiome(pos);
+        var configs = WolfVariantUtil.getAllWolfBiomeConfigForBiome(world.registryAccess(), biome)
+            .stream().filter(x -> x.blocks().contains(Blocks.WATER))
+            .collect(Collectors.toList());
+        if (configs.isEmpty())
+            return false;
+        return true;
+    }
+
 
     /**
      * Seperated getTopNonCollidingPos for DTNWolf for two reason
@@ -99,8 +124,8 @@ public class DTNWolfSpawnPlacements {
         }
 
         var check_pos_below = check_pos.below();
-         if (world.getBlockState(check_pos_below)
-            .isPathfindable(world, check_pos_below, PathComputationType.LAND)) {
+        var below_state = world.getBlockState(check_pos_below);
+         if (below_state.isPathfindable(world, check_pos_below, PathComputationType.LAND) && below_state.getFluidState().isEmpty()) {
             return check_pos_below;
         }
 
