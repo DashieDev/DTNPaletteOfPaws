@@ -57,6 +57,9 @@ public class WolfBiomeConfigs {
             WolfVariants.VANILLA.get()
         ), Util.getResource("gelato_suite"), Biomes.SNOWY_PLAINS, List.of(), true);
         register(ctx, WolfVariants.WALNUT.get(), Biomes.OLD_GROWTH_SPRUCE_TAIGA, false);
+        register(ctx, List.of(
+            WolfVariants.KOMBU.get()
+        ), Util.getResource("kombu_water_spawn"), Biomes.COLD_OCEAN, List.of(Blocks.WATER), true);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
