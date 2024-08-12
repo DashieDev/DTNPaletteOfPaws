@@ -41,6 +41,7 @@ public class DTNWolfSpawnModifiers {
         registerBonitoFlakesWolfModifier(ctx);
         registerGelatoSuiteModifier(ctx);
         registerWalnutWolfModifier(ctx);
+        registerKombuWolfWaterModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
@@ -208,6 +209,15 @@ public class DTNWolfSpawnModifiers {
             Biomes.OLD_GROWTH_SPRUCE_TAIGA, 
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 3)
+        );
+    }
+
+    private static void registerKombuWolfWaterModifier(BootstrapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_kombu_waterspawn", 
+            Biomes.LUKEWARM_OCEAN, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
 
