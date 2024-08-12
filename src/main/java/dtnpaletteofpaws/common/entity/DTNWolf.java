@@ -535,6 +535,8 @@ public class DTNWolf extends TamableAnimal {
     }
 
     public float getShadingWhileWet(float partialTicks) {
+        if (this.getVariant().swimUnderwater())
+            return 1;
         return Math.min(0.5F + Mth.lerp(partialTicks, this.prevTimeWolfIsShaking, this.timeWolfIsShaking) / 2.0F * 0.5F, 1.0F);
     }
 
@@ -1028,7 +1030,7 @@ public class DTNWolf extends TamableAnimal {
         
         WolfVariant variant;
         if (wolf_spawn_group == null) {
-            variant = WolfVariantUtil.getDefaultForSpawn(levelAccessor);
+            variant = WolfVariantUtil.getDefaultForSpawn(this, levelAccessor);
         } else {
             variant = wolf_spawn_group.getWolfVariant(this.getRandom());
         }
