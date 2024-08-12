@@ -1,0 +1,10 @@
+{
+  "biomes": "minecraft:cold_ocean",
+  "blocks": [
+    "minecraft:water"
+  ],
+  "can_spawn_in_dark": true,
+  "variants": [
+    "dtnpaletteofpaws:kombu"
+  ]
+}

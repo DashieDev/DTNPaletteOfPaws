@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:wooded_badlands",
+  "blocks": [
+    "minecraft:red_sand"
+  ],
+  "variants": [
+    "dtnpaletteofpaws:bonito_flakes"
+  ]
+}
