@@ -22,6 +22,6 @@ public class KombuDogVariant extends DogVariant implements IDogAlteration {
     public void props(AbstractDog dog, DogAlterationProps props) {
         props.setCanSwimUnderwater();
         props.setCanBreatheUnderwater();
-        props.addBonusSwimSpeed(10);
+        props.addBonusSwimSpeed(7);
     }
 }
