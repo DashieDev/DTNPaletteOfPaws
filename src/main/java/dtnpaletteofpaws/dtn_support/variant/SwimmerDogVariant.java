@@ -7,14 +7,14 @@ import doggytalents.common.variant.DogVariant;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.Util;
 
-public class KombuDogVariant extends DogVariant implements IDogAlteration {
+public class SwimmerDogVariant extends DogVariant implements IDogAlteration {
 
-    public KombuDogVariant(String name) {
+    public SwimmerDogVariant(String name, int color) {
         super(
             DogVariant.props(Util.getResource(name))
             .customTexture(Util.modifyPath(Util.getResource(name), x -> "textures/entity/dtnwolf/variants/wolf_" + x))
             .customTranslation(Constants.MOD_ID + ".variant." + name)
-            .guiColor(0xff36491d)
+            .guiColor(color)
         );
     }
 
