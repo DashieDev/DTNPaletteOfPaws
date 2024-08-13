@@ -105,7 +105,7 @@ public class DTNWolfSpawnPlacements {
             return false;
         var biome = world.getBiome(pos);
         var configs = WolfVariantUtil.getAllWolfBiomeConfigForBiome(world.registryAccess(), biome)
-            .stream().filter(x -> x.blocks().contains(Blocks.WATER))
+            .stream().filter(x -> x.waterSpawn())
             .collect(Collectors.toList());
         if (configs.isEmpty())
             return false;
