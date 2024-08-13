@@ -27,17 +27,23 @@ public class WolfBiomeConfig {
     private final HolderSet<Biome> biomes;
     private final Set<Block> extraSpawnableBlocks;
     private final boolean canSpawnInDark;
+    private final boolean waterSpawn;
 
-    public WolfBiomeConfig(List<WolfVariant> variants, HolderSet<Biome> biomes, List<Block> blocks, boolean canSpawnInDark) {
+    public WolfBiomeConfig(List<WolfVariant> variants, HolderSet<Biome> biomes, List<Block> blocks, boolean canSpawnInDark, boolean waterSpawn) {
         this.variants = variants == null ? Set.of() : Set.copyOf(variants);
         this.biomes = biomes == null ? HolderSet.direct() : biomes;
         this.extraSpawnableBlocks = blocks == null ? Set.of()
             : Set.copyOf(blocks);
         this.canSpawnInDark = canSpawnInDark;
+        this.waterSpawn = waterSpawn;
     }
 
-    public WolfBiomeConfig(Optional<List<WolfVariant>> variants, HolderSet<Biome> biomes, Optional<List<Block>> blocks, boolean canSpawnInDark) {
-        this(variants.orElse(List.of()), biomes, blocks.orElse(List.of()), canSpawnInDark);
+    public WolfBiomeConfig(List<WolfVariant> variants, HolderSet<Biome> biomes, List<Block> blocks, boolean canSpawnInDark) {
+        this(variants, biomes, blocks, canSpawnInDark, false);
+    }
+
+    public WolfBiomeConfig(Optional<List<WolfVariant>> variants, HolderSet<Biome> biomes, Optional<List<Block>> blocks, boolean canSpawnInDark, boolean waterSpawn) {
+        this(variants.orElse(List.of()), biomes, blocks.orElse(List.of()), canSpawnInDark, waterSpawn);
     }
 
     public HolderSet<Biome> biomes() {
@@ -54,6 +60,10 @@ public class WolfBiomeConfig {
 
     public boolean canSpawnInDark() {
         return this.canSpawnInDark;
+    }
+
+    public boolean waterSpawn() {
+        return this.waterSpawn;
     }
 
     public Optional<List<Block>> blocksAsList() {
@@ -78,7 +88,9 @@ public class WolfBiomeConfig {
             ForgeRegistries.BLOCKS.getCodec().listOf()
                 .optionalFieldOf("blocks").forGetter(WolfBiomeConfig::blocksAsList),
             Codec.BOOL.optionalFieldOf("can_spawn_in_dark", false)
-                .forGetter(WolfBiomeConfig::canSpawnInDark)
+                .forGetter(WolfBiomeConfig::canSpawnInDark),
+            Codec.BOOL.optionalFieldOf("water_spawn", false)
+                .forGetter(WolfBiomeConfig::waterSpawn)
         )
         .apply(builder, WolfBiomeConfig::new)
     );

@@ -59,16 +59,16 @@ public class WolfBiomeConfigs {
             WolfVariants.VANILLA.get()
         ), Util.getResource("gelato_suite"), Biomes.SNOWY_PLAINS, List.of(), true);
         register(ctx, WolfVariants.WALNUT.get(), Biomes.OLD_GROWTH_SPRUCE_TAIGA, false);
-        register(ctx, List.of(
+        registerWaterConfig(ctx, List.of(
             WolfVariants.KOMBU.get()
-        ), Util.getResource("kombu_water_spawn"), Biomes.COLD_OCEAN, List.of(Blocks.WATER), true);
-        register(ctx, List.of(
+        ), Util.getResource("kombu_water_spawn"), Biomes.LUKEWARM_OCEAN, List.of());
+        registerWaterConfig(ctx, List.of(
             WolfVariants.CORAL_BRAIN.get(),
             WolfVariants.CORAL_BUBBLE.get(),
             WolfVariants.CORAL_FIRE.get(),
             WolfVariants.CORAL_HORN.get(),
             WolfVariants.CORAL_TUBE.get()
-        ), Util.getResource("coral_pack"), Biomes.LUKEWARM_OCEAN, List.of(Blocks.WATER), true);
+        ), Util.getResource("coral_pack"), Biomes.WARM_OCEAN, List.of());
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
@@ -131,6 +131,18 @@ public class WolfBiomeConfigs {
             
         var res_key = ResourceKey.create(WolfBiomeConfigs.regKey(), id);
         var config = new WolfBiomeConfig(variants, biomes, spawnable_blocks, can_spawn_in_dark);
+
+        ctx.register(res_key, config);
+    }
+
+    public static void registerWaterConfig(BootstrapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,
+        ResourceLocation id, ResourceKey<Biome> biome, List<Block> spawnable_blocks) {
+            
+        var biome_reg = ctx.lookup(Registries.BIOME);
+        var biome_set = HolderSet.direct(biome_reg.getOrThrow(biome));
+
+        var res_key = ResourceKey.create(WolfBiomeConfigs.regKey(), id);
+        var config = new WolfBiomeConfig(variants, biome_set, spawnable_blocks, true, true);
 
         ctx.register(res_key, config);
     }
