@@ -219,6 +219,12 @@ public class DTNWolfSpawnModifiers {
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
+        registerSingleSpawnModifier(
+            ctx, "wolf_coral_pack_spawn", 
+            Biomes.WARM_OCEAN, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 3)
+        );
     }
 
     private static void registerSingleSpawnModifier(BootstapContext<BiomeModifier> ctx,

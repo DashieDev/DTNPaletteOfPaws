@@ -45,6 +45,11 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> STRAWBERRY = register("strawberry");
     public static final Supplier<WolfVariant> CHOCOLATE = register("chocolate");
     public static final Supplier<WolfVariant> WALNUT = register("walnut");
+    public static final Supplier<WolfVariant> CORAL_BRAIN = register("coral_brain", p -> { p.swimUnderwater(); });
+    public static final Supplier<WolfVariant> CORAL_BUBBLE = register("coral_bubble", p -> { p.swimUnderwater(); });
+    public static final Supplier<WolfVariant> CORAL_FIRE = register("coral_fire", p -> { p.swimUnderwater(); });
+    public static final Supplier<WolfVariant> CORAL_HORN = register("coral_horn", p -> { p.swimUnderwater(); });
+    public static final Supplier<WolfVariant> CORAL_TUBE = register("coral_tube", p -> { p.swimUnderwater(); });
 
     private static Supplier<WolfVariant> register(String name, Function<String, WolfVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);

@@ -29,6 +29,11 @@ public class DTNSupportDogVariants {
     public static final Supplier<DogVariant> STRAWBERRY = register("strawberry", 0xffed8395);
     public static final Supplier<DogVariant> CHOCOLATE = register("chocolate", 0xff533124);
     public static final Supplier<DogVariant> WALNUT = register("walnut", 0xffb88755);
+    public static final Supplier<DogVariant> CORAL_BRAIN = registerSwimmer("coral_brain", 0xffce4e96);
+    public static final Supplier<DogVariant> CORAL_BUBBLE = registerSwimmer("coral_bubble", 0xff911691);
+    public static final Supplier<DogVariant> CORAL_FIRE = registerSwimmer("coral_fire", 0xffb32633);
+    public static final Supplier<DogVariant> CORAL_HORN = registerSwimmer("coral_horn", 0xffe0da45);
+    public static final Supplier<DogVariant> CORAL_TUBE = registerSwimmer("coral_tube", 0xff2546a2);
 
     private static Supplier<DogVariant> registerSwimmer(String name, int guiColor) {
         return DOG_VARIANT.register(name, () -> new SwimmerDogVariant(name, guiColor));

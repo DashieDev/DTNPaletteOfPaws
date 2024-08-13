@@ -62,6 +62,13 @@ public class WolfBiomeConfigs {
         register(ctx, List.of(
             WolfVariants.KOMBU.get()
         ), Util.getResource("kombu_water_spawn"), Biomes.COLD_OCEAN, List.of(Blocks.WATER), true);
+        register(ctx, List.of(
+            WolfVariants.CORAL_BRAIN.get(),
+            WolfVariants.CORAL_BUBBLE.get(),
+            WolfVariants.CORAL_FIRE.get(),
+            WolfVariants.CORAL_HORN.get(),
+            WolfVariants.CORAL_TUBE.get()
+        ), Util.getResource("coral_pack"), Biomes.LUKEWARM_OCEAN, List.of(Blocks.WATER), true);
     }
 
     public static void register(BootstapContext<WolfBiomeConfig> ctx, 
