@@ -1,0 +1,14 @@
+{
+  "biomes": "minecraft:lukewarm_ocean",
+  "blocks": [
+    "minecraft:water"
+  ],
+  "can_spawn_in_dark": true,
+  "variants": [
+    "dtnpaletteofpaws:coral_bubble",
+    "dtnpaletteofpaws:coral_fire",
+    "dtnpaletteofpaws:coral_brain",
+    "dtnpaletteofpaws:coral_horn",
+    "dtnpaletteofpaws:coral_tube"
+  ]
+}

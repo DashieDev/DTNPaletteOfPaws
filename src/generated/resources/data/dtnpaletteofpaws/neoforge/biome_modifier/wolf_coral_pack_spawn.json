@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "minecraft:warm_ocean",
+  "spawners": {
+    "type": "dtnpaletteofpaws:wolf",
+    "maxCount": 3,
+    "minCount": 1,
+    "weight": 1
+  }
+}
