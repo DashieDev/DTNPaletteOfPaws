@@ -77,7 +77,7 @@ public class DTNWolfVariantsFabricSpawn {
         registerBonitoFlakesWolfModifier();
         registerGelatoSuiteModifier();
         registerWalnutWolfModifier();
-        registerKombuWolfWaterModifier();
+        //registerKombuWolfWaterModifier();
     }
 
     private static void registerCherryWolfModifier() {
