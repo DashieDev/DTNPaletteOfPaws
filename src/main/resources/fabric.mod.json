@@ -39,7 +39,7 @@
     "fabric-api": "*",
     "minecraft": "~1.20",
     "java": ">=17",
-    "doggytalents": ">=1.18.26"
+    "doggytalents": ">=1.18.29"
   },
   "suggests": {
     "another-mod": "*"
