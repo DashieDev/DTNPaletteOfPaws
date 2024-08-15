@@ -41,7 +41,7 @@ public class DTNWolfSpawnModifiers {
         registerBonitoFlakesWolfModifier(ctx);
         registerGelatoSuiteModifier(ctx);
         registerWalnutWolfModifier(ctx);
-        registerKombuWolfWaterModifier(ctx);
+        //registerKombuWolfWaterModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
