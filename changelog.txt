@@ -30,3 +30,8 @@ New Wolf Variants:
 + Withered Soul Wolves may Love Burns petter a bit.
 + Fix crimson texture
 + Glowing Crimson and Warped.
+
+**1.2.1 - 16th August 2024**
+New Wolf Variants:
++ Walnut
++ Fix DTN Crash integration.
