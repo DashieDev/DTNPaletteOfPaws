@@ -2,13 +2,13 @@ package dtnpaletteofpaws.common.entity;
 
 import java.util.UUID;
 
+import doggytalents.forge_imitate.atrrib.ForgeMod;
 import dtnpaletteofpaws.common.entity.ai.nav.DTNWolfSwimMoveControl;
 import dtnpaletteofpaws.common.entity.ai.nav.DTNWolfWaterBoundNavigation;
 import dtnpaletteofpaws.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.neoforged.neoforge.common.NeoForgeMod;
 
 public class DTNWolfSwimmingManager {
     
@@ -57,13 +57,13 @@ public class DTNWolfSwimmingManager {
     }
 
     private void applySwimAttributes(DTNWolf dog){
-        dog.setAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID, (dd, u) -> 
+        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.holder(), SWIM_BOOST_ID, (dd, u) -> 
             new AttributeModifier(u, 7, Operation.ADD_VALUE)
         );
     }
 
     private void removeSwimAttributes(DTNWolf dog) {
-        dog.removeAttributeModifier(NeoForgeMod.SWIM_SPEED, SWIM_BOOST_ID);
+        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.holder(), SWIM_BOOST_ID);
     }
     
     private void startSwimming(DTNWolf dog) {
