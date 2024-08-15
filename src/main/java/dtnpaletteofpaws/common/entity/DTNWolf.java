@@ -87,7 +87,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.neoforge.fluids.FluidType;
 
 public class DTNWolf extends TamableAnimal {
         
@@ -334,7 +333,7 @@ public class DTNWolf extends TamableAnimal {
     }
     
     @Override
-    public boolean canDrownInFluidType(FluidType type) {
+    public boolean canBreatheUnderwater() {
         return !this.getVariant().swimUnderwater();
     }
 

@@ -19,12 +19,12 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.Tags.Fluids;
 
 public class WolfVariantUtil {
 
@@ -63,7 +63,7 @@ public class WolfVariantUtil {
     private static boolean checkWaterSpawn(ServerLevelAccessor s_level_accessor, DTNWolf wolf) {
         var pos = wolf.blockPosition();
         var below_state = s_level_accessor.getFluidState(pos.below());
-        return below_state.is(Fluids.WATER);
+        return below_state.is(FluidTags.WATER);
     }
 
     public static List<WolfBiomeConfig> getAllWolfBiomeConfigForBiome(RegistryAccess prov, Holder<Biome> biome) {
