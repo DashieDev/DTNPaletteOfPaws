@@ -31,7 +31,7 @@ public class DTNWolfWaterBoundNavigation extends WaterBoundPathNavigation {
 
     @Override
     protected boolean canUpdatePath() {
-        return this.dog.isInLiquid();
+        return this.isInLiquid();
     }
 
     @Override

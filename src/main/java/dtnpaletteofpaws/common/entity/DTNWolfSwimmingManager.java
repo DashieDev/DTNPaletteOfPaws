@@ -14,7 +14,7 @@ public class DTNWolfSwimmingManager {
     
     private final DTNWolf dog;
 
-    private static final ResourceLocation SWIM_BOOST_ID = Util.getResource("swim_boost");
+    private static final UUID SWIM_BOOST_ID = UUID.fromString("03850b73-fe12-42bc-984d-45f3911f6d8a");
     private DTNWolfSwimMoveControl moveControl_water;
     private DTNWolfWaterBoundNavigation navigator_water;
     private boolean swimming = false;
@@ -57,13 +57,13 @@ public class DTNWolfSwimmingManager {
     }
 
     private void applySwimAttributes(DTNWolf dog){
-        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.holder(), SWIM_BOOST_ID, (dd, u) -> 
-            new AttributeModifier(u, 7, Operation.ADD_VALUE)
+        dog.setAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID, (dd, u) -> 
+            new AttributeModifier(u, "DTNP Swim Boost" ,7, Operation.ADDITION)
         );
     }
 
     private void removeSwimAttributes(DTNWolf dog) {
-        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.holder(), SWIM_BOOST_ID);
+        dog.removeAttributeModifier(ForgeMod.SWIM_SPEED.get(), SWIM_BOOST_ID);
     }
     
     private void startSwimming(DTNWolf dog) {

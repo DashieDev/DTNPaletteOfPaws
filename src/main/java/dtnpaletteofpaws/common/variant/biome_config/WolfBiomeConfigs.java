@@ -133,7 +133,7 @@ public class WolfBiomeConfigs {
         ctx.register(res_key, config);
     }
 
-    public static void registerWaterConfig(BootstrapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,
+    public static void registerWaterConfig(BootstapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,
         ResourceLocation id, ResourceKey<Biome> biome, List<Block> spawnable_blocks) {
             
         var biome_reg = ctx.lookup(Registries.BIOME);
