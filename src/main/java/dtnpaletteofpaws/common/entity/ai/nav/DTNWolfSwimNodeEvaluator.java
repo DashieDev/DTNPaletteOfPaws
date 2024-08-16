@@ -7,10 +7,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.PathType;
-import net.minecraft.world.level.pathfinder.PathfindingContext;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.SwimNodeEvaluator;
@@ -28,7 +28,7 @@ public class DTNWolfSwimNodeEvaluator extends SwimNodeEvaluator {
 
     @Override
     public int getNeighbors(Node[] buffer, Node currentNode) {
-        this.checkLand = (currentNode.type == PathType.WATER);
+        this.checkLand = (currentNode.type == BlockPathTypes.WATER);
         int ret = super.getNeighbors(buffer, currentNode);
         this.checkLand = false;
         return ret;
@@ -65,12 +65,12 @@ public class DTNWolfSwimNodeEvaluator extends SwimNodeEvaluator {
     public Node getStart() {
         var ret = super.getStart();
         if (this.dog.isInWater())
-            ret.type = PathType.WATER;
+            ret.type = BlockPathTypes.WATER;
         return ret;
     }
 
     @Override
-    public PathType getPathTypeOfMob(PathfindingContext context, int x, int y, int z, Mob dog) {
+    public BlockPathTypes getBlockPathType(BlockGetter level, int x, int y, int z, Mob dog) {
         /*
          * TODO Absoluteness of dog bbW.
          * Currently this implementation relies on the fact that currently a dog's bbWidth never
@@ -87,13 +87,13 @@ public class DTNWolfSwimNodeEvaluator extends SwimNodeEvaluator {
                 checkLand && i == y
                 && checkLand(checking_pos, state, dog.level());
             if (checkedWalkable)
-                return PathType.WALKABLE;
+                return BlockPathTypes.WALKABLE;
 
             if (!fluid.is(FluidTags.WATER))
-                return PathType.BLOCKED;
+                return BlockPathTypes.BLOCKED;
         }
 
-        return PathType.WATER;
+        return BlockPathTypes.WATER;
 
         // for(int i = x; i < x + this.entityWidth; ++i) {
         //    for(int j = y; j < y + this.entityHeight; ++j) {
@@ -121,11 +121,11 @@ public class DTNWolfSwimNodeEvaluator extends SwimNodeEvaluator {
     }
 
     private boolean checkLand(BlockPos currentPos, BlockState currenState, BlockGetter level) {
-        if (currenState.isPathfindable(PathComputationType.LAND))
+        if (currenState.isPathfindable(level, currentPos, PathComputationType.LAND))
             return false;
-        var walkType = WalkNodeEvaluator.getPathTypeStatic(dog, currentPos.above().mutable());
-        return walkType == PathType.WATER_BORDER
-            || walkType == PathType.WALKABLE;
+        var walkType = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), currentPos.above().mutable());
+        return walkType == BlockPathTypes.WATER_BORDER
+            || walkType == BlockPathTypes.WALKABLE;
     }
     
 }

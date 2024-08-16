@@ -70,7 +70,7 @@ public class DTNWolfSpawnPlacements {
     }
 
     public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, EntityType<?> type) {
-        if (SpawnPlacementTypes.ON_GROUND.isSpawnPositionOk(world, pos, type))
+        if (NaturalSpawner.canSpawnAtBody(SpawnPlacements.Type.ON_GROUND, world, pos, type))
             return true;
         if (checkPossibleWaterSpawn(world, pos, type))
             return true;
@@ -83,7 +83,7 @@ public class DTNWolfSpawnPlacements {
         if (!state.isAir())
             return false;
         var pos_below = pos.below();
-        var water_spawnable_below = SpawnPlacementTypes.IN_WATER.isSpawnPositionOk(world, pos_below, type);
+        var water_spawnable_below = NaturalSpawner.canSpawnAtBody(SpawnPlacements.Type.IN_WATER, world, pos_below, type);
         if (!water_spawnable_below)
             return false;
         var biome = world.getBiome(pos);

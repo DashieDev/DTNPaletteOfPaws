@@ -82,7 +82,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.minecraftforge.fluids.FluidType;
 
 public class DTNWolf extends TamableAnimal {
         
@@ -267,20 +267,20 @@ public class DTNWolf extends TamableAnimal {
         return super.getPathfindingMalus(type);
     }
 
-    public PathType inferType(PathType type) {
+    public BlockPathTypes inferType(BlockPathTypes type) {
         if (this.fireImmune()) {
-            if (type == PathType.DANGER_FIRE) {
-                return PathType.WALKABLE;
+            if (type == BlockPathTypes.DANGER_FIRE) {
+                return BlockPathTypes.WALKABLE;
             }
-            if (type == PathType.LAVA) {
-                return PathType.BLOCKED;
+            if (type == BlockPathTypes.LAVA) {
+                return BlockPathTypes.BLOCKED;
             }
         }
         if (
             this.getVariant().swimUnderwater()
         ) {
-            if (type == PathType.WATER)
-                return PathType.WALKABLE;
+            if (type == BlockPathTypes.WATER)
+                return BlockPathTypes.WALKABLE;
         }
         return type;
     }
@@ -982,7 +982,7 @@ public class DTNWolf extends TamableAnimal {
         this.isDogFollowingSomeone = val;
     }
 
-    public void setAttributeModifier(Holder<Attribute> attribute, ResourceLocation modifierLoc, BiFunction<DTNWolf, ResourceLocation, AttributeModifier> modifierGenerator) {
+    public void setAttributeModifier(Attribute attribute, UUID modifierLoc, BiFunction<DTNWolf, UUID, AttributeModifier> modifierGenerator) {
         var attributeInst = this.getAttribute(attribute);
 
         var currentModifier = attributeInst.getModifier(modifierLoc);
@@ -1002,7 +1002,7 @@ public class DTNWolf extends TamableAnimal {
         }
     }
 
-    public void removeAttributeModifier(Holder<Attribute> attribute, ResourceLocation modifierLoc) {
+    public void removeAttributeModifier(Attribute attribute, UUID modifierLoc) {
         var attrib = this.getAttribute(attribute);
         if (attrib == null) return;
         attrib.removeModifier(modifierLoc);
