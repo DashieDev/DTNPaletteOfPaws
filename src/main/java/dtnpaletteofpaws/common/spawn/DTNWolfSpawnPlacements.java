@@ -66,7 +66,7 @@ public class DTNWolfSpawnPlacements {
     }
 
     public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, EntityType<?> type) {
-        if (NaturalSpawner.canSpawnAtBody(SpawnPlacements.Type.ON_GROUND, world, pos, type))
+        if (DTNWolfVariantsFabricSpawn.isSpawnPositionOk_imitate(SpawnPlacements.Type.ON_GROUND, world, pos, type))
             return true;
         if (checkPossibleWaterSpawn(world, pos, type))
             return true;
@@ -79,7 +79,7 @@ public class DTNWolfSpawnPlacements {
         if (!state.isAir())
             return false;
         var pos_below = pos.below();
-        var water_spawnable_below = NaturalSpawner.canSpawnAtBody(SpawnPlacements.Type.IN_WATER, world, pos_below, type);
+        var water_spawnable_below = DTNWolfVariantsFabricSpawn.isSpawnPositionOk_imitate(SpawnPlacements.Type.IN_WATER, world, pos_below, type);
         if (!water_spawnable_below)
             return false;
         var biome = world.getBiome(pos);
@@ -121,7 +121,7 @@ public class DTNWolfSpawnPlacements {
 
         var check_pos_below = check_pos.below();
         var below_state = world.getBlockState(check_pos_below);
-         if (below_state.isPathfindable(PathComputationType.LAND) && below_state.getFluidState().isEmpty()) {
+         if (below_state.isPathfindable(world, check_pos_below, PathComputationType.LAND) && below_state.getFluidState().isEmpty()) {
             return check_pos_below;
         }
 

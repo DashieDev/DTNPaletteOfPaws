@@ -109,9 +109,9 @@ public class DTNWolf extends TamableAnimal {
 
     public DTNWolf(EntityType<? extends DTNWolf> p_30369_, Level p_30370_) {
         super(p_30369_, p_30370_);
-        this.setTame(false, true);
-        this.setPathfindingMalus(PathType.POWDER_SNOW, -1.0F);
-        this.setPathfindingMalus(PathType.DANGER_POWDER_SNOW, -1.0F);
+        this.setTame(false);
+        this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
         this.defaultMoveControl = this.moveControl;
         this.defaultPathNavigation = this.navigation;
     }
