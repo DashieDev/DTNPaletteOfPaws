@@ -21,8 +21,10 @@ public class DTNWolfStaticSpawnManager {
     }
 
     public void onChunkGenerationMobSpawn(ServerLevelAccessor level_accessor, Holder<Biome> biome, ChunkPos chunk_pos, RandomSource random) {
-        currentSpawnBiome.set(biome);
+        //currentSpawnBiome.set(biome);
     }
+
+    //TODO Invalidate currentSpawnBiome when return
 
     public Optional<Holder<Biome>> currentSpawnBiome() {
         var val = currentSpawnBiome.get();
