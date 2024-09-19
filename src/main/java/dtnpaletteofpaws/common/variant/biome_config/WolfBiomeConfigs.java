@@ -66,7 +66,13 @@ public class WolfBiomeConfigs {
             WolfVariants.CORAL_FIRE.get(),
             WolfVariants.CORAL_HORN.get(),
             WolfVariants.CORAL_TUBE.get()
-        ), Util.getResource("coral_pack"), Biomes.WARM_OCEAN, List.of());
+        ), Util.getResource("coral_pack"), Biomes.WARM_OCEAN, List.of(
+            Blocks.BRAIN_CORAL_BLOCK,
+            Blocks.FIRE_CORAL_BLOCK,
+            Blocks.HORN_CORAL_BLOCK,
+            Blocks.TUBE_CORAL_BLOCK,
+            Blocks.BUBBLE_CORAL_BLOCK
+        ));
     }
 
     public static void register(BootstrapContext<WolfBiomeConfig> ctx, 
