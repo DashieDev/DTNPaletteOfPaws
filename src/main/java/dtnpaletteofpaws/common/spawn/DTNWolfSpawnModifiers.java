@@ -42,6 +42,7 @@ public class DTNWolfSpawnModifiers {
         registerGelatoSuiteModifier(ctx);
         registerWalnutWolfModifier(ctx);
         //registerKombuWolfWaterModifier(ctx);
+        registerCoralWolfSpawnModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstapContext<BiomeModifier> ctx) {
@@ -219,6 +220,9 @@ public class DTNWolfSpawnModifiers {
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
+    }
+
+    private static void registerCoralWolfSpawnModifier(BootstrapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_coral_pack_spawn", 
             Biomes.WARM_OCEAN, 
