@@ -18,6 +18,7 @@ import dtnpaletteofpaws.common.entity.fabric_helper.FabricWolfVariantSyncher;
 import dtnpaletteofpaws.common.lib.Constants.EntityState;
 import dtnpaletteofpaws.common.network.WolfShakingPacket;
 import dtnpaletteofpaws.common.network.data.WolfShakingData;
+import dtnpaletteofpaws.common.spawn.DTNWolfStaticSpawnManager;
 import dtnpaletteofpaws.common.util.WolfSpawnUtil;
 import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import dtnpaletteofpaws.common.variant.WolfVariant;
@@ -1020,7 +1021,7 @@ public class DTNWolf extends TamableAnimal {
         if (spawnGroup instanceof WolfPackData wolf_group) {
             wolf_spawn_group = wolf_group;
         } else {
-            wolf_spawn_group = initializeGroupData(levelAccessor);
+            wolf_spawn_group = initializeGroupData(levelAccessor, DTNWolfStaticSpawnManager.get().currentSpawnBiome().orElse(null));
         }
         
         WolfVariant variant;
@@ -1034,9 +1035,10 @@ public class DTNWolf extends TamableAnimal {
         return super.finalizeSpawn(levelAccessor, difficulty, spawnType, wolf_spawn_group, tag);
     }
 
-    public WolfPackData initializeGroupData(ServerLevelAccessor levelAccessor) {
-        var holder = levelAccessor.getBiome(this.blockPosition());
-        var possible_variant = WolfVariantUtil.getPossibleSpawnVariants(this.getRandom(), levelAccessor.registryAccess(), holder);
+    public WolfPackData initializeGroupData(ServerLevelAccessor levelAccessor, @Nullable Holder<Biome> biome) {
+        if (biome == null)
+            biome = levelAccessor.getBiome(this.blockPosition());
+        var possible_variant = WolfVariantUtil.getPossibleSpawnVariants(this.getRandom(), levelAccessor.registryAccess(), biome);
         if (possible_variant.isEmpty())
             return null;
         return new WolfPackData(possible_variant);
