@@ -77,7 +77,7 @@ public class DTNWolfVariantsFabricSpawn {
         registerBonitoFlakesWolfModifier();
         registerGelatoSuiteModifier();
         registerWalnutWolfModifier();
-        //registerKombuWolfWaterModifier();
+        registerKombuWolfWaterModifier();
     }
 
     private static void registerCherryWolfModifier() {
@@ -173,8 +173,6 @@ public class DTNWolfVariantsFabricSpawn {
     }
 
     private static void registerKombuWolfWaterModifier() {
-        BiomeModifications.addSpawn(selectForKey(Biomes.LUKEWARM_OCEAN),
-            MobCategory.CREATURE, DTNEntityTypes.DTNWOLF.get(), 1, 1, 1);
         BiomeModifications.addSpawn(selectForKey(Biomes.WARM_OCEAN),
             MobCategory.CREATURE, DTNEntityTypes.DTNWOLF.get(), 1, 1, 3);
     }
