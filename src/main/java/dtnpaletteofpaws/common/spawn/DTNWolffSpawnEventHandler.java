@@ -18,7 +18,7 @@ public class DTNWolffSpawnEventHandler {
         if (spawn_data != null)
             return;
         var level = event.getLevel();
-        spawn_data = wolf.initializeGroupData(level);
+        spawn_data = wolf.initializeGroupData(level, DTNWolfStaticSpawnManager.get().currentSpawnBiome().orElse(null));
         event.setSpawnData(spawn_data);
     }
 
