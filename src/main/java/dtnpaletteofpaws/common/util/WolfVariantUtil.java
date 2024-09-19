@@ -24,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 
 public class WolfVariantUtil {
@@ -81,6 +82,8 @@ public class WolfVariantUtil {
         for (var config : configs) {
             var block_list = config.blocks();
             spawnable_block_set.addAll(block_list);
+            if (config.waterSpawn())
+                spawnable_block_set.add(Blocks.WATER);
         }
         return spawnable_block_set;
     }
