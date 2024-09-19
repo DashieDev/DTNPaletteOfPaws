@@ -26,6 +26,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 public class DTNWolfSpawnPlacements {
     
@@ -105,7 +106,26 @@ public class DTNWolfSpawnPlacements {
             .collect(Collectors.toList());
         if (configs.isEmpty())
             return false;
+        if (checkWaterSpawnRestrictBlock(configs, world, pos))
+            return false;
+
         return true;
+    }
+
+    private static boolean checkWaterSpawnRestrictBlock(List<WolfBiomeConfig> configs, LevelReader world, BlockPos pos) {
+        var restricted_blocks = WolfVariantUtil.getExtraSpawnableBlocksForBiomeConfigs(configs);
+        if (restricted_blocks.isEmpty())
+            return false;
+        final int check_y_initial = world.getHeight(Types.OCEAN_FLOOR, pos.getX(), pos.getZ());
+        var check_pos = new BlockPos(pos.getX(), check_y_initial, pos.getZ());
+        var check_state = world.getBlockState(check_pos);
+        if (check_state.isPathfindable(PathComputationType.WATER)) {
+            check_pos = check_pos.below();
+            check_state = world.getBlockState(check_pos);
+        }
+        if (!restricted_blocks.contains(check_state.getBlock()))
+            return true;
+        return false;
     }
 
 
