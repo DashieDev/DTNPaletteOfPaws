@@ -1,11 +1,15 @@
 package dtnpaletteofpaws.common.entity.ai.nav;
 
 import dtnpaletteofpaws.common.entity.DTNWolf;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
+import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 public class DTNWolfSwimMoveControl extends MoveControl {
@@ -61,7 +65,8 @@ public class DTNWolfSwimMoveControl extends MoveControl {
             this.dog.zza = f6 * speed;
             this.dog.yya = -f4 * speed;
 
-            this.maySwimALittleBitUpToReachLand();
+            if (!this.maySwimALittleBitUpToReachLand())
+                this.mayCheckAndLeapUp();
         } else {
             this.dog.setSpeed(0.0F);
             this.dog.setXxa(0.0F);
@@ -70,24 +75,53 @@ public class DTNWolfSwimMoveControl extends MoveControl {
         }
      }
 
-    private void maySwimALittleBitUpToReachLand() {
+    private boolean maySwimALittleBitUpToReachLand() {
         var path = this.dog.getNavigation().getPath();
         if (path == null || path.isDone())
-            return;
+            return false;
         if (!this.dog.isInWater())
-            return;
+            return false;
         int next_node_id = path.getNextNodeIndex();
         if (next_node_id >= path.getNodeCount() || next_node_id < 0)
-            return;
+            return false;
         var nextNode = path.getNextNode();
         boolean reach_land = 
             nextNode.type == BlockPathTypes.WALKABLE
             && nextNode.y - dog.getY() > 0;
         if (!reach_land)
-            return;
+            return false;
         final float upward_add = 0.05f;
         var current_move = dog.getDeltaMovement();
         dog.setDeltaMovement(current_move.add(0, upward_add, 0));
+        return true;
+    }
+
+    private void mayCheckAndLeapUp() {
+        if (!this.dog.isInWater())
+            return;
+        double dy = this.getWantedY() - dog.getY();
+        double dx = this.getWantedX() - dog.getX();
+        double dz = this.getWantedZ() - dog.getZ();
+        double l_sqr = dx * dx + dz * dz;
+        var b0 = BlockPos.containing(
+            this.getWantedX(),
+            this.getWantedY(),
+            this.getWantedZ()   
+        ).below();
+        
+        boolean dyRequiresJump = 
+            (dy > 0.1) && l_sqr < 2;
+        if (!dyRequiresJump)
+            return;
+        var b0_state = this.dog.level().getBlockState(b0);
+        var b0_collision = b0_state.getCollisionShape(this.dog.level(), b0);
+        boolean collisionRequireJump =
+            !b0_collision.isEmpty();
+        if (collisionRequireJump) {
+            final float upward_add = dy < 0.3 ? 0.05f : 0.1f;
+            var current_move = dog.getDeltaMovement();
+            dog.setDeltaMovement(current_move.add(0, upward_add, 0));
+        }
     }
 
 }
