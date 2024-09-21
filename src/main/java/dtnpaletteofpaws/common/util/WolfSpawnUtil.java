@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.Block;
 
 public class WolfSpawnUtil {
     
-    public static boolean isNetherSpawn(LevelAccessor level_accessor) {
+    public static boolean isNetherOrEndSpawn(LevelAccessor level_accessor) {
         if (!(level_accessor instanceof ServerLevelAccessor s_level_accessor))
             return false;
         
@@ -26,7 +26,7 @@ public class WolfSpawnUtil {
             return false;
         var dim = inner_level.dimension();
         
-        if (!dim.equals(Level.NETHER))
+        if (!dim.equals(Level.NETHER) && !dim.equals(Level.END))
             return false;
         
         return true;

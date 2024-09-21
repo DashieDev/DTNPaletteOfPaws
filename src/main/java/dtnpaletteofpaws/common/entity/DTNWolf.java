@@ -1058,7 +1058,7 @@ public class DTNWolf extends TamableAnimal {
 
     @Override
     public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawn_type) {
-        if (WolfSpawnUtil.isNetherSpawn(level))
+        if (WolfSpawnUtil.isNetherOrEndSpawn(level))
             return true;
 
         return super.checkSpawnRules(level, spawn_type);
