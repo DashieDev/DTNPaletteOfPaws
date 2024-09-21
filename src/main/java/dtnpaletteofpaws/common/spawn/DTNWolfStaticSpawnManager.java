@@ -25,6 +25,8 @@ public class DTNWolfStaticSpawnManager {
     }
 
     //TODO Invalidate currentSpawnBiome when return
+    //TODO also note the getBiome consistency accross everytime a biome-check when DTNWolfSpawn
+    //to check based on this to be appropriate
 
     public Optional<Holder<Biome>> currentSpawnBiome() {
         var val = currentSpawnBiome.get();
