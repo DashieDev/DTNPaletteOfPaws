@@ -35,3 +35,8 @@ New Wolf Variants:
 New Wolf Variants:
 + Walnut
 + Fix DTN Crash integration.
+
+**1.2.2 - 22th September 2024**
+New Wolf Variants:
++ Coral Pack: 5 Variants
++ End Suite: [Ender, Chorus]
