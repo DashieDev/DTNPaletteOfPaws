@@ -10,6 +10,7 @@ import dtnpaletteofpaws.common.lib.Resources;
 import dtnpaletteofpaws.common.util.Util;
 import dtnpaletteofpaws.common.variant.CherryWolfVariant;
 import dtnpaletteofpaws.common.variant.CrimsonWolfVariant;
+import dtnpaletteofpaws.common.variant.EnderWolfVariant;
 import dtnpaletteofpaws.common.variant.MoltenWolfVariant;
 import dtnpaletteofpaws.common.variant.WarpedWolfVariant;
 import dtnpaletteofpaws.common.variant.WitheredSoulWolfVariant;
@@ -50,6 +51,8 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> CORAL_FIRE = register("coral_fire", p -> { p.swimUnderwater(); });
     public static final Supplier<WolfVariant> CORAL_HORN = register("coral_horn", p -> { p.swimUnderwater(); });
     public static final Supplier<WolfVariant> CORAL_TUBE = register("coral_tube", p -> { p.swimUnderwater(); });
+    public static final Supplier<WolfVariant> ENDER = register("ender", EnderWolfVariant::new);
+    public static final Supplier<WolfVariant> CHORUS = register("chorus");
 
     private static Supplier<WolfVariant> register(String name, Function<String, WolfVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);

@@ -73,6 +73,12 @@ public class WolfBiomeConfigs {
             Blocks.TUBE_CORAL_BLOCK,
             Blocks.BUBBLE_CORAL_BLOCK
         ));
+        register(ctx, List.of(
+            WolfVariants.ENDER.get(),
+            WolfVariants.CHORUS.get()
+        ), Util.getResource("end_suite"), Biomes.END_HIGHLANDS, List.of(
+            Blocks.END_STONE
+        ), true);
     }
 
     public static void register(BootstrapContext<WolfBiomeConfig> ctx, 
