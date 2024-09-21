@@ -42,6 +42,13 @@ public class DTNDogVariantMapping {
             .put(WolfVariants.CHOCOLATE.get(), DTNSupportDogVariants.CHOCOLATE.get())
             .put(WolfVariants.VANILLA.get(), DTNSupportDogVariants.VANILLA.get())
             .put(WolfVariants.WALNUT.get(), DTNSupportDogVariants.WALNUT.get())
+            .put(WolfVariants.CORAL_BRAIN.get(), DTNSupportDogVariants.CORAL_BRAIN.get())
+            .put(WolfVariants.CORAL_BUBBLE.get(), DTNSupportDogVariants.CORAL_BUBBLE.get())
+            .put(WolfVariants.CORAL_FIRE.get(), DTNSupportDogVariants.CORAL_FIRE.get())
+            .put(WolfVariants.CORAL_HORN.get(), DTNSupportDogVariants.CORAL_HORN.get())
+            .put(WolfVariants.CORAL_TUBE.get(), DTNSupportDogVariants.CORAL_TUBE.get())
+            .put(WolfVariants.ENDER.get(), DTNSupportDogVariants.ENDER.get())
+            .put(WolfVariants.CHORUS.get(), DTNSupportDogVariants.CHORUS.get())
             .build();
     }
 
