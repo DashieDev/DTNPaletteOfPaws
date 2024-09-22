@@ -40,3 +40,6 @@ New Wolf Variants:
 New Wolf Variants:
 + Coral Pack: 5 Variants
 + End Suite: [Ender, Chorus]
+
+**1.2.3 - 22th September 2024**
+HOTFIX: Fix Walnut Texture
