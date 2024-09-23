@@ -87,7 +87,7 @@ public class DTNWolfStaticSpawnManager {
 
             for (int attempt = 0; !spawned_individual && attempt < 4; attempt++) {
                 var spawnable_pos = DTNWolfSpawnPlacements.getDTNWolfTopNonCollidingPos(DTNEntityTypes.DTNWOLF.get(), level_accessor, check_x, check_z);
-                if (SpawnPlacements.isSpawnPositionOk(spawn_data.type, level_accessor, spawnable_pos)) {
+                if (NaturalSpawner.isSpawnPositionOk(SpawnPlacements.getPlacementType(spawn_data.type), level_accessor, spawnable_pos, spawn_data.type)) {
                     spawned_individual = doSpawnIndividual(level_accessor, spawn_data, min_x, min_z, spawnable_pos, spawngroupdata, rand);
                     if (!spawned_individual)
                         continue;
@@ -119,7 +119,7 @@ public class DTNWolfStaticSpawnManager {
         double check_z_fit = Mth.clamp(check_z, min_z + entity_width, min_z + 16.0 - entity_width);
         check_pos = BlockPos.containing(check_x_fit, (double)check_pos.getY(), check_z_fit);
 
-        var spawn_aabb = spawn_data.type.getSpawnAABB(check_x_fit, (double)check_pos.getY(), check_z_fit);
+        var spawn_aabb = spawn_data.type.getAABB(check_x_fit, (double)check_pos.getY(), check_z_fit);
         boolean no_collision_at_pos = level_accessor.noCollision(spawn_aabb);
         if (!no_collision_at_pos) {
             return false;
@@ -149,10 +149,10 @@ public class DTNWolfStaticSpawnManager {
 
         spawned_entity.moveTo(check_x_fit, (double)check_pos.getY(), check_z_fit, rand.nextFloat() * 360.0F, 0.0F);
         if (spawned_entity instanceof Mob mob
-            && net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(mob, level_accessor, MobSpawnType.CHUNK_GENERATION)) {
+            && net.minecraftforge.event.ForgeEventFactory.checkSpawnPosition(mob, level_accessor, MobSpawnType.CHUNK_GENERATION)) {
             var spawn_group0 = spawn_group_mut.getValue();
             var spawngroupdata = mob.finalizeSpawn(
-                level_accessor, level_accessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawn_group0
+                level_accessor, level_accessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawn_group0, null
             );
             spawn_group_mut.setValue(spawngroupdata);
             level_accessor.addFreshEntityWithPassengers(mob);

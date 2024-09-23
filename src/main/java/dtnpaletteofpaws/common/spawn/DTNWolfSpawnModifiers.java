@@ -222,7 +222,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerCoralWolfSpawnModifier(BootstrapContext<BiomeModifier> ctx) {
+    private static void registerCoralWolfSpawnModifier(BootstapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_coral_pack_spawn", 
             Biomes.WARM_OCEAN, 

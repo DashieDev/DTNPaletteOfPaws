@@ -106,7 +106,7 @@ public class DTNWolfSpawnPlacements {
         final int check_y_initial = world.getHeight(Types.OCEAN_FLOOR, pos.getX(), pos.getZ());
         var check_pos = new BlockPos(pos.getX(), check_y_initial, pos.getZ());
         var check_state = world.getBlockState(check_pos);
-        if (check_state.isPathfindable(PathComputationType.WATER)) {
+        if (check_state.isPathfindable(world, check_pos, PathComputationType.WATER)) {
             check_pos = check_pos.below();
             check_state = world.getBlockState(check_pos);
         }
