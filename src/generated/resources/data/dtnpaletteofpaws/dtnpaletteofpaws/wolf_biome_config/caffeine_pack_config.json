@@ -4,7 +4,7 @@
   "variants": [
     "dtnpaletteofpaws:espresso",
     "dtnpaletteofpaws:mocha",
-    "dtnpaletteofpaws:latte",
-    "dtnpaletteofpaws:cappuccino"
+    "dtnpaletteofpaws:cappuccino",
+    "dtnpaletteofpaws:latte"
   ]
 }

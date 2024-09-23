@@ -1,0 +1,11 @@
+{
+  "biomes": "minecraft:end_highlands",
+  "blocks": [
+    "minecraft:end_stone"
+  ],
+  "can_spawn_in_dark": true,
+  "variants": [
+    "dtnpaletteofpaws:chorus",
+    "dtnpaletteofpaws:ender"
+  ]
+}
