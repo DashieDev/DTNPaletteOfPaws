@@ -43,3 +43,6 @@ New Wolf Variants:
 
 **1.2.3 - 22th September 2024**
 HOTFIX: Fix Walnut Texture
+
+**1.2.4 - 3th October 2024**
+# Some Variant now don't have a wet shade [All Swimmer Dog Variants, Withered Soul]
