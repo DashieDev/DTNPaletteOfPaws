@@ -15,6 +15,7 @@ public class SwimmerDogVariant extends DogVariant implements IDogAlteration {
             .customTexture(Util.modifyPath(Util.getResource(name), x -> "textures/entity/dtnwolf/variants/wolf_" + x))
             .customTranslation(Constants.MOD_ID + ".variant." + name)
             .guiColor(color)
+            .preventWetShade()
         );
     }
 
