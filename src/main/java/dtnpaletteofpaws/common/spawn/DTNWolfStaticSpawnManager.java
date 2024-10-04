@@ -148,8 +148,7 @@ public class DTNWolfStaticSpawnManager {
         }
 
         spawned_entity.moveTo(check_x_fit, (double)check_pos.getY(), check_z_fit, rand.nextFloat() * 360.0F, 0.0F);
-        if (spawned_entity instanceof Mob mob
-            && net.minecraftforge.event.ForgeEventFactory.checkSpawnPosition(mob, level_accessor, MobSpawnType.CHUNK_GENERATION)) {
+        if (spawned_entity instanceof Mob mob) {
             var spawn_group0 = spawn_group_mut.getValue();
             var spawngroupdata = mob.finalizeSpawn(
                 level_accessor, level_accessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawn_group0, null
