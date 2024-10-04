@@ -330,8 +330,8 @@ public class DTNWolf extends TamableAnimal {
         return false;
     }
     
-    @Override
-    public boolean canBreatheUnderwater() {
+    //@Override
+    public boolean canDrownInFluidType() {
         return !this.getVariant().swimUnderwater();
     }
 
@@ -1094,5 +1094,10 @@ public class DTNWolf extends TamableAnimal {
         super.startSeenByPlayer(serverPlayer);
         fabricWolfVariantSyncher.onStartSeeingWolf(serverPlayer);
     }
+
+    @Override
+    public boolean canBreatheUnderwater() {
+        return !this.canDrownInFluidType();
+    }    
 
 }
