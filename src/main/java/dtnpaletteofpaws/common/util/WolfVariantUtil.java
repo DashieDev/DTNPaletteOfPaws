@@ -26,7 +26,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.Tags.Fluids;
 
 public class WolfVariantUtil {
 
