@@ -10,6 +10,8 @@ public class DTNPostInitEntry implements PostInitEntry{
     public void afterDTNInit() {
         DTNSupportEntry.start();
         DTNSupportEntry.startCommonSetup();
+
+        DTNPAndDTNPostInitEntry.markFinish(false);
     }
 
 }
