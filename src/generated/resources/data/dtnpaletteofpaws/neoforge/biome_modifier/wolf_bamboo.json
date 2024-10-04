@@ -1,6 +1,6 @@
 {
-  "type": "forge:add_spawns",
-  "biomes": "minecraft:soul_sand_valley",
+  "type": "neoforge:add_spawns",
+  "biomes": "minecraft:jungle",
   "spawners": {
     "type": "dtnpaletteofpaws:wolf",
     "maxCount": 1,

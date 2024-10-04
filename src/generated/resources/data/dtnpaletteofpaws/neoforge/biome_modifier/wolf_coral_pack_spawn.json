@@ -1,9 +1,9 @@
 {
-  "type": "forge:add_spawns",
-  "biomes": "minecraft:wooded_badlands",
+  "type": "neoforge:add_spawns",
+  "biomes": "minecraft:warm_ocean",
   "spawners": {
     "type": "dtnpaletteofpaws:wolf",
-    "maxCount": 1,
+    "maxCount": 3,
     "minCount": 1,
     "weight": 1
   }

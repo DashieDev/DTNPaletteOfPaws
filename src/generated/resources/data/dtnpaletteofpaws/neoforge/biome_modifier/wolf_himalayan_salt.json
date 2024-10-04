@@ -1,10 +1,10 @@
 {
-  "type": "forge:add_spawns",
-  "biomes": "minecraft:basalt_deltas",
+  "type": "neoforge:add_spawns",
+  "biomes": "minecraft:jagged_peaks",
   "spawners": {
     "type": "dtnpaletteofpaws:wolf",
     "maxCount": 1,
     "minCount": 1,
-    "weight": 20
+    "weight": 1
   }
 }
