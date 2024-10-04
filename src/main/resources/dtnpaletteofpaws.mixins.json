@@ -6,7 +6,8 @@
     "mixins": [
         "NaturalSpawnerMixin",
         "NoiseBasedChunkGeneratorMixin",
-        "Minecraft_UtilMixin"
+        "Minecraft_UtilMixin",
+        "FabricLivingEntityMixin"
     ],
     "client": [
     ],

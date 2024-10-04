@@ -20,7 +20,7 @@ public class DTNPaletteOfPawsEntry implements ModInitializer {
         initAllModRegistries();
         EventHandlerRegisterer.init();
         DTNWolfVariantsFabricSpawn.init();
-        fireAttributeEvent();
+        //fireAttributeEvent();
         ForgeNetworkHandler.init();
         DTNPaletteOfPaws.init();
         PacketHandler.init();
