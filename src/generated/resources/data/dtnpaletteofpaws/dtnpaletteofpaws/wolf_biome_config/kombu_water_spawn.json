@@ -1,0 +1,8 @@
+{
+  "biomes": "minecraft:lukewarm_ocean",
+  "can_spawn_in_dark": true,
+  "variants": [
+    "dtnpaletteofpaws:kombu"
+  ],
+  "water_spawn": true
+}
