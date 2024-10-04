@@ -18,7 +18,7 @@ public class DTNPAndDTNPostInitEntry {
     }
 
     public static void afterDTNAndDTNP() {
-        
+        DTNPaletteOfPawsEntry.fireAttributeEvent();
     }
     
 

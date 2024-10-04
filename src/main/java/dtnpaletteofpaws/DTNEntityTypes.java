@@ -3,6 +3,7 @@ package dtnpaletteofpaws;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import doggytalents.forge_imitate.atrrib.ForgeMod;
 import doggytalents.forge_imitate.event.EntityAttributeCreationEvent;
 import doggytalents.forge_imitate.registry.DeferredRegister;
 import doggytalents.forge_imitate.registry.RegistryObject;
@@ -13,6 +14,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 
 public class DTNEntityTypes {
     
@@ -35,8 +37,14 @@ public class DTNEntityTypes {
     }
 
     public static void addEntityAttributes(EntityAttributeCreationEvent e) {
-        e.put(DTNWOLF.get(), DTNWolf.createAttributes().build());
+        e.put(DTNWOLF.get(), forgeImitateInit(DTNWolf.createAttributes()).build());
     }
 
+
+    //fabric
+    private static AttributeSupplier.Builder forgeImitateInit(AttributeSupplier.Builder builder) {
+        builder.add(ForgeMod.SWIM_SPEED.holder(), 1);
+        return builder;
+    }
 
 }
