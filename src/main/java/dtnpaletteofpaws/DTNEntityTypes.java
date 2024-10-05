@@ -43,7 +43,7 @@ public class DTNEntityTypes {
 
     //fabric
     private static AttributeSupplier.Builder forgeImitateInit(AttributeSupplier.Builder builder) {
-        builder.add(ForgeMod.SWIM_SPEED.holder(), 1);
+        builder.add(ForgeMod.SWIM_SPEED.get(), 1);
         return builder;
     }
 

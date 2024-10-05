@@ -30,14 +30,17 @@ public class DTNWolfVariantsFabricSpawn {
         FluidState spawn_fluid = level.getFluidState(pos);
         BlockPos pos_above = pos.above();
         BlockPos pos_below = pos.below();
-        // switch (type) {
-        //     case IN_WATER: {
-        //         return spawn_fluid.is(FluidTags.WATER) && !level.getBlockState(pos_above).isRedstoneConductor(level, pos_above);
-        //     }
-        //     case IN_LAVA: {
-        //         return spawn_fluid.is(FluidTags.LAVA);
-        //     }
-        // }
+        switch (type) {
+            case IN_WATER: {
+                return spawn_fluid.is(FluidTags.WATER) && !level.getBlockState(pos_above).isRedstoneConductor(level, pos_above);
+            }
+            case IN_LAVA: {
+                return spawn_fluid.is(FluidTags.LAVA);
+            }
+            default: {
+                break;
+            }
+        }
         BlockState below_state = level.getBlockState(pos_below);
         if (!below_state.isValidSpawn(level, pos_below, entity_type)) {
             return false;
