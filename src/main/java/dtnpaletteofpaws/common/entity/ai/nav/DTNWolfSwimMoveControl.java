@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.Vec3;
 
 public class DTNWolfSwimMoveControl extends MoveControl {
 
@@ -65,8 +66,7 @@ public class DTNWolfSwimMoveControl extends MoveControl {
             this.dog.zza = f6 * speed;
             this.dog.yya = -f4 * speed;
 
-            if (!this.maySwimALittleBitUpToReachLand())
-                this.mayCheckAndLeapUp();
+            mayCheckAndLeapUpObstacle();
         } else {
             this.dog.setSpeed(0.0F);
             this.dog.setXxa(0.0F);
@@ -75,50 +75,28 @@ public class DTNWolfSwimMoveControl extends MoveControl {
         }
      }
 
-    private boolean maySwimALittleBitUpToReachLand() {
-        var path = this.dog.getNavigation().getPath();
-        if (path == null || path.isDone())
-            return false;
-        if (!this.dog.isInWater())
-            return false;
-        int next_node_id = path.getNextNodeIndex();
-        if (next_node_id >= path.getNodeCount() || next_node_id < 0)
-            return false;
-        var nextNode = path.getNextNode();
-        boolean reach_land = 
-            nextNode.type == PathType.WALKABLE
-            && nextNode.y - dog.getY() > 0;
-        if (!reach_land)
-            return false;
-        final float upward_add = 0.05f;
-        var current_move = dog.getDeltaMovement();
-        dog.setDeltaMovement(current_move.add(0, upward_add, 0));
-        return true;
-    }
-
-    private void mayCheckAndLeapUp() {
+     private void mayCheckAndLeapUpObstacle() {
         if (!this.dog.isInWater())
             return;
         double dy = this.getWantedY() - dog.getY();
+        if (dy <= 0.1)
+            return;
         double dx = this.getWantedX() - dog.getX();
         double dz = this.getWantedZ() - dog.getZ();
-        double l_sqr = dx * dx + dz * dz;
-        var b0 = BlockPos.containing(
-            this.getWantedX(),
-            this.getWantedY(),
-            this.getWantedZ()   
-        ).below();
-        
-        boolean dyRequiresJump = 
-            (dy > 0.1) && l_sqr < 2;
-        if (!dyRequiresJump)
+        double l_xz_sqr = dx * dx + dz * dz;
+        var min_lxz = dog.getBbWidth()/2 + 0.5 - 0.1; 
+        if (l_xz_sqr < min_lxz * min_lxz)
             return;
-        var b0_state = this.dog.level().getBlockState(b0);
-        var b0_collision = b0_state.getCollisionShape(this.dog.level(), b0);
-        boolean collisionRequireJump =
-            !b0_collision.isEmpty();
-        if (collisionRequireJump) {
-            final float upward_add = dy < 0.3 ? 0.05f : 0.1f;
+
+        var check_pos_offset = new Vec3(dx, 0, dz)
+            .normalize()
+            .scale(dog.getBbWidth()/2 + 0.2);
+        var check_pos = BlockPos.containing(
+            this.dog.position().add(check_pos_offset)   
+        );
+        var state = dog.level().getBlockState(check_pos);
+        if (!state.getCollisionShape(dog.level(), check_pos).isEmpty()) {
+            final float upward_add = 0.05f;
             var current_move = dog.getDeltaMovement();
             dog.setDeltaMovement(current_move.add(0, upward_add, 0));
         }
