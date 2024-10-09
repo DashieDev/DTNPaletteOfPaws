@@ -25,138 +25,130 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class WolfBiomeConfigs {
     
-    public static void bootstrap(BootstapContext<WolfBiomeConfig> ctx) {
-        register(ctx, WolfVariants.CHERRY.get(), Biomes.CHERRY_GROVE, false);
-        register(ctx, WolfVariants.LEMONY_LIME.get(), Biomes.BEACH, Blocks.SAND, false);
-        register(ctx, WolfVariants.HIMALAYAN_SALT.get(), Biomes.JAGGED_PEAKS, false);
-        register(ctx, WolfVariants.BAMBOO.get(), List.of(Biomes.BAMBOO_JUNGLE, Biomes.JUNGLE), false);
-        register(ctx, WolfVariants.CRIMSON.get(), Biomes.CRIMSON_FOREST, Blocks.CRIMSON_NYLIUM, true);
-        register(ctx, WolfVariants.WARPED.get(), Biomes.WARPED_FOREST, Blocks.WARPED_NYLIUM, true);
-        register(ctx, WolfVariants.MOLTEN.get(), Biomes.BASALT_DELTAS, Blocks.BASALT, true);
-        register(ctx, WolfVariants.BIRCH.get(), Biomes.BIRCH_FOREST, false);
-        register(ctx, WolfVariants.PISTACHIO.get(), Biomes.MANGROVE_SWAMP, Blocks.MUD, true);
-        register(ctx, WolfVariants.GUACAMOLE.get(), Biomes.MEADOW, false);
-        register(ctx, WolfVariants.YUZU.get(), Biomes.SNOWY_BEACH, Blocks.SAND, false);
-        register(ctx, 
-            List.of(
+    public static void bootstrap(BootstrapContext<WolfBiomeConfig> ctx) {
+        WolfBiomeConfig.builder(ctx, WolfVariants.CHERRY)
+            .biome(Biomes.CHERRY_GROVE)
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.LEMONY_LIME)
+            .biome(Biomes.BEACH)
+            .extraSpawnableBlock(Blocks.SAND)
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.HIMALAYAN_SALT)
+            .biome(Biomes.JAGGED_PEAKS)
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.BAMBOO)
+            .biomes(List.of(Biomes.BAMBOO_JUNGLE, Biomes.JUNGLE))
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.CRIMSON)
+            .biome(Biomes.CRIMSON_FOREST)
+            .extraSpawnableBlock(Blocks.CRIMSON_NYLIUM)
+            .canSpawnInDark()
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.WARPED)
+            .biome(Biomes.WARPED_FOREST)
+            .extraSpawnableBlock(Blocks.WARPED_NYLIUM)
+            .canSpawnInDark()
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.MOLTEN)
+            .biome(Biomes.BASALT_DELTAS)
+            .extraSpawnableBlock(Blocks.BASALT)
+            .canSpawnInDark()
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.BIRCH)
+            .biome(Biomes.BIRCH_FOREST)
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.PISTACHIO)
+            .biome(Biomes.MANGROVE_SWAMP)
+            .extraSpawnableBlock(Blocks.MUD)
+            .canSpawnInDark()
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.GUACAMOLE)
+            .biome(Biomes.MEADOW)
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.YUZU)
+            .biome(Biomes.SNOWY_BEACH)
+            .extraSpawnableBlock(Blocks.SAND)
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, Util.getResource("caffeine_pack_config"))
+            .variants(List.of(
                 WolfVariants.CAPPUCCINO.get(),
                 WolfVariants.LATTE.get(),
                 WolfVariants.MOCHA.get(),
                 WolfVariants.ESPRESSO.get()
-            ), Util.getResource("caffeine_pack_config"), Biomes.DARK_FOREST, List.of(), true);
-        register(ctx, WolfVariants.WITHERED_SOUL.get(), Biomes.SOUL_SAND_VALLEY, List.of(Blocks.SOUL_SAND, Blocks.SOUL_SOIL), true);
-        register(ctx, List.of(
-            WolfVariants.MUSHROOM_BROWN.get(),
-            WolfVariants.MUSHROOM_RED.get()
-        ), Util.getResource("mushroom_pack_config"), Biomes.MUSHROOM_FIELDS, List.of(Blocks.MYCELIUM), true);
-        register(ctx, WolfVariants.BONITO_FLAKES.get(), Biomes.WOODED_BADLANDS, List.of(Blocks.RED_SAND), false);
-        register(ctx, WolfVariants.KOMBU.get(), Biomes.DESERT, List.of(Blocks.SAND), false);
-        register(ctx, WolfVariants.SHITAKE.get(), Biomes.DARK_FOREST, true);
-        register(ctx, WolfVariants.ENOKI.get(), Biomes.DESERT, false);
-        register(ctx, List.of(
-            WolfVariants.CHOCOLATE.get(),
-            WolfVariants.STRAWBERRY.get(),
-            WolfVariants.VANILLA.get()
-        ), Util.getResource("gelato_suite"), Biomes.SNOWY_PLAINS, List.of(), true);
-        register(ctx, WolfVariants.WALNUT.get(), Biomes.OLD_GROWTH_SPRUCE_TAIGA, false);
-        registerWaterConfig(ctx, List.of(
-            WolfVariants.KOMBU.get()
-        ), Util.getResource("kombu_water_spawn"), Biomes.LUKEWARM_OCEAN, List.of());
-        registerWaterConfig(ctx, List.of(
-            WolfVariants.CORAL_BRAIN.get(),
-            WolfVariants.CORAL_BUBBLE.get(),
-            WolfVariants.CORAL_FIRE.get(),
-            WolfVariants.CORAL_HORN.get(),
-            WolfVariants.CORAL_TUBE.get()
-        ), Util.getResource("coral_pack"), Biomes.WARM_OCEAN, List.of(
-            Blocks.BRAIN_CORAL_BLOCK,
-            Blocks.FIRE_CORAL_BLOCK,
-            Blocks.HORN_CORAL_BLOCK,
-            Blocks.TUBE_CORAL_BLOCK,
-            Blocks.BUBBLE_CORAL_BLOCK
-        ));
-        register(ctx, List.of(
-            WolfVariants.ENDER.get(),
-            WolfVariants.CHORUS.get()
-        ), Util.getResource("end_suite"), Biomes.END_HIGHLANDS, List.of(
-            Blocks.END_STONE
-        ), true);
-    }
-
-    public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        WolfVariant wolf_variant, List<ResourceKey<Biome>> biomes, boolean can_spawn_in_dark) {
-
-        var biome_reg = ctx.lookup(Registries.BIOME);
-        var biome_holders_list = biomes.stream()
-            .map(x -> biome_reg.get(x))
-            .filter(x -> x.isPresent())
-            .map(x -> x.get())
-            .collect(Collectors.toList());
-        var biome_holder_set = HolderSet.direct(biome_holders_list);
-        
-        register(ctx, wolf_variant, biome_holder_set, List.of(), can_spawn_in_dark);
-    }
-
-    public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        WolfVariant wolf_variant, ResourceKey<Biome> biome, Block block, boolean can_spawn_in_dark) {
-
-        register(ctx, wolf_variant, biome, List.of(block), can_spawn_in_dark);
-    }
-
-    public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        WolfVariant wolf_variant, ResourceKey<Biome> biome, boolean can_spawn_in_dark) {
-
-        register(ctx, wolf_variant, biome, List.of(), can_spawn_in_dark);
-    }
-
-    public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        WolfVariant wolf_variant, ResourceKey<Biome> biome, List<Block> spawnable_blocks, boolean can_spawn_in_dark) {
-
-        var biome_reg = ctx.lookup(Registries.BIOME);
-        var biome_set = HolderSet.direct(biome_reg.getOrThrow(biome));
-
-        register(ctx, wolf_variant, biome_set, spawnable_blocks, can_spawn_in_dark);
-    }
-
-    public static void register(BootstapContext<WolfBiomeConfig> ctx, 
-        WolfVariant wolf_variant, HolderSet<Biome> biomes, List<Block> spawnable_blocks,
-        boolean can_spawn_in_dark) {
-        
-        var variant_reg = DTNRegistries.DTN_WOLF_VARIANT.get();
-        var wolf_variant_id = variant_reg.getKey(wolf_variant);
-        if (wolf_variant_id == null)
-            return;
-        register(ctx, List.of(wolf_variant), wolf_variant_id, biomes, spawnable_blocks, can_spawn_in_dark);
-    }
-
-    public static void register(BootstapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,
-        ResourceLocation id, ResourceKey<Biome> biome, List<Block> spawnable_blocks, boolean can_spawn_in_dark) {
-            
-        var biome_reg = ctx.lookup(Registries.BIOME);
-        var biome_set = HolderSet.direct(biome_reg.getOrThrow(biome));
-
-        register(ctx, variants, id, biome_set, spawnable_blocks, can_spawn_in_dark);
-    }
-
-    public static void register(BootstapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,
-        ResourceLocation id, HolderSet<Biome> biomes, List<Block> spawnable_blocks, boolean can_spawn_in_dark) {
-            
-        var res_key = ResourceKey.create(WolfBiomeConfigs.regKey(), id);
-        var config = new WolfBiomeConfig(variants, biomes, spawnable_blocks, can_spawn_in_dark);
-
-        ctx.register(res_key, config);
-    }
-
-    public static void registerWaterConfig(BootstapContext<WolfBiomeConfig> ctx, List<WolfVariant> variants,
-        ResourceLocation id, ResourceKey<Biome> biome, List<Block> spawnable_blocks) {
-            
-        var biome_reg = ctx.lookup(Registries.BIOME);
-        var biome_set = HolderSet.direct(biome_reg.getOrThrow(biome));
-
-        var res_key = ResourceKey.create(WolfBiomeConfigs.regKey(), id);
-        var config = new WolfBiomeConfig(variants, biome_set, spawnable_blocks, true, true);
-
-        ctx.register(res_key, config);
+            ))
+            .biome(Biomes.DARK_FOREST)
+            .canSpawnInDark()
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.WITHERED_SOUL)
+            .biome(Biomes.SOUL_SAND_VALLEY)
+            .extraSpawnableBlocks(List.of(Blocks.SOUL_SAND, Blocks.SOUL_SOIL))
+            .canSpawnInDark()
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, Util.getResource("mushroom_pack_config"))
+            .variants(List.of(
+                WolfVariants.MUSHROOM_BROWN.get(),
+                WolfVariants.MUSHROOM_RED.get()
+            ))
+            .biome(Biomes.MUSHROOM_FIELDS)
+            .extraSpawnableBlock(Blocks.MYCELIUM)
+            .canSpawnInDark()
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.BONITO_FLAKES)
+            .biome(Biomes.WOODED_BADLANDS)
+            .extraSpawnableBlock(Blocks.RED_SAND)
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.KOMBU)
+            .biome(Biomes.DESERT)
+            .extraSpawnableBlock(Blocks.SAND)
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.SHITAKE)
+            .biome(Biomes.DARK_FOREST)
+            .canSpawnInDark()
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.ENOKI)
+            .biome(Biomes.DESERT)
+            .extraSpawnableBlock(Blocks.SAND)
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, Util.getResource("gelato_suite"))
+            .variants(List.of(
+                WolfVariants.CHOCOLATE.get(),
+                WolfVariants.STRAWBERRY.get(),
+                WolfVariants.VANILLA.get()
+            ))
+            .biome(Biomes.SNOWY_PLAINS)
+            .canSpawnInDark()
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.WALNUT)
+            .biome(Biomes.OLD_GROWTH_SPRUCE_TAIGA)
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, Util.getResource("coral_pack"))
+            .variants(List.of(
+                WolfVariants.CORAL_BRAIN.get(),
+                WolfVariants.CORAL_BUBBLE.get(),
+                WolfVariants.CORAL_FIRE.get(),
+                WolfVariants.CORAL_HORN.get(),
+                WolfVariants.CORAL_TUBE.get()
+            ))
+            .biome(Biomes.WARM_OCEAN)
+            .extraSpawnableBlocks(List.of(
+                Blocks.BRAIN_CORAL_BLOCK,
+                Blocks.FIRE_CORAL_BLOCK,
+                Blocks.HORN_CORAL_BLOCK,
+                Blocks.TUBE_CORAL_BLOCK,
+                Blocks.BUBBLE_CORAL_BLOCK
+            ))
+            .waterSpawn()
+            .canSpawnInDark()
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, Util.getResource("end_suite"))
+            .variants(List.of(
+                WolfVariants.ENDER.get(),
+                WolfVariants.CHORUS.get()
+            ))
+            .biome(Biomes.END_HIGHLANDS)
+            .extraSpawnableBlock(Blocks.END_STONE)
+            .canSpawnInDark()
+            .buildAndRegister();
     }
     
     public static ResourceKey<Registry<WolfBiomeConfig>> regKey() {
