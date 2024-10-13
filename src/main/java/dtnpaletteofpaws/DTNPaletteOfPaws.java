@@ -10,6 +10,7 @@ import dtnpaletteofpaws.common.event.EventHandler;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.network.DTNNetworkHandler;
 import dtnpaletteofpaws.common.network.PacketHandler;
+import dtnpaletteofpaws.common.particle.DTNParticleProviders;
 import dtnpaletteofpaws.common.spawn.DTNWolfSpawnPlacements;
 import dtnpaletteofpaws.common.spawn.DTNWolffSpawnEventHandler;
 import dtnpaletteofpaws.dtn_support.DTNSupportEntry;

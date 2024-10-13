@@ -147,6 +147,11 @@ public class WolfBiomeConfigs {
             .extraSpawnableBlock(Blocks.END_STONE)
             .canSpawnInDark()
             .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.WANDERING_SOUL)
+            .biome(Biomes.SOUL_SAND_VALLEY)
+            .extraSpawnableBlocks(List.of(Blocks.SOUL_SAND, Blocks.SOUL_SOIL))
+            .canSpawnInDark()
+            .buildAndRegister();
     }
     
     public static ResourceKey<Registry<WolfBiomeConfig>> regKey() {
