@@ -6,6 +6,7 @@ import dtnpaletteofpaws.common.data.DTNDataRegistriesProvider;
 import dtnpaletteofpaws.common.event.EventHandler;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.network.PacketHandler;
+import dtnpaletteofpaws.common.particle.DTNParticleProviders;
 import dtnpaletteofpaws.common.spawn.DTNWolfSpawnPlacements;
 import dtnpaletteofpaws.common.spawn.DTNWolffSpawnEventHandler;
 import dtnpaletteofpaws.dtn_support.DTNSupportEntry;
@@ -36,6 +37,7 @@ public class DTNPaletteOfPaws {
         WolfVariants.DTN_WOLF_VARIANT.register(mod_event_bus);
         DTNEntityTypes.ENTITIES.register(mod_event_bus);
         DTNSerializers.SERIALIZERS.register(mod_event_bus);
+        DTNParticles.PARTICLES.register(mod_event_bus);
         DTNItems.ITEM.register(mod_event_bus);
         mod_event_bus.addListener(DTNEntityTypes::addEntityAttributes);
         mod_event_bus.addListener(DTNWolfSpawnPlacements::onRegisterSpawnPlacements);
@@ -49,6 +51,7 @@ public class DTNPaletteOfPaws {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             mod_event_bus.addListener(ClientSetup::setupEntityRenderers);
             mod_event_bus.addListener(ClientSetup::registerLayerDefinitions);
+            mod_event_bus.addListener(DTNParticleProviders::onRegisterProv);
         }
 
         DTNSupportEntry.start(mod_event_bus, forge_event_bus);
