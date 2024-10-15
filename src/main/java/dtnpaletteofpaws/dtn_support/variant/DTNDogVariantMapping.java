@@ -49,6 +49,7 @@ public class DTNDogVariantMapping {
             .put(WolfVariants.CORAL_TUBE.get(), DTNSupportDogVariants.CORAL_TUBE.get())
             .put(WolfVariants.ENDER.get(), DTNSupportDogVariants.ENDER.get())
             .put(WolfVariants.CHORUS.get(), DTNSupportDogVariants.CHORUS.get())
+            .put(WolfVariants.WANDERING_SOUL.get(), DTNSupportDogVariants.WANDERING_SOUL.get())
             .build();
     }
 
