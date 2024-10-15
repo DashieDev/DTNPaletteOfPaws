@@ -36,6 +36,7 @@ public class DTNSupportDogVariants {
     public static final Supplier<DogVariant> CORAL_TUBE = registerSwimmer("coral_tube", 0xff2546a2);
     public static final Supplier<DogVariant> ENDER = register("ender", EnderDogVariant::new);
     public static final Supplier<DogVariant> CHORUS = register("chorus", 0xff562e56);
+    public static final Supplier<DogVariant> WANDERING_SOUL = register("wandering_soul", WanderingSoulDogVariant::new);
 
     private static Supplier<DogVariant> registerSwimmer(String name, int guiColor) {
         return DOG_VARIANT.register(name, () -> new SwimmerDogVariant(name, guiColor));
