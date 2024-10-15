@@ -1,4 +1,26 @@
 {
-    "entity.dtnpaletteofpaws.wolf": "狼",
-    "item.dtnpaletteofpaws.wolf_charm": "狼のお守り"
+  "entity.dtnpaletteofpaws.wolf": "オオカミ",
+  "item.dtnpaletteofpaws.wolf_charm": "狼お守り",
+  "dtnpaletteofpaws.variant.cappuccino": "カップチーノ",
+  "dtnpaletteofpaws.variant.espresso": "エスプレッソ",
+  "dtnpaletteofpaws.variant.latte": "ラッテ",
+  "dtnpaletteofpaws.variant.mocha": "モカ",
+  "dtnpaletteofpaws.variant.withered_soul": "枯れた魂",
+  "dtnpaletteofpaws.variant.red_mushroom": "赤色のキノコ",
+  "dtnpaletteofpaws.variant.brown_mushroom": "茶色のキノコ",
+  "dtnpaletteofpaws.variant.bonito_flakes": "カツオ節",
+  "dtnpaletteofpaws.variant.kombu": "昆布",
+  "dtnpaletteofpaws.variant.shitake": "シータケ",
+  "dtnpaletteofpaws.variant.enoki": "エノキタケ",
+  "dtnpaletteofpaws.variant.vanilla": "バニラ",
+  "dtnpaletteofpaws.variant.strawberry": "イチゴ",
+  "dtnpaletteofpaws.variant.chocolate": "チョコレート",
+  "dtnpaletteofpaws.variant.walnut": "クルミ",
+  "dtnpaletteofpaws.variant.coral_brain": "ノウサンゴ",
+  "dtnpaletteofpaws.variant.coral_bubble": "ミズタマサンゴ",
+  "dtnpaletteofpaws.variant.coral_fire": "ミレポラサンゴ",
+  "dtnpaletteofpaws.variant.coral_horn": "シカツノサンゴ",
+  "dtnpaletteofpaws.variant.coral_tube": "クダサンゴ",
+  "dtnpaletteofpaws.variant.ender": "エンダー",
+  "dtnpaletteofpaws.variant.chorus": "コーラス"
 }
