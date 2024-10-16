@@ -21,7 +21,6 @@ public class WanderingSoulDogVariant extends DogVariant implements IDogAlteratio
             )
             .customTranslation(Constants.MOD_ID + ".variant." + name)
             .guiColor(0xff88f6f6)
-            .burnsPetter()
             .preventWetShade()
         );
     }
