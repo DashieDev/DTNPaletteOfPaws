@@ -43,6 +43,7 @@ public class DTNWolfSpawnModifiers {
         registerWalnutWolfModifier(ctx);
         //registerKombuWolfWaterModifier(ctx);
         registerCoralWolfSpawnModifier(ctx);
+        registerNetherWasteSuite(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstrapContext<BiomeModifier> ctx) {
@@ -228,6 +229,15 @@ public class DTNWolfSpawnModifiers {
             Biomes.WARM_OCEAN, 
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 3)
+        );
+    }
+
+    private static void registerNetherWasteSuite(BootstrapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "nether_waste_suite", 
+            Biomes.NETHER_WASTES, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
 
