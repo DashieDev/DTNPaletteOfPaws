@@ -152,6 +152,15 @@ public class WolfBiomeConfigs {
             .extraSpawnableBlocks(List.of(Blocks.SOUL_SAND, Blocks.SOUL_SOIL))
             .canSpawnInDark()
             .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, Util.getResource("nether_waste_suite"))
+            .variants(List.of(
+                WolfVariants.SANGUINE.get(),
+                WolfVariants.DESICCATED.get()
+            ))
+            .biome(Biomes.NETHER_WASTES)
+            .extraSpawnableBlock(Blocks.NETHERRACK)
+            .canSpawnInDark()
+            .buildAndRegister();
     }
     
     public static ResourceKey<Registry<WolfBiomeConfig>> regKey() {

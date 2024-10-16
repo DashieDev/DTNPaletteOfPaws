@@ -50,6 +50,8 @@ public class DTNDogVariantMapping {
             .put(WolfVariants.ENDER.get(), DTNSupportDogVariants.ENDER.get())
             .put(WolfVariants.CHORUS.get(), DTNSupportDogVariants.CHORUS.get())
             .put(WolfVariants.WANDERING_SOUL.get(), DTNSupportDogVariants.WANDERING_SOUL.get())
+            .put(WolfVariants.SANGUINE.get(), DTNSupportDogVariants.SANGUINE.get())
+            .put(WolfVariants.DESICCATED.get(), DTNSupportDogVariants.DESICCATED.get())
             .build();
     }
 
