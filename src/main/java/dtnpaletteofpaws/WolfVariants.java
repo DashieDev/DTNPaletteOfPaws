@@ -55,6 +55,8 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> ENDER = register("ender", EnderWolfVariant::new);
     public static final Supplier<WolfVariant> CHORUS = register("chorus");
     public static final Supplier<WolfVariant> WANDERING_SOUL = register("wandering_soul", WanderingSoulWolfVariant::new);
+    public static final Supplier<WolfVariant> SANGUINE = register("sanguine", p -> { p.fireImmune(); });
+    public static final Supplier<WolfVariant> DESICCATED = register("desiccated");
 
     private static Supplier<WolfVariant> register(String name, Function<String, WolfVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);
