@@ -564,7 +564,7 @@ public class DTNWolf extends TamableAnimal {
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(40.0);
             this.setHealth(40.0F);
         } else {
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(8.0);
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0);
         }
     }
 
