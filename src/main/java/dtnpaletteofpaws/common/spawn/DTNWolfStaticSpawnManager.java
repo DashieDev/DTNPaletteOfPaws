@@ -7,6 +7,8 @@ import org.apache.commons.lang3.mutable.Mutable;
 import org.apache.commons.lang3.mutable.MutableObject;
 
 import dtnpaletteofpaws.DTNEntityTypes;
+import dtnpaletteofpaws.common.entity.DTNWolf;
+import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -86,6 +88,10 @@ public class DTNWolfStaticSpawnManager {
     public static void spawnDTNWOlfForChunkGeneration(ServerLevelAccessor level_accessor, Holder<Biome> biome, 
         ChunkPos chunk_pos, RandomSource rand, float biome_chance) {
         
+        var variants = WolfVariantUtil.getAllWolfBiomeConfigForBiome(level_accessor.registryAccess(), biome);
+        if (variants.isEmpty())
+            return;
+
         while (rand.nextFloat() < biome_chance) {
             doChunkGeneratedSpawnIteration(level_accessor, biome, chunk_pos, rand);
         }
