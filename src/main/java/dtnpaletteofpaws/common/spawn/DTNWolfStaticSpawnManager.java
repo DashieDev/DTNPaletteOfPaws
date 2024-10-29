@@ -23,6 +23,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -55,18 +56,37 @@ public class DTNWolfStaticSpawnManager {
         return Optional.ofNullable(val);
     }
 
-    public static void spawnEndWolvesForChunkGeneration(WorldGenRegion region) {
-        var chunkpos = region.getCenter();
-        var biome = region.getBiome(chunkpos.getWorldPosition().atY(region.getMaxBuildHeight() - 1));
-        var worldgenrandom = new WorldgenRandom(new LegacyRandomSource(RandomSupport.generateUniqueSeed()));
-        worldgenrandom.setDecorationSeed(region.getSeed(), chunkpos.getMinBlockX(), chunkpos.getMinBlockZ());
-        spawnEndWolvesForChunkGeneration(region, biome, chunkpos, worldgenrandom);
+    public static void onSpawnOriginalMobsForChunk(WorldGenRegion region) {
+        if (isTheEndSpawn(region)) {
+            spawnDTNWOlfForChunkGeneration(region, 0.01f, region.getMaxBuildHeight() - 1);
+        }
     }
 
-    public static void spawnEndWolvesForChunkGeneration(ServerLevelAccessor level_accessor, Holder<Biome> biome, 
-        ChunkPos chunk_pos, RandomSource rand) {
+    private static boolean isTheEndSpawn(WorldGenRegion region) {
+        var level = region.getLevel();
+        if (level == null)
+            return false;
+        var dim = level.dimension();
+        if (dim == null)
+            return false;
+        if (!dim.equals(Level.END))
+            return false;
         
-        while (rand.nextFloat() < 0.01f) {
+        return true;
+    }
+
+    public static void spawnDTNWOlfForChunkGeneration(WorldGenRegion region, float biome_chance, int at_height) {
+        var chunkpos = region.getCenter();
+        var biome = region.getBiome(chunkpos.getWorldPosition().atY(at_height));
+        var worldgenrandom = new WorldgenRandom(new LegacyRandomSource(RandomSupport.generateUniqueSeed()));
+        worldgenrandom.setDecorationSeed(region.getSeed(), chunkpos.getMinBlockX(), chunkpos.getMinBlockZ());
+        spawnDTNWOlfForChunkGeneration(region, biome, chunkpos, worldgenrandom, biome_chance);
+    }
+
+    public static void spawnDTNWOlfForChunkGeneration(ServerLevelAccessor level_accessor, Holder<Biome> biome, 
+        ChunkPos chunk_pos, RandomSource rand, float biome_chance) {
+        
+        while (rand.nextFloat() < biome_chance) {
             doChunkGeneratedSpawnIteration(level_accessor, biome, chunk_pos, rand);
         }
     }

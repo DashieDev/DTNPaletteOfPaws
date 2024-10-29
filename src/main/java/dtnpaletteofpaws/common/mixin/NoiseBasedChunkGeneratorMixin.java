@@ -15,16 +15,7 @@ public class NoiseBasedChunkGeneratorMixin {
     
     @Inject(method = "spawnOriginalMobs", at = @At(value = "HEAD"), cancellable = false)
     public void dtn_spawnOriginalMobs(WorldGenRegion region, CallbackInfo info) {
-        var level = region.getLevel();
-        if (level == null)
-            return;
-        var dim = level.dimension();
-        if (dim == null)
-            return;
-        if (!dim.equals(Level.END))
-            return;
-        
-        DTNWolfStaticSpawnManager.spawnEndWolvesForChunkGeneration(region);
+        DTNWolfStaticSpawnManager.onSpawnOriginalMobsForChunk(region);
     }
 
 }
