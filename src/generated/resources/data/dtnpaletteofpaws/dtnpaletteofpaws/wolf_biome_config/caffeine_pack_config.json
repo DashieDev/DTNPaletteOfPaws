@@ -2,9 +2,9 @@
   "biomes": "minecraft:dark_forest",
   "can_spawn_in_dark": true,
   "variants": [
+    "dtnpaletteofpaws:espresso",
     "dtnpaletteofpaws:latte",
     "dtnpaletteofpaws:mocha",
-    "dtnpaletteofpaws:espresso",
     "dtnpaletteofpaws:cappuccino"
   ]
 }
