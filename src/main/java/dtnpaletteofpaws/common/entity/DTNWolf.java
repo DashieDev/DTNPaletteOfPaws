@@ -142,7 +142,7 @@ public class DTNWolf extends TamableAnimal {
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, new DTNWolfHurtByTargetGoal(this).setAlertOthers());
-        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, AbstractSkeleton.class, false));
+        this.targetSelector.addGoal(7, new DTNWolfSkeletonGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
