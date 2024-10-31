@@ -46,3 +46,12 @@ HOTFIX: Fix Walnut Texture
 
 **1.2.4 - 3th October 2024**
 # Some Variant now don't have a wet shade [All Swimmer Dog Variants, Withered Soul]
+
+**1.2.5 - 31th October 2024**
+||🦇🎃 Happy Halloween! 🎃🦇||
+
+New wolf variants:
++ Wandering Soul
++ Desiccated
++ Sanguine
+# Improve Swimmer Wolf Variant Swim move control.
