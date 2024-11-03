@@ -1,0 +1,11 @@
+{
+  "biomes": "minecraft:soul_sand_valley",
+  "blocks": [
+    "minecraft:soul_sand",
+    "minecraft:soul_soil"
+  ],
+  "can_spawn_in_dark": true,
+  "variants": [
+    "dtnpaletteofpaws:wandering_soul"
+  ]
+}
