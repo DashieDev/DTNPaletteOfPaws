@@ -7,10 +7,10 @@
         "NaturalSpawnerMixin",
         "NoiseBasedChunkGeneratorMixin",
         "Minecraft_UtilMixin",
-        "FabricLivingEntityMixin",
-        "FabricParticleEngineMixin"
+        "FabricLivingEntityMixin"
     ],
     "client": [
+      "FabricParticleEngineMixin"
     ],
     "server": [],
     "injectors": {
