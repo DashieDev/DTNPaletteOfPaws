@@ -1,7 +1,7 @@
 package dtnpaletteofpaws.common.particle;
 
 import dtnpaletteofpaws.DTNParticles;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import dtnpaletteofpaws.common.forge_imitate.RegisterParticleProvidersEvent;
 
 public class DTNParticleProviders {
     

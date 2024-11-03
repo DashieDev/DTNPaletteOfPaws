@@ -5,6 +5,7 @@ import doggytalents.forge_imitate.event.EventCallbacksRegistry.InstanceEventCall
 import doggytalents.forge_imitate.event.EventCallbacksRegistry.SingleEventCallBack;
 import doggytalents.forge_imitate.event.client.EntityRenderersEvent;
 import dtnpaletteofpaws.client.ClientSetup;
+import dtnpaletteofpaws.common.particle.DTNParticleProviders;
 
 public class ClientEventHandlerRegisterer {
 
@@ -21,6 +22,12 @@ public class ClientEventHandlerRegisterer {
             new SingleEventCallBack<EntityRenderersEvent.RegisterRenderers>
                 (EntityRenderersEvent.RegisterRenderers.class,
                     ClientSetup::setupEntityRenderers
+                )
+        );
+        ModEventCallbacksRegistry.registerCallback(
+            new SingleEventCallBack<RegisterParticleProvidersEvent>
+                (RegisterParticleProvidersEvent.class,
+                    DTNParticleProviders::onRegisterProv
                 )
         );
     }
