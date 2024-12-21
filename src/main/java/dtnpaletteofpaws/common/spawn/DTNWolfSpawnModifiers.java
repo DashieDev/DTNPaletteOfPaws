@@ -44,6 +44,8 @@ public class DTNWolfSpawnModifiers {
         //registerKombuWolfWaterModifier(ctx);
         registerCoralWolfSpawnModifier(ctx);
         registerNetherWasteSuite(ctx);
+        registerFrostyWolfModifier(ctx);
+        registerIcyWolfModifier(ctx);
     }
 
     private static void registerCherryWolfModifier(BootstapContext<BiomeModifier> ctx) {
@@ -236,6 +238,24 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "nether_waste_suite", 
             Biomes.NETHER_WASTES, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
+        );
+    }
+
+    private static void registerFrostyWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_frosty_spawn", 
+            Biomes.FROZEN_PEAKS, 
+            new MobSpawnSettings
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
+        );
+    }
+
+    private static void registerIcyWolfModifier(BootstrapContext<BiomeModifier> ctx) {
+        registerSingleSpawnModifier(
+            ctx, "wolf_icy_spawn", 
+            Biomes.ICE_SPIKES, 
             new MobSpawnSettings
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );

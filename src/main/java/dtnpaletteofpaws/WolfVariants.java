@@ -10,6 +10,7 @@ import dtnpaletteofpaws.common.util.Util;
 import dtnpaletteofpaws.common.variant.CherryWolfVariant;
 import dtnpaletteofpaws.common.variant.CrimsonWolfVariant;
 import dtnpaletteofpaws.common.variant.EnderWolfVariant;
+import dtnpaletteofpaws.common.variant.FrostyWolfVariant;
 import dtnpaletteofpaws.common.variant.MoltenWolfVariant;
 import dtnpaletteofpaws.common.variant.WanderingSoulWolfVariant;
 import dtnpaletteofpaws.common.variant.WarpedWolfVariant;
@@ -57,6 +58,8 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> WANDERING_SOUL = register("wandering_soul", WanderingSoulWolfVariant::new);
     public static final Supplier<WolfVariant> SANGUINE = register("sanguine", p -> { p.fireImmune(); });
     public static final Supplier<WolfVariant> DESICCATED = register("desiccated");
+    public static final Supplier<WolfVariant> FROSTY = register("frosty", FrostyWolfVariant::new);
+    public static final Supplier<WolfVariant> ICY = register("icy");
 
     private static Supplier<WolfVariant> register(String name, Function<String, WolfVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);
