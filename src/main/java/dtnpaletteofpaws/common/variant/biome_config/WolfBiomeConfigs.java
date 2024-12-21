@@ -161,6 +161,14 @@ public class WolfBiomeConfigs {
             .extraSpawnableBlock(Blocks.NETHERRACK)
             .canSpawnInDark()
             .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.FROSTY)
+            .biome(Biomes.FROZEN_PEAKS)
+            .extraSpawnableBlocks(List.of(Blocks.ICE, Blocks.PACKED_ICE))
+            .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.ICY)
+            .biome(Biomes.ICE_SPIKES)
+            .extraSpawnableBlocks(List.of(Blocks.ICE, Blocks.PACKED_ICE))
+            .buildAndRegister();
     }
     
     public static ResourceKey<Registry<WolfBiomeConfig>> regKey() {

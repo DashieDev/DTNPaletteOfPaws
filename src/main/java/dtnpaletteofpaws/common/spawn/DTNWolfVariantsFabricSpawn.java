@@ -182,4 +182,14 @@ public class DTNWolfVariantsFabricSpawn {
         BiomeModifications.addSpawn(selectForKey(Biomes.NETHER_WASTES),
             MobCategory.CREATURE, DTNEntityTypes.DTNWOLF.get(), 1, 1, 1);
     }
+
+    private static void registerFrostyWolfModifier() {
+        BiomeModifications.addSpawn(selectForKey(Biomes.FROZEN_PEAKS),
+            MobCategory.CREATURE, DTNEntityTypes.DTNWOLF.get(), 1, 1, 1);
+    }
+
+    private static void registerIcyWolfModifier() {
+        BiomeModifications.addSpawn(selectForKey(Biomes.ICE_SPIKES),
+            MobCategory.CREATURE, DTNEntityTypes.DTNWOLF.get(), 1, 1, 1);
+    }
 }
