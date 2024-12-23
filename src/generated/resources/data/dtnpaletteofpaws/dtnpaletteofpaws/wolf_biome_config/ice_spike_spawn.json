@@ -1,10 +1,11 @@
 {
-  "biomes": "minecraft:frozen_peaks",
+  "biomes": "minecraft:ice_spikes",
   "blocks": [
     "minecraft:packed_ice",
     "minecraft:ice"
   ],
   "variants": [
+    "dtnpaletteofpaws:icy",
     "dtnpaletteofpaws:frosty"
   ]
 }
