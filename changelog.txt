@@ -55,3 +55,9 @@ New wolf variants:
 + Desiccated
 + Sanguine
 # Improve Swimmer Wolf Variant Swim move control.
+
+**1.2.6 - 31th October 2024**
+||❄️🎄Merry Christmas🎄❄️!||
+
+New wolf variants:
++ Icy and Frosty ❄️❄️❄️❄️❄️
