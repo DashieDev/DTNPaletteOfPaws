@@ -233,7 +233,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerNetherWasteSuite(BootstrapContext<BiomeModifier> ctx) {
+    private static void registerNetherWasteSuite(BootstapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "nether_waste_suite", 
             Biomes.NETHER_WASTES, 
@@ -242,7 +242,7 @@ public class DTNWolfSpawnModifiers {
         );
     }
 
-    private static void registerIcySpawnModifier(BootstrapContext<BiomeModifier> ctx) {
+    private static void registerIcySpawnModifier(BootstapContext<BiomeModifier> ctx) {
         registerSingleSpawnModifier(
             ctx, "wolf_icy_spawn", 
             Biomes.ICE_SPIKES, 

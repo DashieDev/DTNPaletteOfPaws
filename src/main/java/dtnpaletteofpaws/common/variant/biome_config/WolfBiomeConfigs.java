@@ -25,7 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class WolfBiomeConfigs {
     
-    public static void bootstrap(BootstrapContext<WolfBiomeConfig> ctx) {
+    public static void bootstrap(BootstapContext<WolfBiomeConfig> ctx) {
         WolfBiomeConfig.builder(ctx, WolfVariants.CHERRY)
             .biome(Biomes.CHERRY_GROVE)
             .buildAndRegister();

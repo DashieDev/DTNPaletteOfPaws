@@ -19,7 +19,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -78,16 +78,16 @@ public class WolfBiomeConfig {
 
     public static class Builder {
 
-        private final BootstrapContext<WolfBiomeConfig> ctx;
+        private final BootstapContext<WolfBiomeConfig> ctx;
         
         private final ResourceKey<WolfBiomeConfig> id;
         private Set<WolfVariant> variants = Set.of();
-        private HolderSet<Biome> biomes = HolderSet.empty();
+        private HolderSet<Biome> biomes = HolderSet.direct(List.of());
         private Set<Block> extraSpawnableBlocks = Set.of();
         private boolean canSpawnInDark = false;
         private boolean waterSpawn = false;
 
-        private Builder(BootstrapContext<WolfBiomeConfig> ctx, ResourceKey<WolfBiomeConfig> id) {
+        private Builder(BootstapContext<WolfBiomeConfig> ctx, ResourceKey<WolfBiomeConfig> id) {
             this.ctx = ctx;
             this.id = id;
         }
@@ -146,11 +146,11 @@ public class WolfBiomeConfig {
         }
     }
 
-    public static final Builder builder(BootstrapContext<WolfBiomeConfig> ctx, ResourceLocation id) { 
+    public static final Builder builder(BootstapContext<WolfBiomeConfig> ctx, ResourceLocation id) { 
         return new Builder(ctx, ResourceKey.create(WolfBiomeConfigs.regKey(), id)); 
     }
 
-    public static final Builder builder(BootstrapContext<WolfBiomeConfig> ctx, Supplier<WolfVariant> variant_sup) {
+    public static final Builder builder(BootstapContext<WolfBiomeConfig> ctx, Supplier<WolfVariant> variant_sup) {
         var variant = variant_sup.get();
         var variant_reg = DTNRegistries.DTN_WOLF_VARIANT.get();
         var wolf_variant_id = variant_reg.getKey(variant);
