@@ -80,6 +80,7 @@ public class DTNWolfVariantsFabricSpawn {
         registerCoralWolfWaterModifier();
         registerNetherWasteWolfModifier();
         registerIcyWolfModifier();
+        registerSavannaSpawnModifier();
     }
 
     private static void registerCherryWolfModifier() {
@@ -187,5 +188,10 @@ public class DTNWolfVariantsFabricSpawn {
     private static void registerIcyWolfModifier() {
         BiomeModifications.addSpawn(selectForKey(Biomes.ICE_SPIKES),
             MobCategory.CREATURE, DTNEntityTypes.DTNWOLF.get(), 1, 1, 4);
+    }
+
+    private static void registerSavannaSpawnModifier() {
+        BiomeModifications.addSpawn(selectForKey(Biomes.SAVANNA),
+            MobCategory.CREATURE, DTNEntityTypes.DTNWOLF.get(), 8, 1, 4);
     }
 }

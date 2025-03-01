@@ -54,6 +54,10 @@ public class DTNDogVariantMapping {
             .put(WolfVariants.DESICCATED.get(), DTNSupportDogVariants.DESICCATED.get())
             .put(WolfVariants.FROSTY.get(), DTNSupportDogVariants.FROSTY.get())
             .put(WolfVariants.ICY.get(), DTNSupportDogVariants.ICY.get())
+            .put(WolfVariants.MUDDY.get(), DTNSupportDogVariants.MUDDY.get())
+            .put(WolfVariants.BRINDLE.get(), DTNSupportDogVariants.BRINDLE.get())
+            .put(WolfVariants.SOOTY.get(), DTNSupportDogVariants.SOOTY.get())
+            .put(WolfVariants.ROOT_BEER.get(), DTNSupportDogVariants.ROOT_BEER.get())
             .build();
     }
 
