@@ -168,6 +168,16 @@ public class WolfBiomeConfigs {
             .biome(Biomes.ICE_SPIKES)
             .extraSpawnableBlocks(List.of(Blocks.ICE, Blocks.PACKED_ICE))
             .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, Util.getResource("savanna_suite"))
+            .variants(List.of(
+                WolfVariants.SOOTY.get(),
+                WolfVariants.BRINDLE.get(),
+                WolfVariants.MUDDY.get(),
+                WolfVariants.ROOT_BEER.get()
+            ))
+            .biome(Biomes.SAVANNA)
+            .canSpawnInDark()
+            .buildAndRegister();
     }
     
     public static ResourceKey<Registry<WolfBiomeConfig>> regKey() {

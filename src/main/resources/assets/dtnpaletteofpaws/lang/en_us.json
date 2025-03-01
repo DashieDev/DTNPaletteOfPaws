@@ -28,5 +28,9 @@
     "dtnpaletteofpaws.variant.sanguine": "Sanguine",
     "dtnpaletteofpaws.variant.desiccated": "Desiccated",
     "dtnpaletteofpaws.variant.frosty": "Frosty",
-    "dtnpaletteofpaws.variant.icy": "Icy"
+    "dtnpaletteofpaws.variant.icy": "Icy",
+    "dtnpaletteofpaws.variant.muddy": "Muddy",
+    "dtnpaletteofpaws.variant.brindle": "Brindle",
+    "dtnpaletteofpaws.variant.sooty": "Sooty",
+    "dtnpaletteofpaws.variant.root_beer": "Root Beer"
 }
