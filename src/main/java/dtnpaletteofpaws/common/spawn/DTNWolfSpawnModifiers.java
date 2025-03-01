@@ -257,7 +257,7 @@ public class DTNWolfSpawnModifiers {
             ctx, "wolf_savanna_spawn", 
             Biomes.SAVANNA, 
             new MobSpawnSettings
-                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 4)
+                .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 15, 1, 4)
         );
     }
 
