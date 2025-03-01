@@ -60,6 +60,10 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> DESICCATED = register("desiccated");
     public static final Supplier<WolfVariant> FROSTY = register("frosty", FrostyWolfVariant::new);
     public static final Supplier<WolfVariant> ICY = register("icy");
+    public static final Supplier<WolfVariant> SOOTY = register("sooty");
+    public static final Supplier<WolfVariant> MUDDY = register("muddy");
+    public static final Supplier<WolfVariant> BRINDLE = register("brindle");
+    public static final Supplier<WolfVariant> ROOT_BEER = register("root_beer");
 
     private static Supplier<WolfVariant> register(String name, Function<String, WolfVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);
