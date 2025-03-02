@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import dtnpaletteofpaws.ChopinLogger;
 import dtnpaletteofpaws.DTNEntityTypes;
+import dtnpaletteofpaws.DTNPConfig;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.WolfSpawnUtil;
@@ -14,6 +15,7 @@ import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import dtnpaletteofpaws.common.variant.biome_config.WolfBiomeConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
@@ -24,6 +26,8 @@ import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
@@ -60,6 +64,11 @@ public class DTNWolfSpawnPlacements {
 
     public static boolean DTNWolfSpawnableOn(EntityType<DTNWolf> type, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
         var biome = level.getBiome(pos);
+        //temp fix for gelato suite, yuzu and desert suite being a bit too common.
+        if (DTNPConfig.ServerConfig.getConfigOrDefault(DTNPConfig.SERVER.DTNP_SPAWN_TOO_COMMON_FIX, false) 
+            && makeCommonDTNPSpawnBiomeRarer(biome, random))
+            return false;
+
         var configs = WolfVariantUtil.getAllWolfBiomeConfigForBiome(level.registryAccess(), biome);
         boolean block_is_spawnable =
             checkWolfSpawnableBlock(level, pos, configs);
@@ -167,6 +176,16 @@ public class DTNWolfSpawnPlacements {
         }
 
         return check_pos;
+    }
+
+    private static boolean makeCommonDTNPSpawnBiomeRarer(Holder<Biome> biome, RandomSource random) {
+        boolean too_common_biome = 
+            biome.is(Biomes.SNOWY_BEACH) || biome.is(Biomes.SNOWY_PLAINS)
+            || biome.is(Biomes.DESERT);
+        if (too_common_biome && random.nextInt(3) != 0)
+            return true;
+        
+        return false;
     }
 
 }

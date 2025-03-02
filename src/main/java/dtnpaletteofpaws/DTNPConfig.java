@@ -4,6 +4,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 
 public class DTNPConfig {
     
@@ -18,8 +19,24 @@ public class DTNPConfig {
     }
 
     public static class ServerConfig {
+
+        public ModConfigSpec.BooleanValue DTNP_SPAWN_TOO_COMMON_FIX;
+
         public ServerConfig(ModConfigSpec.Builder builder) {
+            DTNP_SPAWN_TOO_COMMON_FIX = builder
+                .comment("As of now, some biomes doesn't have much spawn causing some DTNP wolf variants")
+                .comment("to be much more common than anticipated. This option makes DTNP spawns")
+                .comment("in those biomes have a chance to cancel when attempting to carrying out the spawn.")
+                .translation("dtnpaletteofpaws.config.fix_dtnp_spawn_too_common ")
+                .define("fix_dtnp_spawn_too_common", true);
         }
+
+        public static<T> T getConfigOrDefault(ConfigValue<T> config, T defaultVal) {
+            if (SERVER_SPEC.isLoaded()) {
+                    return config.get();
+            }
+            return defaultVal;
+        } 
     }
 
 }
