@@ -26,6 +26,7 @@ public class DTNPaletteOfPawsEntry implements ModInitializer {
         PacketHandler.init();
         DTNWolfSpawnPlacements.init();
         
+        DTNPConfig.init();
         DTNPAndDTNPostInitEntry.markFinish(true);
     }
     
