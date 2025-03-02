@@ -1,28 +1,28 @@
 package dtnpaletteofpaws;
 
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 
 public class DTNPConfig {
     
     public static ServerConfig SERVER;
-    private static ModConfigSpec SERVER_SPEC;
+    private static ForgeConfigSpec SERVER_SPEC;
 
     public static void init(IEventBus mod_event_bus) {
-        var server_config_pair = new ModConfigSpec.Builder().configure(ServerConfig::new);
+        var server_config_pair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
         SERVER_SPEC = server_config_pair.getRight();
         SERVER = server_config_pair.getLeft();
-        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.SERVER, SERVER_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_SPEC);
     }
 
     public static class ServerConfig {
 
-        public ModConfigSpec.BooleanValue DTNP_SPAWN_TOO_COMMON_FIX;
+        public ForgeConfigSpec.BooleanValue DTNP_SPAWN_TOO_COMMON_FIX;
 
-        public ServerConfig(ModConfigSpec.Builder builder) {
+        public ServerConfig(ForgeConfigSpec.Builder builder) {
             DTNP_SPAWN_TOO_COMMON_FIX = builder
                 .comment("As of now, some biomes doesn't have much spawn causing some DTNP wolf variants")
                 .comment("to be much more common than anticipated. This option makes DTNP spawns")
