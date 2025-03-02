@@ -1,8 +1,8 @@
 {
   "biomes": "minecraft:soul_sand_valley",
   "blocks": [
-    "minecraft:soul_sand",
-    "minecraft:soul_soil"
+    "minecraft:soul_soil",
+    "minecraft:soul_sand"
   ],
   "can_spawn_in_dark": true,
   "variants": [
