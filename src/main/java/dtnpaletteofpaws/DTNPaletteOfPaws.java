@@ -54,6 +54,8 @@ public class DTNPaletteOfPaws {
             mod_event_bus.addListener(DTNParticleProviders::onRegisterProv);
         }
 
+        DTNPConfig.init(mod_event_bus);
+
         DTNSupportEntry.start(mod_event_bus, forge_event_bus);
     }
 
