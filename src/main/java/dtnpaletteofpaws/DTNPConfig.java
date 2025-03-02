@@ -1,7 +1,7 @@
 package dtnpaletteofpaws;
 
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
+import dtnpaletteofpaws.common.lib.Constants;
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
@@ -11,11 +11,11 @@ public class DTNPConfig {
     public static ServerConfig SERVER;
     private static ModConfigSpec SERVER_SPEC;
 
-    public static void init(IEventBus mod_event_bus) {
+    public static void init() {
         var server_config_pair = new ModConfigSpec.Builder().configure(ServerConfig::new);
         SERVER_SPEC = server_config_pair.getRight();
         SERVER = server_config_pair.getLeft();
-        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.SERVER, SERVER_SPEC);
+        NeoForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, SERVER_SPEC);
     }
 
     public static class ServerConfig {
