@@ -61,3 +61,11 @@ New wolf variants:
 
 New wolf variants:
 + Icy and Frosty ❄️❄️❄️❄️❄️
+
+**1.2.7 - 2th March 2025**
+New wolf variants:
+Sooty
+Muddy
+Brindle
+Root Beer
+Gelato Suite and Yuzu spawn is now rarer (Configurable)
