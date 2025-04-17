@@ -4,9 +4,12 @@ import java.util.Objects;
 
 import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.common.entity.DTNWolf;
+import dtnpaletteofpaws.common.util.Util;
 import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -18,7 +21,7 @@ import net.minecraft.world.item.context.UseOnContext;
 public class WolfCharmItem extends Item {
     
     public WolfCharmItem() {
-        super(new Item.Properties());
+        super(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Util.getResource("wolf_charm"))));
     }
 
     @Override

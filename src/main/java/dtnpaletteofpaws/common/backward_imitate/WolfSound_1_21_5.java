@@ -10,8 +10,8 @@ import net.minecraft.world.level.Level;
 public class WolfSound_1_21_5 {
     
     public static WolfSoundVariant getClassic(Level level) {
-        var sound_variant = level.registryAccess().get(Registries.WOLF_SOUND_VARIANT).orElseThrow()
-            .value().getValue(WolfSoundVariants.CLASSIC);
+        var sound_variant = level.registryAccess().lookupOrThrow(Registries.WOLF_SOUND_VARIANT)
+            .getValue(WolfSoundVariants.CLASSIC);
         return sound_variant;
     }
 
