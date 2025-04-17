@@ -5,7 +5,7 @@
     "minecraft:ice"
   ],
   "variants": [
-    "dtnpaletteofpaws:frosty",
-    "dtnpaletteofpaws:icy"
+    "dtnpaletteofpaws:icy",
+    "dtnpaletteofpaws:frosty"
   ]
 }
