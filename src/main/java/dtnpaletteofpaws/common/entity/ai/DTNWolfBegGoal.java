@@ -8,7 +8,6 @@ import dtnpaletteofpaws.common.entity.DTNWolf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -34,7 +33,7 @@ public class DTNWolfBegGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        this.player = this.level.getNearestPlayer(this.begTargeting, this.wolf);
+        this.player = this.level.getNearestPlayer(this.wolf, 8);
         return this.player == null ? false : this.playerHoldingInteresting(this.player);
     }
 

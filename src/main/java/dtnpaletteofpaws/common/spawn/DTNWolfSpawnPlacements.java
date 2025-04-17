@@ -18,8 +18,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnPlacementType;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -62,7 +62,7 @@ public class DTNWolfSpawnPlacements {
         );
     }
 
-    public static boolean DTNWolfSpawnableOn(EntityType<DTNWolf> type, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
+    public static boolean DTNWolfSpawnableOn(EntityType<DTNWolf> type, LevelAccessor level, EntitySpawnReason spawn_type, BlockPos pos, RandomSource random) {
         var biome = level.getBiome(pos);
         //temp fix for gelato suite, yuzu and desert suite being a bit too common.
         if (DTNPConfig.ServerConfig.getConfigOrDefault(DTNPConfig.SERVER.DTNP_SPAWN_TOO_COMMON_FIX, false) 
@@ -162,7 +162,7 @@ public class DTNWolfSpawnPlacements {
             } while(!world.getBlockState(check_pos).isAir());
     
             var check_pos_below = check_pos.below();
-            while (check_pos_below.getY() > world.getMinBuildHeight() 
+            while (check_pos_below.getY() > world.getMinY() 
                 && world.getBlockState(check_pos_below).isAir()) {
                 check_pos = check_pos_below;
                 check_pos_below = check_pos.below();

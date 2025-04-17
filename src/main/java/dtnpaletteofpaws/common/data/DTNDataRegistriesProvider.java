@@ -17,7 +17,7 @@ public class DTNDataRegistriesProvider {
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, DTNWolfSpawnModifiers::bootstrap);
 
         var datagen = event.getGenerator();
-        datagen.addProvider(event.includeServer(),
+        datagen.addProvider(true,
             new DatapackBuiltinEntriesProvider(
                 datagen.getPackOutput(), event.getLookupProvider(), 
                 wolf_biome_set, Set.of(Constants.MOD_ID) 

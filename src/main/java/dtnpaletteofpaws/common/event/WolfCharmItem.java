@@ -10,8 +10,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 
 public class WolfCharmItem extends Item {
@@ -51,7 +52,7 @@ public class WolfCharmItem extends Item {
             !Objects.equals(spawn_pos, clicked_pos) && clicked_face == Direction.UP;
 
         var entity = DTNEntityTypes.DTNWOLF.get().spawn(sLevel, stack, 
-            context.getPlayer(), spawn_pos, MobSpawnType.SPAWN_EGG, 
+            context.getPlayer(), spawn_pos, EntitySpawnReason.SPAWN_ITEM_USE, 
             upward_collision, false);
         
         if (entity == null)
@@ -59,7 +60,7 @@ public class WolfCharmItem extends Item {
 
         stack.shrink(1);
         if (player instanceof ServerPlayer sP) {
-            sP.getCooldowns().addCooldown(this, 30);
+            sP.getCooldowns().addCooldown(new ItemStack(this), 30);
         }
         return InteractionResult.SUCCESS;
     }

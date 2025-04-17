@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 
 public class ChopinLogger {
     private static final Logger LOGGER = LogManager.getLogger("chopin");

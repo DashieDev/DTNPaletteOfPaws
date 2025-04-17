@@ -1,6 +1,7 @@
 package dtnpaletteofpaws;
 
 import dtnpaletteofpaws.client.ClientSetup;
+import dtnpaletteofpaws.client.backward_imitate.DTNPModelProvider_21_5;
 import dtnpaletteofpaws.client.data.DTNItemModelProvider;
 import dtnpaletteofpaws.common.data.DTNDataRegistriesProvider;
 import dtnpaletteofpaws.common.event.EventHandler;
@@ -66,13 +67,13 @@ public class DTNPaletteOfPaws {
         DTNSupportEntry.startCommonSetup();
     }
 
-    public void onGatherData(final GatherDataEvent event) {
+    public void onGatherData(final GatherDataEvent.Client event) {
         DTNDataRegistriesProvider.start(event);
-        if (event.includeClient()) {
+        if (/*event.includeClient()*/true) {
             var gen = event.getGenerator();
-            var file_helper = event.getExistingFileHelper();
+            //var file_helper = event.getExistingFileHelper();
             var pack_output = gen.getPackOutput();
-            gen.addProvider(true, new DTNItemModelProvider(pack_output, file_helper));
+            gen.addProvider(true, new DTNPModelProvider_21_5(pack_output));
         }
     }
 

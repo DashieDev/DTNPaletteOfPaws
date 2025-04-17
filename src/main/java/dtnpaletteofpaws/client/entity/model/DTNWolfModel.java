@@ -2,9 +2,10 @@ package dtnpaletteofpaws.client.entity.model;
 
 import com.google.common.collect.ImmutableList;
 
+import dtnpaletteofpaws.client.backward_imitate.DTNWolfRenderState_21_3;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import net.minecraft.client.animation.KeyframeAnimations;
-import net.minecraft.client.model.ColorableAgeableListModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -14,7 +15,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class DTNWolfModel extends ColorableAgeableListModel<DTNWolf> {
+public class DTNWolfModel extends EntityModel<DTNWolfRenderState_21_3> {
  
     public ModelPart head;
     public ModelPart realHead;
@@ -28,6 +29,7 @@ public class DTNWolfModel extends ColorableAgeableListModel<DTNWolf> {
     public ModelPart realTail;
 
     public DTNWolfModel(ModelPart box) {
+        super(box);
         this.head = box.getChild("head");
         this.realHead = this.head.getChild("real_head");
         this.body = box.getChild("body");
@@ -40,17 +42,17 @@ public class DTNWolfModel extends ColorableAgeableListModel<DTNWolf> {
         this.realTail = this.tail.getChild("real_tail");
     }
 
-    @Override
-    protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of(this.head);
-    }
+    // @Override
+    // protected Iterable<ModelPart> headParts() {
+    //     return ImmutableList.of(this.head);
+    // }
 
-    @Override
-    protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(this.body, this.legBackLeft, this.legBackRight, this.legFrontLeft, this.legFrontRight, this.tail, this.mane);
-    }
+    // @Override
+    // protected Iterable<ModelPart> bodyParts() {
+    //     return ImmutableList.of(this.body, this.legBackLeft, this.legBackRight, this.legFrontLeft, this.legFrontRight, this.tail, this.mane);
+    // }
 
-    @Override
+    //@Override
     public void prepareMobModel(DTNWolf dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         resetAllPose();
         if (dog.isInSittingPose()) {
@@ -75,7 +77,7 @@ public class DTNWolfModel extends ColorableAgeableListModel<DTNWolf> {
         this.tail.resetPose();
     }
 
-    @Override
+    //@Override
     public void setupAnim(DTNWolf dog, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot += headPitch * ((float)Math.PI / 180F); 
         this.head.yRot += netHeadYaw * ((float)Math.PI / 180F);
@@ -161,6 +163,21 @@ public class DTNWolfModel extends ColorableAgeableListModel<DTNWolf> {
                 .texOffs(9, 18).addBox(-1F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, scale)
         , PartPose.ZERO);
         return LayerDefinition.create(var0, 64, 32);
+    }
+
+    //1.21.3+
+    public boolean young;
+    @Override
+    public void setupAnim(DTNWolfRenderState_21_3 render_state) {
+        var dog = render_state.wolf;
+        var walk_anim_time = render_state.walkAnimationPos;
+        var walk_anim_speed = render_state.walkAnimationSpeed;
+        var yrot = render_state.yRot;
+        var xrot = render_state.xRot;
+        var ticks_with_partial = render_state.ageInTicks;
+        this.young = dog.isBaby();
+        this.prepareMobModel(dog, walk_anim_time, walk_anim_speed, render_state.partialTick);
+        this.setupAnim(dog, walk_anim_time, walk_anim_speed, ticks_with_partial, yrot, xrot);
     }
 
 }

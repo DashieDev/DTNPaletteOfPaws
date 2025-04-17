@@ -37,7 +37,7 @@ public class WolfVariantUtil {
         var res = ResourceLocation.tryParse(id);
         if (res == null)
             return getDefault();
-        var variant = DTNRegistries.DTN_WOLF_VARIANT.get().get(res);
+        var variant = DTNRegistries.DTN_WOLF_VARIANT.get().getValue(res);
         if (variant == null)
             variant = getDefault();
         return variant;
@@ -68,11 +68,11 @@ public class WolfVariantUtil {
     }
 
     public static List<WolfBiomeConfig> getAllWolfBiomeConfigForBiome(RegistryAccess prov, Holder<Biome> biome) {
-        var biome_config_reg = prov.registryOrThrow(WolfBiomeConfigs.regKey());
-        var filtered_config = biome_config_reg.holders()
+        var biome_config_reg = prov.lookupOrThrow(WolfBiomeConfigs.regKey());
+        var filtered_config = biome_config_reg.stream()
             .filter(filter_config -> filter_config
-                .value().biomes().contains(biome))
-            .map(x -> x.value())
+                .biomes().contains(biome))
+            .map(x -> x)
             .collect(Collectors.toList());
         return filtered_config;
     }

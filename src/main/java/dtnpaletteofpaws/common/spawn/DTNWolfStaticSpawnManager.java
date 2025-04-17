@@ -7,6 +7,8 @@ import org.apache.commons.lang3.mutable.Mutable;
 import org.apache.commons.lang3.mutable.MutableObject;
 
 import dtnpaletteofpaws.DTNEntityTypes;
+import dtnpaletteofpaws.common.backward_imitate.MobSpawnSettings_1_21_5;
+import dtnpaletteofpaws.common.backward_imitate.MobSpawnSettings_1_21_5.SpawnerData;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import net.minecraft.core.BlockPos;
@@ -16,12 +18,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.ChunkPos;
@@ -31,7 +32,6 @@ import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.RandomSupport;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
@@ -60,7 +60,7 @@ public class DTNWolfStaticSpawnManager {
 
     public static void onSpawnOriginalMobsForChunk(WorldGenRegion region) {
         if (isTheEndSpawn(region)) {
-            spawnDTNWOlfForChunkGeneration(region, 0.01f, region.getMaxBuildHeight() - 1);
+            spawnDTNWOlfForChunkGeneration(region, 0.01f, region.getMaxY() - 1);
         }
     }
 
@@ -101,7 +101,7 @@ public class DTNWolfStaticSpawnManager {
         ChunkPos chunk_pos, RandomSource rand) {
         int min_x = chunk_pos.getMinBlockX();
         int min_z = chunk_pos.getMinBlockZ();
-        var spawn_data = new SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1);
+        var spawn_data = new MobSpawnSettings_1_21_5.SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1);
         int spawn_count = spawn_data.minCount
             + rand.nextInt(1 + spawn_data.maxCount - spawn_data.minCount);
         var spawngroupdata = new MutableObject<SpawnGroupData>(null);
@@ -154,7 +154,7 @@ public class DTNWolfStaticSpawnManager {
         boolean spawn_rule_check = SpawnPlacements.checkSpawnRules(
             spawn_data.type,
             level_accessor,
-            MobSpawnType.CHUNK_GENERATION,
+            EntitySpawnReason.CHUNK_GENERATION,
             check_pos,
             level_accessor.getRandom()
         );
@@ -163,7 +163,7 @@ public class DTNWolfStaticSpawnManager {
 
         Entity spawned_entity;
         try {
-            spawned_entity = spawn_data.type.create(level_accessor.getLevel());
+            spawned_entity = spawn_data.type.create(level_accessor.getLevel(), EntitySpawnReason.CHUNK_GENERATION);
         } catch (Exception exception) {
             //LOGGER.warn("Failed to create mob", (Throwable)exception);
             return false;
@@ -173,12 +173,12 @@ public class DTNWolfStaticSpawnManager {
             return false;
         }
 
-        spawned_entity.moveTo(check_x_fit, (double)check_pos.getY(), check_z_fit, rand.nextFloat() * 360.0F, 0.0F);
+        spawned_entity.snapTo(check_x_fit, (double)check_pos.getY(), check_z_fit, rand.nextFloat() * 360.0F, 0.0F);
         if (spawned_entity instanceof Mob mob
-            && net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(mob, level_accessor, MobSpawnType.CHUNK_GENERATION)) {
+            && net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(mob, level_accessor, EntitySpawnReason.CHUNK_GENERATION)) {
             var spawn_group0 = spawn_group_mut.getValue();
             var spawngroupdata = mob.finalizeSpawn(
-                level_accessor, level_accessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawn_group0
+                level_accessor, level_accessor.getCurrentDifficultyAt(mob.blockPosition()), EntitySpawnReason.CHUNK_GENERATION, spawn_group0
             );
             spawn_group_mut.setValue(spawngroupdata);
             level_accessor.addFreshEntityWithPassengers(mob);

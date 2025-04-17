@@ -14,6 +14,7 @@ import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.dtn_support.variant.DTNDogVariantMapping;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
@@ -93,7 +94,7 @@ public class DTNSupportEventHandler {
     }
 
     public static void trainWolf(DTNWolf wolf, Player owner, Level level) {
-        Dog dog = DoggyEntityTypes.DOG.get().create(level);
+        Dog dog = DoggyEntityTypes.DOG.get().create(level, EntitySpawnReason.LOAD);
         if (dog == null) {
             throw new IllegalStateException("Creator function for the dog returned \"null\"");
         }
@@ -102,7 +103,7 @@ public class DTNSupportEventHandler {
         dog.maxHealth();
         dog.setOrderedToSit(false);
         dog.setAge(wolf.getAge());
-        dog.moveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
+        dog.snapTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
         dog.setYHeadRot(wolf.yBodyRot);
         dog.setYBodyRot(wolf.yBodyRot);
         dog.setYRot(wolf.yBodyRot);

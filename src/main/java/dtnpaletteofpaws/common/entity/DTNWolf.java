@@ -12,6 +12,8 @@ import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.DTNRegistries;
 import dtnpaletteofpaws.DTNSerializers;
 import dtnpaletteofpaws.WolfVariants;
+import dtnpaletteofpaws.common.backward_imitate.WolfInteractionResult;
+import dtnpaletteofpaws.common.backward_imitate.WolfSound_1_21_5;
 import dtnpaletteofpaws.common.entity.ai.*;
 import dtnpaletteofpaws.common.entity.ai.nav.*;
 import dtnpaletteofpaws.common.lib.Constants.EntityState;
@@ -23,6 +25,7 @@ import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import dtnpaletteofpaws.common.variant.WolfVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -48,11 +51,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Crackiness;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -64,13 +67,11 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
@@ -188,21 +189,21 @@ public class DTNWolf extends TamableAnimal {
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.random.nextInt(3) == 0) {
-            return this.isTame() && this.getHealth() < 20.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
+            return this.isTame() && this.getHealth() < 20.0F ? WolfSound_1_21_5.getWhineSound(this.level()) : WolfSound_1_21_5.getPantSound(this.level());
         } else {
-            return SoundEvents.WOLF_AMBIENT;
+            return WolfSound_1_21_5.getAmbientSound(this.level());
         }
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return this.canWolfArmorAbsorb(source) ? SoundEvents.WOLF_ARMOR_DAMAGE : SoundEvents.WOLF_HURT;
+        return this.canWolfArmorAbsorb(source) ? SoundEvents.WOLF_ARMOR_DAMAGE : WolfSound_1_21_5.getHurtSound(this.level());
         //return SoundEvents.WOLF_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.WOLF_DEATH;
+        return WolfSound_1_21_5.getDeathSound(this.level());
     }
 
     @Override
@@ -311,7 +312,7 @@ public class DTNWolf extends TamableAnimal {
             return;
         if (!dog.isInLava()) return;
         var collisioncontext = CollisionContext.of(dog);
-        if (collisioncontext.isAbove(LiquidBlock.STABLE_SHAPE, 
+        if (collisioncontext.isAbove(LiquidBlock.SHAPE_STABLE, 
             dog.blockPosition(), true) 
             && !dog.level().getFluidState(dog.blockPosition().above()).is(FluidTags.LAVA)) {
             dog.setOnGround(true);
@@ -384,7 +385,7 @@ public class DTNWolf extends TamableAnimal {
             this.wetSource = WetSource.RAIN;
             return true;
         }
-        if (this.isInWaterOrBubble()) {
+        if (this.isInWater()) {
             this.wetSource = WetSource.BUBBLE_COLUMN;
             return true;
         }
@@ -607,117 +608,117 @@ public class DTNWolf extends TamableAnimal {
         return handle_super;
     }
 
-    private InteractionResult handleWolfHeal(Player player, ItemStack stack) {
+    private WolfInteractionResult handleWolfHeal(Player player, ItemStack stack) {
         if (!this.isTame())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (!this.isFood(stack))
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (this.getHealth() >= this.getMaxHealth())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
-        var food_props = stack.getFoodProperties(this);
+            return WolfInteractionResult.SUCCESS;
+        var food_props = stack.get(DataComponents.FOOD);
         float nutrition = food_props != null ? (float)food_props.nutrition() : 1.0F;
         this.heal(2.0F * nutrition);
         stack.shrink(1);
-        return InteractionResult.SUCCESS;
+        return WolfInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleChangeDye(Player player, ItemStack stack) {
+    private WolfInteractionResult handleChangeDye(Player player, ItemStack stack) {
         var item = stack.getItem();
         if (!this.isTame())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (!(item instanceof DyeItem dye))
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (!this.isOwnedBy(player))
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         var color = dye.getDyeColor();
         if (color == this.getCollarColor())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
 
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return WolfInteractionResult.SUCCESS;
         this.setCollarColor(color);
         stack.shrink(1);
-        return InteractionResult.SUCCESS;
+        return WolfInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleSetWolfArmor(Player player, ItemStack stack) {
+    private WolfInteractionResult handleSetWolfArmor(Player player, ItemStack stack) {
         if (!stack.is(Items.WOLF_ARMOR))
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (this.hasWolfArmor())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (!this.isTame())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (!this.isOwnedBy(player))
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
 
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return WolfInteractionResult.SUCCESS;
         this.setBodyArmorItem(stack.copyWithCount(1));
         stack.consume(1, player);
-        return InteractionResult.SUCCESS;
+        return WolfInteractionResult.SUCCESS;
         //return InteractionResult.PASS;
     }
 
-    private InteractionResult handleRepairWolfArmor(Player player, ItemStack stack) {
-        if (!ArmorMaterials.ARMADILLO.value().repairIngredient().get().test(stack))
-            return InteractionResult.PASS;
+    private WolfInteractionResult handleRepairWolfArmor(Player player, ItemStack stack) {
+        if (stack.getItem() != Items.ARMADILLO_SCUTE)
+            return WolfInteractionResult.PASS;
         if (!this.hasWolfArmor())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (!this.isTame())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (!this.isOwnedBy(player))
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         
         var wolf_armor = getBodyArmorItem();
         if (!wolf_armor.isDamaged())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
 
         
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return WolfInteractionResult.SUCCESS;
         stack.shrink(1);
         this.playSound(SoundEvents.WOLF_ARMOR_REPAIR);
         int repair_val = (int)(stack.getMaxDamage() * 0.125f);
         int new_damage_val = wolf_armor.getDamageValue() - repair_val;
         if (new_damage_val < 0) new_damage_val = 0;
         wolf_armor.setDamageValue(new_damage_val);
-        return InteractionResult.SUCCESS;
-        // return InteractionResult.PASS;
+        return WolfInteractionResult.SUCCESS;
+        // return WolfInteractionResult.PASS;
     }
 
-    private InteractionResult handleUnsetWolfArmor(Player player, ItemStack stack, InteractionHand hand) {
+    private WolfInteractionResult handleUnsetWolfArmor(Player player, ItemStack stack, InteractionHand hand) {
         if (!stack.is(Items.SHEARS))
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (!this.hasWolfArmor())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (!this.isTame())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (!this.isOwnedBy(player))
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
 
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return WolfInteractionResult.SUCCESS;
         stack.hurtAndBreak(1, player, getSlotForHand(hand));
         this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
 
         var wolf_armor0 = this.getBodyArmorItem();
         this.setBodyArmorItem(ItemStack.EMPTY);
-        this.spawnAtLocation(wolf_armor0);
-        return InteractionResult.SUCCESS;
-        //return InteractionResult.PASS;
+        this.spawnAtLocation((ServerLevel)this.level(), wolf_armor0);
+        return WolfInteractionResult.SUCCESS;
+        //return WolfInteractionResult.PASS;
     }
 
-    private InteractionResult handleTameWolf(Player player, ItemStack stack) {
+    private WolfInteractionResult handleTameWolf(Player player, ItemStack stack) {
         if (!stack.is(Items.BONE))
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
         if (this.isTame())
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
 
         if (this.level().isClientSide)
-            return InteractionResult.SUCCESS;
+            return WolfInteractionResult.SUCCESS;
             
         stack.shrink(1);
 
@@ -731,18 +732,18 @@ public class DTNWolf extends TamableAnimal {
             this.level().broadcastEntityEvent(this, EntityState.WOLF_SMOKE);
         }
         
-        return InteractionResult.SUCCESS;
+        return WolfInteractionResult.SUCCESS;
     }
 
-    private InteractionResult handleWolfSitStand(Player player, ItemStack stack) {
+    private WolfInteractionResult handleWolfSitStand(Player player, ItemStack stack) {
         if (!this.isOwnedBy(player))
-            return InteractionResult.PASS;
+            return WolfInteractionResult.PASS;
 
         this.setOrderedToSit(!this.isOrderedToSit());
         this.jumping = false;
         this.navigation.stop();
         this.setTarget(null);
-        return InteractionResult.SUCCESS;
+        return WolfInteractionResult.SUCCESS;
     }
 
     @Override
@@ -778,23 +779,23 @@ public class DTNWolf extends TamableAnimal {
     // }
 
     @Override
-    public boolean hurt(DamageSource p_30386_, float p_30387_) {
-        if (this.isInvulnerableTo(p_30386_)) {
+    public boolean hurtServer(ServerLevel level, DamageSource p_30386_, float p_30387_) {
+        if (this.isInvulnerableTo(level, p_30386_)) {
             return false;
         } else {
             if (!this.level().isClientSide) {
                 this.setOrderedToSit(false);
             }
 
-            return super.hurt(p_30386_, p_30387_);
+            return super.hurtServer(level, p_30386_, p_30387_);
         }
     }
 
     @Override
-    protected void actuallyHurt(DamageSource source, float amount) {
+    protected void actuallyHurt(ServerLevel level, DamageSource source, float amount) {
         if (mayWolfArmorAbsorb(source, amount))
             return;
-        super.actuallyHurt(source, amount);
+        super.actuallyHurt(level, source, amount);
     }
 
     private boolean mayWolfArmorAbsorb(DamageSource source, float amount) {
@@ -845,16 +846,16 @@ public class DTNWolf extends TamableAnimal {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        var variant_str = compound.getString("variant");
+        var variant_str = compound.getString("variant").orElse("");
         this.setVariant(WolfVariantUtil.variantFromString(variant_str));
-        if (compound.contains("CollarColor", 99)) {
-            this.setCollarColor(DyeColor.byId(compound.getInt("CollarColor")));
+        if (compound.getInt("CollarColor").isPresent()) {
+            this.setCollarColor(DyeColor.byId(compound.getInt("CollarColor").orElse(-1)));
         }
     }
 
     @Nullable
     public DTNWolf getBreedOffspring(ServerLevel p_149088_, AgeableMob p_149089_) {
-        DTNWolf wolf = DTNEntityTypes.DTNWOLF.get().create(p_149088_);
+        DTNWolf wolf = DTNEntityTypes.DTNWOLF.get().create(p_149088_, EntitySpawnReason.BREEDING);
         if (wolf != null && p_149089_ instanceof DTNWolf wolf1) {
             if (this.random.nextBoolean()) {
                 wolf.setVariant(this.getVariant());
@@ -863,7 +864,7 @@ public class DTNWolf extends TamableAnimal {
             }
 
             if (this.isTame()) {
-                wolf.setOwnerUUID(this.getOwnerUUID());
+                wolf.setOwnerReference(this.getOwnerReference());
                 wolf.setTame(true, true);
                 if (this.random.nextBoolean()) {
                     wolf.setCollarColor(this.getCollarColor());
@@ -912,7 +913,7 @@ public class DTNWolf extends TamableAnimal {
     }
 
     @Override
-    public boolean causeFallDamage(float distance, float modifier, DamageSource source) {
+    public boolean causeFallDamage(double distance, float modifier, DamageSource source) {
         if (this.getVariant().fallImmune())
             return false;
 
@@ -1014,7 +1015,7 @@ public class DTNWolf extends TamableAnimal {
 
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroup) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, EntitySpawnReason spawnType, @Nullable SpawnGroupData spawnGroup) {
         
         WolfPackData wolf_spawn_group = null;
         if (spawnGroup instanceof WolfPackData wolf_group) {
@@ -1057,7 +1058,7 @@ public class DTNWolf extends TamableAnimal {
     }
 
     @Override
-    public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawn_type) {
+    public boolean checkSpawnRules(LevelAccessor level, EntitySpawnReason spawn_type) {
         if (WolfSpawnUtil.isNetherOrEndSpawn(level))
             return true;
 

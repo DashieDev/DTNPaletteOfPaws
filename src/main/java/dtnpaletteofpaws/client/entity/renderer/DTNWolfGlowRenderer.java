@@ -3,6 +3,8 @@ package dtnpaletteofpaws.client.entity.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import dtnpaletteofpaws.client.backward_imitate.DTNWolfRenderLayer_21_3;
+import dtnpaletteofpaws.client.backward_imitate.DTNWolfRenderState_21_3;
 import dtnpaletteofpaws.client.entity.model.DTNWolfModel;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -11,9 +13,9 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
-public class DTNWolfGlowRenderer extends RenderLayer<DTNWolf, DTNWolfModel> {
+public class DTNWolfGlowRenderer extends DTNWolfRenderLayer_21_3 {
 
-    public DTNWolfGlowRenderer(RenderLayerParent<DTNWolf, DTNWolfModel> parent) {
+    public DTNWolfGlowRenderer(RenderLayerParent<DTNWolfRenderState_21_3, DTNWolfModel> parent) {
         super(parent);
     }
 

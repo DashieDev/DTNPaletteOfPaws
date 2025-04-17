@@ -7,6 +7,8 @@ import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -24,7 +26,7 @@ public class DTNEntityTypes {
         .setShouldReceiveVelocityUpdates(true));
 
     private static <E extends Entity, T extends EntityType<E>> Supplier<EntityType<E>> register(final String name, final EntityType.EntityFactory<E> sup, final MobCategory classification, final Function<EntityType.Builder<E>, EntityType.Builder<E>> builder) {
-        return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(Util.getResource(name).toString()));
+        return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(ResourceKey.create(Registries.ENTITY_TYPE, Util.getResource(name))));
     }
 
     private static <E extends Entity, T extends EntityType<E>> Supplier<T> register(final String name, final Supplier<T> sup) {

@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dtnpaletteofpaws.DTNEntityTypes;
+import dtnpaletteofpaws.common.backward_imitate.MobSpawnSettings_1_21_5;
 import dtnpaletteofpaws.common.util.Util;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -52,7 +54,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_cherry", 
             Biomes.CHERRY_GROVE, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -61,7 +63,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_lemony_lime", 
             Biomes.BEACH, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -70,7 +72,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_himalayan_salt", 
             Biomes.JAGGED_PEAKS, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -79,13 +81,13 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_bamboo", 
             Biomes.JUNGLE, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
         registerSingleSpawnModifier(
             ctx, "wolf_bamboo_dedicated", 
             Biomes.BAMBOO_JUNGLE,
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 60, 1, 3)
         );
     }
@@ -94,7 +96,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_crimson", 
             Biomes.CRIMSON_FOREST, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 20, 1, 1)
         );
     }
@@ -103,7 +105,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_warped", 
             Biomes.WARPED_FOREST, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 20, 1, 1)
         );
     }
@@ -112,7 +114,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_molten", 
             Biomes.BASALT_DELTAS, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 20, 1, 1)
         );
     }
@@ -121,7 +123,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_birch", 
             Biomes.BIRCH_FOREST, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -130,7 +132,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_pistachio", 
             Biomes.MANGROVE_SWAMP, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -139,7 +141,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_guacamole", 
             Biomes.MEADOW, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -148,7 +150,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_yuzu", 
             Biomes.SNOWY_BEACH, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -157,7 +159,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "dark_forest_suite", 
             Biomes.DARK_FOREST, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 4, 2, 4)
         );
     }
@@ -166,7 +168,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_withered_soul", 
             Biomes.SOUL_SAND_VALLEY, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -175,7 +177,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "mushroom_pack", 
             Biomes.MUSHROOM_FIELDS, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 5, 2, 4)
         );
     }
@@ -184,7 +186,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "desert_suite", 
             Biomes.DESERT, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -193,7 +195,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_bonito_flakes", 
             Biomes.WOODED_BADLANDS, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -202,7 +204,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "gelato_suite", 
             Biomes.SNOWY_PLAINS, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 3)
         );
     }
@@ -211,7 +213,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_walnut", 
             Biomes.OLD_GROWTH_SPRUCE_TAIGA, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 3)
         );
     }
@@ -220,7 +222,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_kombu_waterspawn", 
             Biomes.LUKEWARM_OCEAN, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -229,7 +231,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_coral_pack_spawn", 
             Biomes.WARM_OCEAN, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 3)
         );
     }
@@ -238,7 +240,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "nether_waste_suite", 
             Biomes.NETHER_WASTES, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 1)
         );
     }
@@ -247,7 +249,7 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_icy_spawn", 
             Biomes.ICE_SPIKES, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 1, 1, 4)
         );
     }
@@ -256,19 +258,19 @@ public class DTNWolfSpawnModifiers {
         registerSingleSpawnModifier(
             ctx, "wolf_savanna_spawn", 
             Biomes.SAVANNA, 
-            new MobSpawnSettings
+            new MobSpawnSettings_1_21_5
                 .SpawnerData(DTNEntityTypes.DTNWOLF.get(), 8, 1, 4)
         );
     }
 
     private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
-        String name, ResourceKey<Biome> biome, MobSpawnSettings.SpawnerData spawner_data) {
+        String name, ResourceKey<Biome> biome, MobSpawnSettings_1_21_5.SpawnerData spawner_data) {
         
         registerSingleSpawnModifier(ctx, name, List.of(biome), spawner_data);
     }
 
     private static void registerSingleSpawnModifier(BootstrapContext<BiomeModifier> ctx,
-        String name, List<ResourceKey<Biome>> biomes, MobSpawnSettings.SpawnerData spawner_data) {
+        String name, List<ResourceKey<Biome>> biomes, MobSpawnSettings_1_21_5.SpawnerData spawner_data) {
         
         var spawn_id = ResourceKey.create(
             NeoForgeRegistries.Keys.BIOME_MODIFIERS, 
@@ -284,7 +286,7 @@ public class DTNWolfSpawnModifiers {
             return;
         var spawn_biomes = HolderSet.direct(biome_holders);
         var spawn_modifier = BiomeModifiers.AddSpawnsBiomeModifier
-            .singleSpawn(spawn_biomes, spawner_data);
+            .singleSpawn(spawn_biomes, new Weighted<MobSpawnSettings.SpawnerData>(new MobSpawnSettings.SpawnerData(spawner_data.type, spawner_data.minCount, spawner_data.maxCount), spawner_data.weight));
         
         ctx.register(spawn_id, spawn_modifier);
     }

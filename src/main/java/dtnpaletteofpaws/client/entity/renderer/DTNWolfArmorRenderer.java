@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import dtnpaletteofpaws.client.ClientSetup;
+import dtnpaletteofpaws.client.backward_imitate.DTNWolfRenderLayer_21_3;
 import dtnpaletteofpaws.client.entity.model.DTNWolfModel;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.util.Util;
@@ -22,12 +23,13 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.Crackiness;
-import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.item.AnimalArmorItem;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
@@ -35,7 +37,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class DTNWolfArmorRenderer extends RenderLayer<DTNWolf, DTNWolfModel> {
+public class DTNWolfArmorRenderer extends DTNWolfRenderLayer_21_3 {
     private static final Map<Crackiness.Level, ResourceLocation> ARMOR_CRACK_LOCATIONS = Map.of(
         Crackiness.Level.LOW,
         Util.getVanillaResource("textures/entity/wolf/wolf_armor_crackiness_low.png"),
@@ -73,40 +75,40 @@ public class DTNWolfArmorRenderer extends RenderLayer<DTNWolf, DTNWolfModel> {
         renderWolfArmorLayerCracks(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getLeft());
     }
 
-    private Optional<Pair<ItemStack, AnimalArmorItem>> getWolfArmorItem(DTNWolf dog) {
+    private Optional<Pair<ItemStack, Item>> getWolfArmorItem(DTNWolf dog) {
         var wolf_armor_stack = dog.getBodyArmorItem();
-        if (!(wolf_armor_stack.getItem() instanceof AnimalArmorItem wolfArmorItem))
+        if (!(isWolfArmor_1_21_5(wolf_armor_stack)))
             return Optional.empty();
-        if (wolfArmorItem.getBodyType() != AnimalArmorItem.BodyType.CANINE)
-            return Optional.empty();
-        return Optional.of(Pair.of(wolf_armor_stack, wolfArmorItem));
+        // if (wolfArmorItem.getBodyType() != AnimalArmorItem.BodyType.CANINE)
+        //     return Optional.empty();
+        return Optional.of(Pair.of(wolf_armor_stack, wolf_armor_stack.getItem()));
     }
 
-    private void renderWolfArmorLayerMain(DTNWolfModel model, PoseStack poseStack, MultiBufferSource buffer, int light, AnimalArmorItem item) {
-        var vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(item.getTexture()));
+    private void renderWolfArmorLayerMain(DTNWolfModel model, PoseStack poseStack, MultiBufferSource buffer, int light, Item item) {
+        var vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(WOLF_ARMOR_MAIN_21_3));
         model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 
     private void renderWolfArmorLayerDyed(DTNWolfModel model, PoseStack stack, MultiBufferSource buffer, int light, 
-        ItemStack itemStack, AnimalArmorItem item) {
+        ItemStack itemStack, Item item) {
         if (item != Items.WOLF_ARMOR)
             return;
         int i = DyedItemColor.getOrDefault(itemStack, 0);
-        if (FastColor.ARGB32.alpha(i) == 0)
+        if (ARGB.alpha(i) == 0)
             return;
 
-        var armor_overlay = item.getOverlayTexture();
+        var armor_overlay = WOLF_ARMOR_DYE_21_3;
         if (armor_overlay == null)
             return;
             
-        float r = (float)FastColor.ARGB32.red(i) / 255.0F;
-        float g = (float)FastColor.ARGB32.green(i) / 255.0F;
-        float b = (float)FastColor.ARGB32.blue(i) / 255.0F;
+        float r = (float)ARGB.red(i) / 255.0F;
+        float g = (float)ARGB.green(i) / 255.0F;
+        float b = (float)ARGB.blue(i) / 255.0F;
         
         model
             .renderToBuffer(
                 stack, buffer.getBuffer(RenderType.entityCutoutNoCull(armor_overlay)), light, 
-                OverlayTexture.NO_OVERLAY, FastColor.ARGB32.colorFromFloat(1, r, g, b)
+                OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, r, g, b)
             );
     }
 
@@ -119,5 +121,22 @@ public class DTNWolfArmorRenderer extends RenderLayer<DTNWolf, DTNWolfModel> {
         var vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(crack_rl));
         model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
+
+
+
+    //1.21.5+
+    public static boolean isWolfArmor_1_21_5(ItemStack stack) {
+        var slot = Optional.ofNullable(
+            stack.get(DataComponents.EQUIPPABLE))
+            .map(x -> x.slot()).orElse(null);
+            
+        if (slot == null)
+            return false;
+        return slot.getType() == EquipmentSlot.Type.ANIMAL_ARMOR;
+    }
+
+    private static final ResourceLocation WOLF_ARMOR_MAIN_21_3 = Util.getVanillaResource("textures/entity/wolf/wolf_armor.png");
+    private static final ResourceLocation WOLF_ARMOR_DYE_21_3 = Util.getVanillaResource("textures/entity/wolf/wolf_armor_overlay.png");
+
     
 }
