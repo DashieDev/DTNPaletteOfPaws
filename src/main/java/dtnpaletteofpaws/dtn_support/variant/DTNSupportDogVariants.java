@@ -45,6 +45,7 @@ public class DTNSupportDogVariants {
     public static final Supplier<DogVariant> BRINDLE = register("brindle", 0xff67644e);
     public static final Supplier<DogVariant> SOOTY = register("sooty", 0xff151615);
     public static final Supplier<DogVariant> ROOT_BEER = register("root_beer", 0xff423a36);
+    public static final Supplier<DogVariant> CAKE = register("cake", 0xff753510);
 
     private static Supplier<DogVariant> registerSwimmer(String name, int guiColor) {
         return DOG_VARIANT.register(name, () -> new SwimmerDogVariant(name, guiColor));
