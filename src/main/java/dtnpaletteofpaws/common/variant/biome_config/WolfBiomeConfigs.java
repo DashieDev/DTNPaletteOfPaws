@@ -111,7 +111,8 @@ public class WolfBiomeConfigs {
             .variants(List.of(
                 WolfVariants.CHOCOLATE.get(),
                 WolfVariants.STRAWBERRY.get(),
-                WolfVariants.VANILLA.get()
+                WolfVariants.VANILLA.get(),
+                WolfVariants.CAKE.get()
             ))
             .biome(Biomes.SNOWY_PLAINS)
             .canSpawnInDark()
