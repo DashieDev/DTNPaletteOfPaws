@@ -69,3 +69,7 @@ Muddy
 Brindle
 Root Beer
 Gelato Suite and Yuzu spawn is now rarer (Configurable)
+
+**1.2.8 - 20th April 2025**
+Happy Easter Sunday!
+New wolf variants: Cake 🍰
