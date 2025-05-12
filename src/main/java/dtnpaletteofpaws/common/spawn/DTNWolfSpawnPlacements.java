@@ -62,7 +62,7 @@ public class DTNWolfSpawnPlacements {
         );
     }
 
-    public static boolean DTNWolfSpawnableOn(EntityType<DTNWolf> type, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
+    public static boolean DTNWolfSpawnableOn(WolfBiomeConfig config, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
         var biome = level.getBiome(pos);
         //temp fix for gelato suite, yuzu and desert suite being a bit too common.
         if (DTNPConfig.ServerConfig.getConfigOrDefault(DTNPConfig.SERVER.DTNP_SPAWN_TOO_COMMON_FIX, false) 
@@ -96,37 +96,29 @@ public class DTNWolfSpawnPlacements {
         return false;
     }
 
-    public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, EntityType<?> type) {
-        if (SpawnPlacementTypes.ON_GROUND.isSpawnPositionOk(world, pos, type))
-            return true;
-        if (checkPossibleWaterSpawn(world, pos, type))
-            return true;
-            
-        return false;
+    public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, WolfBiomeConfig config) {
+        if (config.waterSpawn()) {
+            return checkPossibleWaterSpawn(world, pos, config);
+        }
+        return SpawnPlacementTypes.ON_GROUND.isSpawnPositionOk(world, pos, DTNEntityTypes.DTNWOLF.get());
     }
 
-    private static boolean checkPossibleWaterSpawn(LevelReader world, BlockPos pos, EntityType<?> type) {
+    private static boolean checkPossibleWaterSpawn(LevelReader world, BlockPos pos, WolfBiomeConfig config) {
         var state = world.getBlockState(pos);
         if (!state.isAir())
             return false;
         var pos_below = pos.below();
-        var water_spawnable_below = SpawnPlacementTypes.IN_WATER.isSpawnPositionOk(world, pos_below, type);
+        var water_spawnable_below = SpawnPlacementTypes.IN_WATER.isSpawnPositionOk(world, pos_below, DTNEntityTypes.DTNWOLF.get());
         if (!water_spawnable_below)
             return false;
-        var biome = world.getBiome(pos);
-        var configs = WolfVariantUtil.getAllWolfBiomeConfigForBiome(world.registryAccess(), biome)
-            .stream().filter(x -> x.waterSpawn())
-            .collect(Collectors.toList());
-        if (configs.isEmpty())
-            return false;
-        if (checkWaterSpawnRestrictBlock(configs, world, pos))
+        if (checkWaterSpawnRestrictBlock(config, world, pos))
             return false;
 
         return true;
     }
 
-    private static boolean checkWaterSpawnRestrictBlock(List<WolfBiomeConfig> configs, LevelReader world, BlockPos pos) {
-        var restricted_blocks = WolfVariantUtil.getExtraSpawnableBlocksForBiomeConfigs(configs);
+    private static boolean checkWaterSpawnRestrictBlock(WolfBiomeConfig config, LevelReader world, BlockPos pos) {
+        var restricted_blocks = config.blocks();
         if (restricted_blocks.isEmpty())
             return false;
         final int check_y_initial = world.getHeight(Types.OCEAN_FLOOR, pos.getX(), pos.getZ());

@@ -19,7 +19,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 public class DTNWolfSpawnModifiers {
     
     public static void bootstrap(BootstrapContext<BiomeModifier> ctx) {
-        registerWolfModifier(ctx);
+        //registerWolfModifier(ctx);
     }
 
     private static void registerWolfModifier(BootstrapContext<BiomeModifier> ctx) {

@@ -23,6 +23,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -34,14 +35,36 @@ public class WolfBiomeConfig {
     private final Set<Block> extraSpawnableBlocks;
     private final boolean canSpawnInDark;
     private final boolean waterSpawn;
+    private final int minCount;
+    private final int maxCount;
+    private final float spawnChance;
 
-    private WolfBiomeConfig(Set<WolfVariant> variants, HolderSet<Biome> biomes, Set<Block> blocks, boolean canSpawnInDark, boolean waterSpawn) {
+    private WolfBiomeConfig(Set<WolfVariant> variants, HolderSet<Biome> biomes, Set<Block> blocks, boolean canSpawnInDark, boolean waterSpawn, int minCount, int maxCount, float spawnChance) {
         this.variants = variants;
         this.biomes = biomes == null ? HolderSet.direct() : biomes;
         this.extraSpawnableBlocks = blocks == null ? Set.of()
             : Set.copyOf(blocks);
         this.canSpawnInDark = canSpawnInDark;
         this.waterSpawn = waterSpawn;
+        this.minCount = minCount;
+        this.maxCount = maxCount;
+        this.spawnChance = Mth.clamp(spawnChance, 0, 1);
+    }
+
+    public boolean doSpawn() {
+        return this.spawnChance > 0;
+    }
+
+    public int minCount() {
+        return this.minCount;
+    }
+    
+    public int maxCount() {
+        return this.maxCount;
+    }
+
+    public float spawnChance() {
+        return this.spawnChance;
     }
 
     public HolderSet<Biome> biomes() {
@@ -76,6 +99,10 @@ public class WolfBiomeConfig {
         return Optional.of(new ArrayList<>(this.variants));
     }
 
+    public static float defaultSpawnChance() {
+        return 0.01f;
+    }
+
     public static class Builder {
 
         private final BootstrapContext<WolfBiomeConfig> ctx;
@@ -86,6 +113,9 @@ public class WolfBiomeConfig {
         private Set<Block> extraSpawnableBlocks = Set.of();
         private boolean canSpawnInDark = false;
         private boolean waterSpawn = false;
+        private int minCount = 1;
+        private int maxCount = 1;
+        private float spawnChance = 0.1f;
 
         private Builder(BootstrapContext<WolfBiomeConfig> ctx, ResourceKey<WolfBiomeConfig> id) {
             this.ctx = ctx;
@@ -137,8 +167,19 @@ public class WolfBiomeConfig {
             return this;
         }
 
+        public Builder packSize(int minCount, int maxCount) {
+            this.minCount = minCount;
+            this.maxCount = maxCount;
+            return this;
+        }
+
+        public Builder spawnChance(float val) {
+            this.spawnChance = val;
+            return this;
+        }
+
         public WolfBiomeConfig build() {
-            return new WolfBiomeConfig(this.variants, biomes, this.extraSpawnableBlocks, canSpawnInDark, waterSpawn);
+            return new WolfBiomeConfig(this.variants, biomes, this.extraSpawnableBlocks, canSpawnInDark, waterSpawn, this.minCount, this.maxCount, this.spawnChance);
         }
 
         public void buildAndRegister() {
@@ -162,12 +203,12 @@ public class WolfBiomeConfig {
 
     private static WolfBiomeConfig codecDeserializer(Optional<List<WolfVariant>> variants, 
         HolderSet<Biome> biomes, Optional<List<Block>> blocks,
-        boolean canSpawnInDark, boolean waterSpawn) {
+        boolean canSpawnInDark, boolean waterSpawn, int minCount, int maxCount, float spawnChance) {
         
         return new WolfBiomeConfig(
             new HashSet<>(variants.orElse(List.of())), 
             biomes, new HashSet<>(blocks.orElse(List.of())), 
-            canSpawnInDark, waterSpawn);
+            canSpawnInDark, waterSpawn, minCount, maxCount, spawnChance);
     }
 
     public static final Codec<WolfBiomeConfig> CODEC = RecordCodecBuilder.create(
@@ -182,7 +223,13 @@ public class WolfBiomeConfig {
             Codec.BOOL.optionalFieldOf("can_spawn_in_dark", false)
                 .forGetter(WolfBiomeConfig::canSpawnInDark),
             Codec.BOOL.optionalFieldOf("water_spawn", false)
-                .forGetter(WolfBiomeConfig::waterSpawn)
+                .forGetter(WolfBiomeConfig::waterSpawn),
+            Codec.INT.optionalFieldOf("min_count", 1)
+                    .forGetter(WolfBiomeConfig::minCount),
+            Codec.INT.optionalFieldOf("max_count", 1)
+                .forGetter(WolfBiomeConfig::maxCount),
+            Codec.FLOAT.optionalFieldOf("spawn_chance", defaultSpawnChance())
+                .forGetter(WolfBiomeConfig::spawnChance)
         )
         .apply(builder, WolfBiomeConfig::codecDeserializer)
     );

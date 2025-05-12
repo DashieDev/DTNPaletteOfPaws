@@ -2,9 +2,9 @@
   "biomes": "minecraft:snowy_plains",
   "can_spawn_in_dark": true,
   "variants": [
-    "dtnpaletteofpaws:vanilla",
-    "dtnpaletteofpaws:cake",
     "dtnpaletteofpaws:strawberry",
-    "dtnpaletteofpaws:chocolate"
+    "dtnpaletteofpaws:cake",
+    "dtnpaletteofpaws:chocolate",
+    "dtnpaletteofpaws:vanilla"
   ]
 }

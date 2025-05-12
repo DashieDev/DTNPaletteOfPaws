@@ -1,7 +1,9 @@
 package dtnpaletteofpaws.common.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiFunction;
 
@@ -21,6 +23,7 @@ import dtnpaletteofpaws.common.spawn.DTNWolfStaticSpawnManager;
 import dtnpaletteofpaws.common.util.WolfSpawnUtil;
 import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import dtnpaletteofpaws.common.variant.WolfVariant;
+import dtnpaletteofpaws.common.variant.biome_config.WolfBiomeConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -1016,22 +1019,22 @@ public class DTNWolf extends TamableAnimal {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroup) {
         
-        WolfPackData wolf_spawn_group = null;
-        if (spawnGroup instanceof WolfPackData wolf_group) {
-            wolf_spawn_group = wolf_group;
-        } else {
-            wolf_spawn_group = initializeGroupData(levelAccessor, DTNWolfStaticSpawnManager.get().currentSpawnBiome().orElse(null));
-        }
+        // WolfPackData wolf_spawn_group = null;
+        // if (spawnGroup instanceof WolfPackData wolf_group) {
+        //     wolf_spawn_group = wolf_group;
+        // } else {
+        //     wolf_spawn_group = initializeGroupData(levelAccessor, DTNWolfStaticSpawnManager.get().currentSpawnBiome().orElse(null));
+        // }
         
-        WolfVariant variant;
-        if (wolf_spawn_group == null) {
-            variant = WolfVariantUtil.getDefaultForSpawn(this, levelAccessor);
-        } else {
-            variant = wolf_spawn_group.getWolfVariant(this.getRandom());
-        }
+        // WolfVariant variant;
+        // if (wolf_spawn_group == null) {
+        //     variant = WolfVariantUtil.getDefaultForSpawn(this, levelAccessor);
+        // } else {
+        //     variant = wolf_spawn_group.getWolfVariant(this.getRandom());
+        // }
 
-        this.setVariant(variant);
-        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, wolf_spawn_group);
+        // this.setVariant(variant);
+        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnGroup);
     }   
 
     public WolfPackData initializeGroupData(ServerLevelAccessor levelAccessor, @Nullable Holder<Biome> biome) {
@@ -1041,6 +1044,13 @@ public class DTNWolf extends TamableAnimal {
         if (possible_variant.isEmpty())
             return null;
         return new WolfPackData(possible_variant);
+    }
+
+    public WolfPackData initializeGroupData(ServerLevelAccessor levelAccessor, WolfBiomeConfig config) {
+        var variants = config.variants();
+        if (variants.isEmpty())
+            variants = Set.of(WolfVariantUtil.getDefault());
+        return new WolfPackData(new ArrayList<>(variants));
     }
 
     @Override
