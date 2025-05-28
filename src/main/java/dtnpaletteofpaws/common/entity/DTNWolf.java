@@ -10,6 +10,7 @@ import java.util.function.BiFunction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import dtnpaletteofpaws.ChopinLogger;
 import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.DTNRegistries;
 import dtnpaletteofpaws.DTNSerializers;
@@ -1019,21 +1020,22 @@ public class DTNWolf extends TamableAnimal {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroup) {
         
-        // WolfPackData wolf_spawn_group = null;
-        // if (spawnGroup instanceof WolfPackData wolf_group) {
-        //     wolf_spawn_group = wolf_group;
-        // } else {
-        //     wolf_spawn_group = initializeGroupData(levelAccessor, DTNWolfStaticSpawnManager.get().currentSpawnBiome().orElse(null));
-        // }
+        WolfPackData wolf_spawn_group = null;
+        if (spawnGroup instanceof WolfPackData wolf_group) {
+            wolf_spawn_group = wolf_group;
+        } else {
+            wolf_spawn_group = initializeGroupData(levelAccessor, DTNWolfStaticSpawnManager.get().currentSpawnBiome().orElse(null));
+        }
         
-        // WolfVariant variant;
-        // if (wolf_spawn_group == null) {
-        //     variant = WolfVariantUtil.getDefaultForSpawn(this, levelAccessor);
-        // } else {
-        //     variant = wolf_spawn_group.getWolfVariant(this.getRandom());
-        // }
+        WolfVariant variant;
+        if (wolf_spawn_group == null) {
+            variant = WolfVariantUtil.getDefaultForSpawn(this, levelAccessor);
+        } else {
+            variant = wolf_spawn_group.getWolfVariant(this.getRandom());
+        }
 
-        // this.setVariant(variant);
+        this.setVariant(variant);
+        ChopinLogger.l("wolf spawned at " + this.blockPosition() + " variant : " + this.getVariant().id());
         return super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnGroup);
     }   
 

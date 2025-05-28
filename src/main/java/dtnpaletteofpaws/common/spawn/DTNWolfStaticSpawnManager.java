@@ -7,6 +7,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.mutable.Mutable;
 import org.apache.commons.lang3.mutable.MutableObject;
 
+import dtnpaletteofpaws.ChopinLogger;
 import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.util.RandomUtil;
@@ -39,6 +40,7 @@ import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.RandomSupport;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.phys.Vec3;
 
 public class DTNWolfStaticSpawnManager {
     
@@ -57,7 +59,8 @@ public class DTNWolfStaticSpawnManager {
         List<WolfBiomeConfig> configs = null;
         while (random.nextFloat() < spawn_settings.getCreatureProbability()) {
             if (configs == null) {
-                configs = WolfVariantUtil.getAllWolfBiomeConfigForBiome(level_accessor.registryAccess(), biome);
+                configs = WolfVariantUtil.getAllWolfBiomeConfigForBiome(level_accessor.registryAccess(), biome)
+                    .stream().filter(x -> x.doSpawn()).toList();
                 if (configs.isEmpty())
                     break;
             }
@@ -138,8 +141,8 @@ public class DTNWolfStaticSpawnManager {
                 var spawnable_pos = DTNWolfSpawnPlacements.getDTNWolfTopNonCollidingPos(DTNEntityTypes.DTNWOLF.get(), level_accessor, check_x, check_z);
                 if (DTNWolfSpawnPlacements.spawnPlacementTypeCheck(level_accessor, spawnable_pos, config)) {
                     spawned_individual = doSpawnIndividual(level_accessor, config, min_x, min_z, spawnable_pos, spawngroupdata, rand);
-                    if (!spawned_individual)
-                        continue;
+                    // if (!spawned_individual)
+                    //     continue;
                 }
 
                 int check_x0 = check_x;
@@ -159,30 +162,37 @@ public class DTNWolfStaticSpawnManager {
 
     private static boolean doSpawnIndividual(ServerLevelAccessor level_accessor, WolfBiomeConfig config,
         int min_x, int min_z, BlockPos check_pos, Mutable<SpawnGroupData> spawn_group_mut, RandomSource rand) {
-        float entity_width = wolfType().getWidth();
-        int check_x = check_pos.getX();
-        int check_z = check_pos.getZ();
+            
+        double spawn_x = check_pos.getX() + 0.5f;
+        double spawn_z = check_pos.getZ() + 0.5f;
                     
         //Clamp so that Bb always fit inside chunk
-        double check_x_fit = Mth.clamp(check_x, min_x + entity_width, min_x + 16.0 - entity_width);
-        double check_z_fit = Mth.clamp(check_z, min_z + entity_width, min_z + 16.0 - entity_width);
-        check_pos = BlockPos.containing(check_x_fit, (double)check_pos.getY(), check_z_fit);
+        float entity_width = wolfType().getWidth();
+        spawn_x = Mth.clamp(spawn_x, min_x + entity_width, min_x + 16.0 - entity_width);
+        spawn_z = Mth.clamp(spawn_z, min_z + entity_width, min_z + 16.0 - entity_width);
+        check_pos = BlockPos.containing(spawn_x, check_pos.getY(), spawn_z);
 
-        var spawn_aabb = wolfType().getSpawnAABB(check_x_fit, (double)check_pos.getY(), check_z_fit);
+        var spawn_aabb = wolfType().getSpawnAABB(spawn_x, (double)check_pos.getY(), spawn_z);
         boolean no_collision_at_pos = level_accessor.noCollision(spawn_aabb);
         if (!no_collision_at_pos) {
+            
+            ChopinLogger.l("DTNP Spawn failed at collision : " + new Vec3(spawn_x, check_pos.getY(), spawn_z) );
             return false;
         }
         
         boolean spawn_rule_check = DTNWolfSpawnPlacements.DTNWolfSpawnableOn(config, level_accessor, MobSpawnType.CHUNK_GENERATION, check_pos, level_accessor.getRandom());
-        if (!spawn_rule_check)
+        if (!spawn_rule_check) {
+            ChopinLogger.l("DTNP Spawn failed at check spawn rule : " + new Vec3(spawn_x, check_pos.getY(), spawn_z) );
             return false;
+        }
+            
 
         Entity spawned_entity;
         try {
             spawned_entity = wolfType().create(level_accessor.getLevel());
         } catch (Exception exception) {
             //LOGGER.warn("Failed to create mob", (Throwable)exception);
+            ChopinLogger.l("DTNP Spawn failed at (1)");
             return false;
         }
 
@@ -190,7 +200,7 @@ public class DTNWolfStaticSpawnManager {
             return false;
         }
 
-        spawned_entity.moveTo(check_x_fit, (double)check_pos.getY(), check_z_fit, rand.nextFloat() * 360.0F, 0.0F);
+        spawned_entity.moveTo(spawn_x, check_pos.getY(), spawn_z, rand.nextFloat() * 360.0F, 0.0F);
         if (spawned_entity instanceof DTNWolf wolf
             && net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(wolf, level_accessor, MobSpawnType.CHUNK_GENERATION)) {
             var spawn_group0 = spawn_group_mut.getValue();
@@ -203,6 +213,7 @@ public class DTNWolfStaticSpawnManager {
             level_accessor.addFreshEntityWithPassengers(wolf);
             return true;
         }
+        ChopinLogger.l("DTNP Spawn failed at (2)");
         return false;
     }
 

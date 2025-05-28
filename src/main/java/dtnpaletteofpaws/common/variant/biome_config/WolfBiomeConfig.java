@@ -115,7 +115,7 @@ public class WolfBiomeConfig {
         private boolean waterSpawn = false;
         private int minCount = 1;
         private int maxCount = 1;
-        private float spawnChance = 0.1f;
+        private float spawnChance = 0f;
 
         private Builder(BootstrapContext<WolfBiomeConfig> ctx, ResourceKey<WolfBiomeConfig> id) {
             this.ctx = ctx;
@@ -183,6 +183,9 @@ public class WolfBiomeConfig {
         }
 
         public void buildAndRegister() {
+            if (this.variants.isEmpty())
+                throw new IllegalStateException(String.format("Attempting to register a config that has no Wolf Variants: %s", 
+                    this.id.location().toString()));
             ctx.register(id, build());
         }
     }

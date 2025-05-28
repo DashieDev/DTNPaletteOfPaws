@@ -147,14 +147,4 @@ public class DTNWolfSpawnPlacements {
         return check_pos;
     }
 
-    private static boolean makeCommonDTNPSpawnBiomeRarer(Holder<Biome> biome, RandomSource random) {
-        boolean too_common_biome = 
-            biome.is(Biomes.SNOWY_BEACH) || biome.is(Biomes.SNOWY_PLAINS)
-            || biome.is(Biomes.DESERT);
-        if (too_common_biome && random.nextInt(3) != 0)
-            return true;
-        
-        return false;
-    }
-
 }
