@@ -26,6 +26,7 @@ import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
@@ -35,65 +36,41 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
 public class DTNWolfSpawnPlacements {
-    
-    // public static final SpawnPlacements.Type DTN_WOLF_SPAWN_TYPE
-    //     = SpawnPlacements.Type.create(Constants.MOD_ID + "_DTN_WOLF_SPAWN_TYPE", 
-    //     DTNWolfSpawnPlacements::spawnPlacementTypeCheck);
-    //1.21+
-    public static final SpawnPlacementType DTN_WOLF_SPAWN_TYPE
-        = new SpawnPlacementType() {
-
-            @Override
-            public boolean isSpawnPositionOk(LevelReader level, BlockPos pos,
-                    @Nullable EntityType<?> type) {
-                return spawnPlacementTypeCheck(level, pos, type);
-            }
-            
-        };
-       
-    //
 
     public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         event.register(
-            DTNEntityTypes.DTNWOLF.get(), DTN_WOLF_SPAWN_TYPE,
+            DTNEntityTypes.DTNWOLF.get(), SpawnPlacementTypes.ON_GROUND,
             Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-            DTNWolfSpawnPlacements::DTNWolfSpawnableOn,
+            DTNWolfSpawnPlacements::DTNWolfSpawnableOnDefault,
             RegisterSpawnPlacementsEvent.Operation.OR
         );
     }
 
-    public static boolean DTNWolfSpawnableOn(WolfBiomeConfig config, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
-        var biome = level.getBiome(pos);
-        //temp fix for gelato suite, yuzu and desert suite being a bit too common.
-        if (DTNPConfig.ServerConfig.getConfigOrDefault(DTNPConfig.SERVER.DTNP_SPAWN_TOO_COMMON_FIX, false) 
-            && makeCommonDTNPSpawnBiomeRarer(biome, random))
-            return false;
+    public static boolean DTNWolfSpawnableOnDefault(EntityType<DTNWolf> type, ServerLevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
+        var state_below = level.getBlockState(pos.below());
+        return DTNWolf.checkWolfSpawnableBlockDefault(level, pos, state_below)
+            && DTNWolf.checkWolfSpawnableLight(level, pos);
+    }
 
-        var configs = WolfVariantUtil.getAllWolfBiomeConfigForBiome(level.registryAccess(), biome);
+    public static boolean DTNWolfSpawnableOn(WolfBiomeConfig config, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
         boolean block_is_spawnable =
-            checkWolfSpawnableBlock(level, pos, configs);
+            checkWolfSpawnableBlock(level, pos, config);
         if (!block_is_spawnable)
             return false;
         boolean light_condition =
-            WolfVariantUtil.checkCanSpawnInTheDarkForConfigs(configs)
+            config.canSpawnInDark()
             || DTNWolf.checkWolfSpawnableLight(level, pos);
         if (!light_condition)
             return false;
         return true;
     }
 
-    public static boolean checkWolfSpawnableBlock(LevelAccessor level, BlockPos pos, List<WolfBiomeConfig> configs) {
-        if (checkBasedOnExtraSpawnableBlocksForBiomes(level, pos, configs))
-            return true;
-        return DTNWolf.checkWolfSpawnableBlockDefault(level, pos);
-    }
-
-    public static boolean checkBasedOnExtraSpawnableBlocksForBiomes(LevelAccessor level, BlockPos pos, List<WolfBiomeConfig> configs) {
+    public static boolean checkWolfSpawnableBlock(LevelAccessor level, BlockPos pos, WolfBiomeConfig config) {
+        var blocks = config.blocks();
         var state_below = level.getBlockState(pos.below());
-        var extra_block_set = WolfVariantUtil.getExtraSpawnableBlocksForBiomeConfigs(configs);
-        if (extra_block_set.contains(state_below.getBlock()))
-            return true;
-        return false;
+        var block_below = state_below.getBlock();
+        return blocks.contains(block_below)
+            || DTNWolf.checkWolfSpawnableBlockDefault(level, pos, state_below);
     }
 
     public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, WolfBiomeConfig config) {

@@ -1058,8 +1058,8 @@ public class DTNWolf extends TamableAnimal {
         return 8;
     }
     
-    public static boolean checkWolfSpawnableBlockDefault(LevelAccessor level, BlockPos pos) {
-        return level.getBlockState(pos.below()).is(BlockTags.WOLVES_SPAWNABLE_ON);
+    public static boolean checkWolfSpawnableBlockDefault(LevelAccessor level, BlockPos pos, BlockState state_below) {
+        return state_below.is(BlockTags.WOLVES_SPAWNABLE_ON);
     }
 
     public static boolean checkWolfSpawnableLight(LevelAccessor level, BlockPos pos) {
@@ -1068,10 +1068,7 @@ public class DTNWolf extends TamableAnimal {
 
     @Override
     public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawn_type) {
-        if (WolfSpawnUtil.isNetherOrEndSpawn(level))
-            return true;
-
-        return super.checkSpawnRules(level, spawn_type);
+        return true;
     }
 
     public static class WolfPackData extends AgeableMob.AgeableMobGroupData {

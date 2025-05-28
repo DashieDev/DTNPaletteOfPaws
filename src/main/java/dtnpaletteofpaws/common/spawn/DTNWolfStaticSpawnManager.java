@@ -118,14 +118,7 @@ public class DTNWolfStaticSpawnManager {
 
     public static void spawnDTNWOlfForChunkGeneration(ServerLevelAccessor level_accessor, Holder<Biome> biome, 
         ChunkPos chunk_pos, RandomSource rand, float biome_chance) {
-        
-        var variants = WolfVariantUtil.getAllWolfBiomeConfigForBiome(level_accessor.registryAccess(), biome);
-        if (variants.isEmpty())
-            return;
-
-        while (rand.nextFloat() < biome_chance) {
-            doChunkGeneratedSpawnIteration(level_accessor, biome, chunk_pos, rand);
-        }
+        get().onChunkGenerationMobSpawn(level_accessor, biome, chunk_pos, rand);
     }
 
     private static void doChunkGeneratedSpawnIteration(ServerLevelAccessor level_accessor, Holder<Biome> biome, 
