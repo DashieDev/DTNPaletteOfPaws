@@ -100,7 +100,7 @@ public class WolfBiomeConfig {
     }
 
     public static float defaultSpawnChance() {
-        return 0.01f;
+        return 0;
     }
 
     public static class Builder {

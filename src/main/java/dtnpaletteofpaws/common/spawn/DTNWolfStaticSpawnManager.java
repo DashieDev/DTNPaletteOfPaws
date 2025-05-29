@@ -52,12 +52,16 @@ public class DTNWolfStaticSpawnManager {
     }
 
     public void onChunkGenerationMobSpawn(ServerLevelAccessor level_accessor, Holder<Biome> biome, ChunkPos chunk_pos, RandomSource random) {
+        var spawn_settings = biome.value().getMobSettings();
+        var biome_chance = spawn_settings.getCreatureProbability();
+        onChunkGenerationMobSpawn(level_accessor, biome, chunk_pos, random, biome_chance);
+    }
+
+    public void onChunkGenerationMobSpawn(ServerLevelAccessor level_accessor, Holder<Biome> biome, ChunkPos chunk_pos, RandomSource random, float biome_chance) {
         //do DTNP wolf spawn here to avoid getBioemAagain
         //currentSpawnBiome.set(biome);
-        
-        var spawn_settings = biome.value().getMobSettings();
         List<WolfBiomeConfig> configs = null;
-        while (random.nextFloat() < spawn_settings.getCreatureProbability()) {
+        while (random.nextFloat() < biome_chance) {
             if (configs == null) {
                 configs = WolfVariantUtil.getAllWolfBiomeConfigForBiome(level_accessor.registryAccess(), biome)
                     .stream().filter(x -> x.doSpawn()).toList();
@@ -121,7 +125,7 @@ public class DTNWolfStaticSpawnManager {
 
     public static void spawnDTNWOlfForChunkGeneration(ServerLevelAccessor level_accessor, Holder<Biome> biome, 
         ChunkPos chunk_pos, RandomSource rand, float biome_chance) {
-        get().onChunkGenerationMobSpawn(level_accessor, biome, chunk_pos, rand);
+        get().onChunkGenerationMobSpawn(level_accessor, biome, chunk_pos, rand, biome_chance);
     }
 
     private static void doChunkGeneratedSpawnIteration(ServerLevelAccessor level_accessor, Holder<Biome> biome, 
