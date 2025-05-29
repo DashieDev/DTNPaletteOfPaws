@@ -68,6 +68,7 @@ public class WolfVariantUtil {
     }
 
     public static List<WolfBiomeConfig> getAllWolfBiomeConfigForBiome(RegistryAccess prov, Holder<Biome> biome) {
+        //Optimize this to use a Map
         var biome_config_reg = prov.registryOrThrow(WolfBiomeConfigs.regKey());
         var filtered_config = biome_config_reg.holders()
             .filter(filter_config -> filter_config
@@ -75,25 +76,6 @@ public class WolfVariantUtil {
             .map(x -> x.value())
             .collect(Collectors.toList());
         return filtered_config;
-    }
-
-    public static Set<Block> getExtraSpawnableBlocksForBiomeConfigs(List<WolfBiomeConfig> configs) {
-        var spawnable_block_set = new HashSet<Block>();
-        for (var config : configs) {
-            var block_list = config.blocks();
-            spawnable_block_set.addAll(block_list);
-            if (config.waterSpawn())
-                spawnable_block_set.add(Blocks.WATER);
-        }
-        return spawnable_block_set;
-    }
-
-    public static boolean checkCanSpawnInTheDarkForConfigs(List<WolfBiomeConfig> configs) {
-        for (var config : configs) {
-            if (config.canSpawnInDark())
-                return true;
-        }
-        return false;
     }
 
     public static List<WolfVariant> getPossibleSpawnVariants(RandomSource random, RegistryAccess prov, Holder<Biome> biome) {
