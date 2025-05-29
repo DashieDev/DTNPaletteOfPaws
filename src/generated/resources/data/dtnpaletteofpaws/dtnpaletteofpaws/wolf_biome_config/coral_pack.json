@@ -2,17 +2,19 @@
   "biomes": "minecraft:warm_ocean",
   "blocks": [
     "minecraft:brain_coral_block",
-    "minecraft:bubble_coral_block",
     "minecraft:fire_coral_block",
-    "minecraft:tube_coral_block",
-    "minecraft:horn_coral_block"
+    "minecraft:horn_coral_block",
+    "minecraft:bubble_coral_block",
+    "minecraft:tube_coral_block"
   ],
   "can_spawn_in_dark": true,
+  "max_count": 3,
+  "spawn_chance": 0.9,
   "variants": [
-    "dtnpaletteofpaws:coral_tube",
     "dtnpaletteofpaws:coral_fire",
-    "dtnpaletteofpaws:coral_horn",
     "dtnpaletteofpaws:coral_brain",
+    "dtnpaletteofpaws:coral_tube",
+    "dtnpaletteofpaws:coral_horn",
     "dtnpaletteofpaws:coral_bubble"
   ],
   "water_spawn": true
