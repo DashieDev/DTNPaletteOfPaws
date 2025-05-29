@@ -1,7 +1,9 @@
 package dtnpaletteofpaws.common.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiFunction;
 
@@ -21,6 +23,7 @@ import dtnpaletteofpaws.common.spawn.DTNWolfStaticSpawnManager;
 import dtnpaletteofpaws.common.util.WolfSpawnUtil;
 import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import dtnpaletteofpaws.common.variant.WolfVariant;
+import dtnpaletteofpaws.common.variant.biome_config.WolfBiomeConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -1031,6 +1034,7 @@ public class DTNWolf extends TamableAnimal {
         }
 
         this.setVariant(variant);
+        //ChopinLogger.l("wolf spawned at " + this.blockPosition() + " variant : " + this.getVariant().id());
         return super.finalizeSpawn(levelAccessor, difficulty, spawnType, wolf_spawn_group);
     }   
 
@@ -1043,13 +1047,20 @@ public class DTNWolf extends TamableAnimal {
         return new WolfPackData(possible_variant);
     }
 
+    public WolfPackData initializeGroupData(ServerLevelAccessor levelAccessor, WolfBiomeConfig config) {
+        var variants = config.variants();
+        if (variants.isEmpty())
+            variants = Set.of(WolfVariantUtil.getDefault());
+        return new WolfPackData(new ArrayList<>(variants));
+    }
+
     @Override
     public int getMaxSpawnClusterSize() {
         return 8;
     }
     
-    public static boolean checkWolfSpawnableBlockDefault(LevelAccessor level, BlockPos pos) {
-        return level.getBlockState(pos.below()).is(BlockTags.WOLVES_SPAWNABLE_ON);
+    public static boolean checkWolfSpawnableBlockDefault(LevelAccessor level, BlockPos pos, BlockState state_below) {
+        return state_below.is(BlockTags.WOLVES_SPAWNABLE_ON);
     }
 
     public static boolean checkWolfSpawnableLight(LevelAccessor level, BlockPos pos) {
@@ -1058,10 +1069,10 @@ public class DTNWolf extends TamableAnimal {
 
     @Override
     public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawn_type) {
-        if (WolfSpawnUtil.isNetherOrEndSpawn(level))
-            return true;
-
-        return super.checkSpawnRules(level, spawn_type);
+        //We don't use super's CheckSpawnRules for now as light check is already being done
+        //before this entity is created and there is no need to checkSpawnRules with respect 
+        //to a DTNWOlf instance.
+        return true;
     }
 
     public static class WolfPackData extends AgeableMob.AgeableMobGroupData {
