@@ -1,8 +1,0 @@
-{
-  "biomes": "minecraft:bamboo_jungle",
-  "max_count": 3,
-  "spawn_chance": 0.26,
-  "variants": [
-    "dtnpaletteofpaws:bamboo"
-  ]
-}
