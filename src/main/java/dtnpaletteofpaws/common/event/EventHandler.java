@@ -1,6 +1,7 @@
 package dtnpaletteofpaws.common.event;
 
 import dtnpaletteofpaws.common.entity.DTNWolf;
+import dtnpaletteofpaws.common.spawn.DTNWolfStaticSpawnManager;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Wolf;
@@ -21,6 +22,16 @@ public class EventHandler {
             AbstractSkeleton skeleton = (AbstractSkeleton) entity;
             skeleton.goalSelector.addGoal(3, new AvoidEntityGoal<>(skeleton, DTNWolf.class, 6.0F, 1.0D, 1.2D)); // Same goal as in AbstractSkeletonEntity
         }
+    }
+
+    @SubscribeEvent
+    public void onServerAboutToStart(final ServerAboutToStartEvent event) {
+        DTNWolfStaticSpawnManager.onServerStarting(event.getServer());
+    }
+
+    @SubscribeEvent
+    public void onServerStopped(final ServerStoppedEvent event) {
+        DTNWolfStaticSpawnManager.onServerStopped();
     }
 
 }
