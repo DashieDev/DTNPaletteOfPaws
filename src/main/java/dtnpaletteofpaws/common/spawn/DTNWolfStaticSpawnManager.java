@@ -1,11 +1,16 @@
 package dtnpaletteofpaws.common.spawn;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.mutable.Mutable;
 import org.apache.commons.lang3.mutable.MutableObject;
+
+import com.google.common.collect.ImmutableMap;
 
 import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.common.backward_imitate.MobSpawnSettings_1_21_5;
@@ -14,10 +19,12 @@ import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.util.RandomUtil;
 import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import dtnpaletteofpaws.common.variant.biome_config.WolfBiomeConfig;
+import dtnpaletteofpaws.common.variant.biome_config.WolfBiomeConfigs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -44,6 +51,8 @@ public class DTNWolfStaticSpawnManager {
     private static final DTNWolfStaticSpawnManager instance = new DTNWolfStaticSpawnManager();  
     private static final ThreadLocal<Holder<Biome>> currentSpawnBiome = new ThreadLocal<>();
 
+    private static Map<ResourceKey<Biome>, List<WolfBiomeConfig>> configByBiome = ImmutableMap.of();
+
     public static DTNWolfStaticSpawnManager get() {
         return instance;
     }
@@ -60,8 +69,7 @@ public class DTNWolfStaticSpawnManager {
         List<WolfBiomeConfig> configs = null;
         while (random.nextFloat() < biome_chance) {
             if (configs == null) {
-                configs = WolfVariantUtil.getAllWolfBiomeConfigForBiome(level_accessor.registryAccess(), biome)
-                    .stream().filter(x -> x.doSpawn()).toList();
+                configs = configByBiome.getOrDefault(biome.getKey(), List.of());
                 if (configs.isEmpty())
                     break;
             }
@@ -226,6 +234,39 @@ public class DTNWolfStaticSpawnManager {
 
     private static EntityType<DTNWolf> wolfType() {
         return DTNEntityTypes.DTNWOLF.get();
+    }
+
+    private static void initConfigCache(HolderLookup.Provider prov) {
+        var new_map = new HashMap
+            <ResourceKey<Biome>, List<WolfBiomeConfig>>();
+        var config_reg = prov.lookupOrThrow(WolfBiomeConfigs.regKey());
+        config_reg.listElements().forEach(config_holder -> {
+            var config = config_holder.value();
+            if (!config.doSpawn())
+                return;
+            for (var biome : config.biomes()) {
+                new_map.computeIfAbsent(biome.getKey(), key -> new ArrayList<>())
+                    .add(config);
+            }
+        });
+        var builder = ImmutableMap
+            .<ResourceKey<Biome>, List<WolfBiomeConfig>>builder();
+        for (var entry : new_map.entrySet()) {
+            builder.put(entry.getKey(), List.copyOf(entry.getValue()));
+        }
+        configByBiome = builder.build();
+    }
+
+    private static void invalidateConifgCache() {
+        configByBiome = ImmutableMap.of();
+    }
+
+    public static void onServerStarting(MinecraftServer server) {
+        initConfigCache(server.registryAccess());
+    }
+
+    public static void onServerStopped() {
+        invalidateConifgCache();
     }
 
 }
