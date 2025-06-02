@@ -24,7 +24,8 @@ import net.minecraft.world.level.block.Blocks;
 
 public class WolfBiomeConfigs {
     
-    public static void bootstrap(BootstrapContext<WolfBiomeConfig> ctx) {
+    public static void bootstrap(BootstrapContext<WolfBiomeConfig> bootstrap_ctx) {
+        var ctx = WolfBiomeConfig.wrapOutput(bootstrap_ctx);
         WolfBiomeConfig.builder(ctx, WolfVariants.CHERRY)
             .biome(Biomes.CHERRY_GROVE)
             .spawnChance(0.17f)

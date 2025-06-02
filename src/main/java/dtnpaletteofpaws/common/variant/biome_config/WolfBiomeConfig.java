@@ -199,7 +199,7 @@ public class WolfBiomeConfig {
 
     }
 
-    public static final Builder builder(BootstrapContext<WolfBiomeConfig> ctx, ResourceKey<WolfBiomeConfig> id) {
+    public static WolfBiomeConfig.Output wrapOutput(BootstrapContext<WolfBiomeConfig> ctx) {
         var wrapped = new WolfBiomeConfig.Output() {
 
             @Override
@@ -213,21 +213,25 @@ public class WolfBiomeConfig {
             }
             
         };
-        return new Builder(wrapped, id);
+        return wrapped;
     }
 
-    public static final Builder builder(BootstrapContext<WolfBiomeConfig> ctx, ResourceLocation id) { 
-        return builder(ctx, ResourceKey.create(WolfBiomeConfigs.regKey(), id)); 
+    public static Builder builder(WolfBiomeConfig.Output output, ResourceKey<WolfBiomeConfig> id) {
+        return new Builder(output, id);
     }
 
-    public static final Builder builder(BootstrapContext<WolfBiomeConfig> ctx, Supplier<WolfVariant> variant_sup) {
+    public static Builder builder(WolfBiomeConfig.Output output, ResourceLocation id) { 
+        return builder(output, ResourceKey.create(WolfBiomeConfigs.regKey(), id)); 
+    }
+
+    public static Builder builder(WolfBiomeConfig.Output output, Supplier<WolfVariant> variant_sup) {
         var variant = variant_sup.get();
         var variant_reg = DTNRegistries.DTN_WOLF_VARIANT.get();
         var wolf_variant_id = variant_reg.getKey(variant);
         if (wolf_variant_id == null)
             throw new IllegalStateException("unregistered wolf variant");
         var res_key = ResourceKey.create(WolfBiomeConfigs.regKey(), wolf_variant_id);
-        return builder(ctx, res_key).variants(List.of(variant));
+        return builder(output, res_key).variants(List.of(variant));
     }
 
     private static WolfBiomeConfig codecDeserializer(Optional<List<WolfVariant>> variants, 
