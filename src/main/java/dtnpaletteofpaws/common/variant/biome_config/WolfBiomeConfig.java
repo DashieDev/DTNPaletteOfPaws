@@ -1,6 +1,7 @@
 package dtnpaletteofpaws.common.variant.biome_config;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -122,38 +123,41 @@ public class WolfBiomeConfig {
             this.id = id;
         }
 
-        public Builder variants(List<WolfVariant> variant_list) {
-            this.variants = new HashSet<>(variant_list);
+        public Builder variant(WolfVariant... variants) {
+            if (variants.length <= 0)
+                throw new IllegalArgumentException("variants cannot be empty!");
+            this.variants = new HashSet<>(Arrays.asList(variants));
             return this;
         }
 
-        public Builder biome(ResourceKey<Biome> biome) {
-            return biomes(List.of(biome));
+        @SafeVarargs
+        public final Builder variant(Supplier<WolfVariant>... variants) {
+            return variant(Arrays.stream(variants)
+                .map(x -> x.get())
+                .toArray(WolfVariant[]::new));
         }
         
-        public Builder biomes(List<ResourceKey<Biome>> biomes) {
+        @SafeVarargs
+        public final Builder biome(ResourceKey<Biome>... biomes) {
+            if (biomes.length <= 0)
+                throw new IllegalArgumentException("biomes cannot be empty!");
             var biome_reg = this.ctx.lookup(Registries.BIOME);
-            var biome_holders_list = biomes.stream()
+            var biome_holders_list = Arrays.stream(biomes)
                 .map(x -> biome_reg.get(x))
                 .filter(x -> x.isPresent())
                 .map(x -> x.get())
                 .collect(Collectors.toList());
             var biome_holder_set = HolderSet.direct(biome_holders_list);
-            return biomes(biome_holder_set);
+            return biome(biome_holder_set);
         }
 
-        public Builder biomes(HolderSet<Biome> biome_set) {
+        public Builder biome(HolderSet<Biome> biome_set) {
             this.biomes = biome_set;
             return this;
         }
 
-        public Builder extraSpawnableBlocks(List<Block> blocks) {
-            this.extraSpawnableBlocks = new HashSet<>(blocks);
-            return this;
-        }
-
-        public Builder extraSpawnableBlock(Block block) {
-            extraSpawnableBlocks(List.of(block));
+        public Builder extraSpawnableBlock(Block... blocks) {
+            this.extraSpawnableBlocks = new HashSet<>(Arrays.asList(blocks));
             return this;
         }
 
@@ -201,7 +205,7 @@ public class WolfBiomeConfig {
         if (wolf_variant_id == null)
             throw new IllegalStateException("unregistered wolf variant");
         var res_key = ResourceKey.create(WolfBiomeConfigs.regKey(), wolf_variant_id);
-        return new Builder(ctx, res_key).variants(List.of(variant));
+        return new Builder(ctx, res_key).variant(variant);
     }
 
     private static WolfBiomeConfig codecDeserializer(Optional<List<WolfVariant>> variants, 

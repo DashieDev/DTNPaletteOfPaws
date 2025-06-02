@@ -1,24 +1,12 @@
 package dtnpaletteofpaws.common.variant.biome_config;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-
 import dtnpaletteofpaws.DTNRegistries;
 import dtnpaletteofpaws.WolfVariants;
 import dtnpaletteofpaws.common.util.Util;
-import dtnpaletteofpaws.common.variant.WolfVariant;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 public class WolfBiomeConfigs {
@@ -38,13 +26,13 @@ public class WolfBiomeConfigs {
             .spawnChance(0.17f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("wolf_bamboo_bamboo"))
-            .variants(List.of(WolfVariants.BAMBOO.get()))
+            .variant(WolfVariants.BAMBOO)
             .biome(Biomes.BAMBOO_JUNGLE)
             .packSize(1, 3)
             .spawnChance(0.26f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("wolf_bamboo_jungle"))
-            .variants(List.of(WolfVariants.BAMBOO.get()))
+            .variant(WolfVariants.BAMBOO)
             .biome(Biomes.JUNGLE)
             .packSize(1, 3)
             .spawnChance(0.01f)
@@ -87,12 +75,12 @@ public class WolfBiomeConfigs {
             .spawnChance(0.3f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("caffeine_pack_config"))
-            .variants(List.of(
-                WolfVariants.CAPPUCCINO.get(),
-                WolfVariants.LATTE.get(),
-                WolfVariants.MOCHA.get(),
-                WolfVariants.ESPRESSO.get()
-            ))
+            .variant(
+                WolfVariants.CAPPUCCINO,
+                WolfVariants.LATTE,
+                WolfVariants.MOCHA,
+                WolfVariants.ESPRESSO
+            )
             .biome(Biomes.DARK_FOREST)
             .canSpawnInDark()
             .packSize(1, 4)
@@ -100,15 +88,12 @@ public class WolfBiomeConfigs {
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.WITHERED_SOUL)
             .biome(Biomes.SOUL_SAND_VALLEY)
-            .extraSpawnableBlocks(List.of(Blocks.SOUL_SAND, Blocks.SOUL_SOIL))
+            .extraSpawnableBlock(Blocks.SOUL_SAND, Blocks.SOUL_SOIL)
             .canSpawnInDark()
             .spawnChance(0.02f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("mushroom_pack_config"))
-            .variants(List.of(
-                WolfVariants.MUSHROOM_BROWN.get(),
-                WolfVariants.MUSHROOM_RED.get()
-            ))
+            .variant(WolfVariants.MUSHROOM_BROWN, WolfVariants.MUSHROOM_RED)
             .biome(Biomes.MUSHROOM_FIELDS)
             .extraSpawnableBlock(Blocks.MYCELIUM)
             .canSpawnInDark()
@@ -137,12 +122,12 @@ public class WolfBiomeConfigs {
             .spawnChance(0.05f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("gelato_suite"))
-            .variants(List.of(
-                WolfVariants.CHOCOLATE.get(),
-                WolfVariants.STRAWBERRY.get(),
-                WolfVariants.VANILLA.get(),
-                WolfVariants.CAKE.get()
-            ))
+            .variant(
+                WolfVariants.CHOCOLATE,
+                WolfVariants.STRAWBERRY,
+                WolfVariants.VANILLA,
+                WolfVariants.CAKE
+            )
             .biome(Biomes.SNOWY_PLAINS)
             .canSpawnInDark()
             .packSize(1, 3)
@@ -154,31 +139,31 @@ public class WolfBiomeConfigs {
             .spawnChance(0.02f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("coral_pack"))
-            .variants(List.of(
-                WolfVariants.CORAL_BRAIN.get(),
-                WolfVariants.CORAL_BUBBLE.get(),
-                WolfVariants.CORAL_FIRE.get(),
-                WolfVariants.CORAL_HORN.get(),
-                WolfVariants.CORAL_TUBE.get()
-            ))
+            .variant(
+                WolfVariants.CORAL_BRAIN,
+                WolfVariants.CORAL_BUBBLE,
+                WolfVariants.CORAL_FIRE,
+                WolfVariants.CORAL_HORN,
+                WolfVariants.CORAL_TUBE
+            )
             .biome(Biomes.WARM_OCEAN)
-            .extraSpawnableBlocks(List.of(
+            .extraSpawnableBlock(
                 Blocks.BRAIN_CORAL_BLOCK,
                 Blocks.FIRE_CORAL_BLOCK,
                 Blocks.HORN_CORAL_BLOCK,
                 Blocks.TUBE_CORAL_BLOCK,
                 Blocks.BUBBLE_CORAL_BLOCK
-            ))
+            )
             .waterSpawn()
             .canSpawnInDark()
             .packSize(1, 3)
             .spawnChance(0.9f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("end_suite"))
-            .variants(List.of(
-                WolfVariants.ENDER.get(),
-                WolfVariants.CHORUS.get()
-            ))
+            .variant(
+                WolfVariants.ENDER,
+                WolfVariants.CHORUS
+            )
             .biome(Biomes.END_HIGHLANDS)
             .extraSpawnableBlock(Blocks.END_STONE)
             .canSpawnInDark()
@@ -186,34 +171,34 @@ public class WolfBiomeConfigs {
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.WANDERING_SOUL)
             .biome(Biomes.SOUL_SAND_VALLEY)
-            .extraSpawnableBlocks(List.of(Blocks.SOUL_SAND, Blocks.SOUL_SOIL))
+            .extraSpawnableBlock(Blocks.SOUL_SAND, Blocks.SOUL_SOIL)
             .canSpawnInDark()
             .spawnChance(0.02f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("nether_waste_suite"))
-            .variants(List.of(
-                WolfVariants.SANGUINE.get(),
-                WolfVariants.DESICCATED.get()
-            ))
+            .variant(
+                WolfVariants.SANGUINE,
+                WolfVariants.DESICCATED
+            )
             .biome(Biomes.NETHER_WASTES)
             .extraSpawnableBlock(Blocks.NETHERRACK)
             .canSpawnInDark()
             .spawnChance(0.02f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("ice_spike_spawn"))
-            .variants(List.of(WolfVariants.ICY.get(), WolfVariants.FROSTY.get()))
+            .variant(WolfVariants.ICY, WolfVariants.FROSTY)
             .biome(Biomes.ICE_SPIKES)
-            .extraSpawnableBlocks(List.of(Blocks.ICE, Blocks.PACKED_ICE))
+            .extraSpawnableBlock(Blocks.ICE, Blocks.PACKED_ICE)
             .packSize(1, 2)
             .spawnChance(0.08f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("savanna_suite"))
-            .variants(List.of(
-                WolfVariants.SOOTY.get(),
-                WolfVariants.BRINDLE.get(),
-                WolfVariants.MUDDY.get(),
-                WolfVariants.ROOT_BEER.get()
-            ))
+            .variant(
+                WolfVariants.SOOTY,
+                WolfVariants.BRINDLE,
+                WolfVariants.MUDDY,
+                WolfVariants.ROOT_BEER
+            )
             .biome(Biomes.SAVANNA)
             .canSpawnInDark()
             .packSize(1, 4)
