@@ -3,6 +3,7 @@ package dtnpaletteofpaws;
 import dtnpaletteofpaws.client.ClientSetup;
 import dtnpaletteofpaws.client.data.DTNItemModelProvider;
 import dtnpaletteofpaws.common.data.DTNDataRegistriesProvider;
+import dtnpaletteofpaws.common.data.DTNWolfBiomeConfigDatapackProvider;
 import dtnpaletteofpaws.common.event.EventHandler;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.network.DTNNetworkHandler;
@@ -68,6 +69,7 @@ public class DTNPaletteOfPaws {
 
     public void onGatherData(final GatherDataEvent event) {
         DTNDataRegistriesProvider.start(event);
+        DTNWolfBiomeConfigDatapackProvider.start(event);
         if (event.includeClient()) {
             var gen = event.getGenerator();
             var file_helper = event.getExistingFileHelper();
