@@ -4,7 +4,9 @@ import dtnpaletteofpaws.client.ClientSetup;
 import dtnpaletteofpaws.client.backward_imitate.DTNPModelProvider_21_5;
 import dtnpaletteofpaws.client.data.DTNItemModelProvider;
 import dtnpaletteofpaws.common.data.DTNDataRegistriesProvider;
+import dtnpaletteofpaws.common.data.DTNWolfBiomeConfigPackProvider;
 import dtnpaletteofpaws.common.event.EventHandler;
+import dtnpaletteofpaws.common.event.PackHandler;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.network.DTNNetworkHandler;
 import dtnpaletteofpaws.common.network.PacketHandler;
@@ -54,6 +56,7 @@ public class DTNPaletteOfPaws {
             mod_event_bus.addListener(ClientSetup::setupEntityRenderers);
             mod_event_bus.addListener(ClientSetup::registerLayerDefinitions);
             mod_event_bus.addListener(DTNParticleProviders::onRegisterProv);
+            mod_event_bus.addListener(PackHandler::onAddPackFinder);
         }
 
         DTNPConfig.init(mod_event_bus);
@@ -69,6 +72,7 @@ public class DTNPaletteOfPaws {
 
     public void onGatherData(final GatherDataEvent.Client event) {
         DTNDataRegistriesProvider.start(event);
+        DTNWolfBiomeConfigPackProvider.start(event);
         if (/*event.includeClient()*/true) {
             var gen = event.getGenerator();
             //var file_helper = event.getExistingFileHelper();
