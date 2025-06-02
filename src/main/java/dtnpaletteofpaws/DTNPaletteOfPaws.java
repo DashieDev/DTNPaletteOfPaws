@@ -6,7 +6,9 @@ import org.apache.logging.log4j.Logger;
 import dtnpaletteofpaws.client.ClientSetup;
 import dtnpaletteofpaws.client.data.DTNItemModelProvider;
 import dtnpaletteofpaws.common.data.DTNDataRegistriesProvider;
+import dtnpaletteofpaws.common.data.DTNWolfBiomeConfigPackProvider;
 import dtnpaletteofpaws.common.event.EventHandler;
+import dtnpaletteofpaws.common.event.PackHandler;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.network.DTNNetworkHandler;
 import dtnpaletteofpaws.common.network.PacketHandler;
@@ -73,5 +75,8 @@ public class DTNPaletteOfPaws {
     //         gen.addProvider(true, new DTNItemModelProvider(pack_output, file_helper));
     //     }
     // }
+
+    //FABRIC TODO:
+    //Add PackHandler entry
 
 }
