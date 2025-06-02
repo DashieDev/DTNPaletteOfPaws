@@ -17,6 +17,7 @@ import dtnpaletteofpaws.common.variant.WolfVariant;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -105,7 +106,7 @@ public class WolfBiomeConfig {
 
     public static class Builder {
 
-        private final BootstrapContext<WolfBiomeConfig> ctx;
+        private final Output output;
         
         private final ResourceKey<WolfBiomeConfig> id;
         private Set<WolfVariant> variants = Set.of();
@@ -117,8 +118,8 @@ public class WolfBiomeConfig {
         private int maxCount = 1;
         private float spawnChance = 0f;
 
-        private Builder(BootstrapContext<WolfBiomeConfig> ctx, ResourceKey<WolfBiomeConfig> id) {
-            this.ctx = ctx;
+        private Builder(Output registries, ResourceKey<WolfBiomeConfig> id) {
+            this.output = registries;
             this.id = id;
         }
 
@@ -132,7 +133,7 @@ public class WolfBiomeConfig {
         }
         
         public Builder biomes(List<ResourceKey<Biome>> biomes) {
-            var biome_reg = this.ctx.lookup(Registries.BIOME);
+            var biome_reg = this.output.lookup(Registries.BIOME);
             var biome_holders_list = biomes.stream()
                 .map(x -> biome_reg.get(x))
                 .filter(x -> x.isPresent())
@@ -186,12 +187,37 @@ public class WolfBiomeConfig {
         }
 
         public void buildAndRegister() {
-            ctx.register(id, build());
+            output.accept(id, build());
         }
     }
 
+    public static interface Output {
+        
+        public <S> HolderGetter<S> lookup(ResourceKey<? extends Registry<S>> regKey);
+
+        public void accept(ResourceKey<WolfBiomeConfig> id, WolfBiomeConfig val); 
+
+    }
+
+    public static final Builder builder(BootstrapContext<WolfBiomeConfig> ctx, ResourceKey<WolfBiomeConfig> id) {
+        var wrapped = new WolfBiomeConfig.Output() {
+
+            @Override
+            public <S> HolderGetter<S> lookup(ResourceKey<? extends Registry<S>> regKey) {
+                return ctx.lookup(regKey);
+            }
+
+            @Override
+            public void accept(ResourceKey<WolfBiomeConfig> id, WolfBiomeConfig val) {
+                ctx.register(id, val);
+            }
+            
+        };
+        return new Builder(wrapped, id);
+    }
+
     public static final Builder builder(BootstrapContext<WolfBiomeConfig> ctx, ResourceLocation id) { 
-        return new Builder(ctx, ResourceKey.create(WolfBiomeConfigs.regKey(), id)); 
+        return builder(ctx, ResourceKey.create(WolfBiomeConfigs.regKey(), id)); 
     }
 
     public static final Builder builder(BootstrapContext<WolfBiomeConfig> ctx, Supplier<WolfVariant> variant_sup) {
@@ -201,7 +227,7 @@ public class WolfBiomeConfig {
         if (wolf_variant_id == null)
             throw new IllegalStateException("unregistered wolf variant");
         var res_key = ResourceKey.create(WolfBiomeConfigs.regKey(), wolf_variant_id);
-        return new Builder(ctx, res_key).variants(List.of(variant));
+        return builder(ctx, res_key).variants(List.of(variant));
     }
 
     private static WolfBiomeConfig codecDeserializer(Optional<List<WolfVariant>> variants, 
