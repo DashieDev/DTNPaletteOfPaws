@@ -20,8 +20,16 @@ public class DTNPConfig {
 
     public static class ServerConfig {
 
-        public ServerConfig(ForgeConfigSpec.Builder builder) {
-            
+        public ModConfigSpec.BooleanValue DTNP_STATIC_SPAWN;
+
+        public ServerConfig(ModConfigSpec.Builder builder) {
+            DTNP_STATIC_SPAWN = builder
+                .comment("Set this to false to disable DTNP Chunk Generation Spawn.")
+                .comment("Notice that when this option is disabled DTNP Wolves will not")
+                .comment("spawn upon chunk generation.")
+                .translation("dtnpaletteofpaws.config.dtnp_static_spawn")
+                .worldRestart()
+                .define("dtnp_static_spawn", true);
         }
 
         public static<T> T getConfigOrDefault(ConfigValue<T> config, T defaultVal) {
