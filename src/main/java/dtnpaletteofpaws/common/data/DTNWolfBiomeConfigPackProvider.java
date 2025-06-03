@@ -40,6 +40,7 @@ public class DTNWolfBiomeConfigPackProvider {
         WolfBiomeConfig.builder(ctx, WolfVariants.CHERRY)
             .biome(Biomes.CHERRY_GROVE)
             .spawnChance(0.3f)
+            .packSize(1, 3)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.LEMONY_LIME)
             .biome(Biomes.BEACH)
@@ -49,6 +50,7 @@ public class DTNWolfBiomeConfigPackProvider {
         WolfBiomeConfig.builder(ctx, WolfVariants.HIMALAYAN_SALT)
             .biome(Biomes.JAGGED_PEAKS)
             .spawnChance(0.25f)
+            .packSize(1, 3)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("wolf_bamboo_bamboo"))
             .variant(WolfVariants.BAMBOO)
@@ -84,12 +86,14 @@ public class DTNWolfBiomeConfigPackProvider {
         WolfBiomeConfig.builder(ctx, WolfVariants.BIRCH)
             .biome(Biomes.BIRCH_FOREST)
             .spawnChance(0.1f)
+            .packSize(1, 3)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.PISTACHIO)
             .biome(Biomes.MANGROVE_SWAMP)
             .extraSpawnableBlock(Blocks.MUD)
             .canSpawnInDark()
             .spawnChance(0.25f)
+            .packSize(1, 3)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.GUACAMOLE)
             .biome(Biomes.MEADOW)
@@ -131,11 +135,13 @@ public class DTNWolfBiomeConfigPackProvider {
             .biome(Biomes.WOODED_BADLANDS)
             .extraSpawnableBlock(Blocks.RED_SAND)
             .spawnChance(0.2f)
+            .packSize(1, 3)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.KOMBU)
             .biome(Biomes.DESERT)
             .extraSpawnableBlock(Blocks.SAND)
             .spawnChance(0.1f)
+            .packSize(1, 3)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.SHITAKE)
             .biome(Biomes.DARK_FOREST)
