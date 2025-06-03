@@ -91,7 +91,7 @@ public class WolfBiomeConfigs {
             .biome(Biomes.SOUL_SAND_VALLEY)
             .extraSpawnableBlock(Blocks.SOUL_SAND, Blocks.SOUL_SOIL)
             .canSpawnInDark()
-            .spawnChance(0.02f)
+            .spawnChance(0.1f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("mushroom_pack_config"))
             .variant(WolfVariants.MUSHROOM_BROWN, WolfVariants.MUSHROOM_RED)
