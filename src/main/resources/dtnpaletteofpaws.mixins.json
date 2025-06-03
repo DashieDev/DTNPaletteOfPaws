@@ -8,6 +8,7 @@
         "NoiseBasedChunkGeneratorMixin"
     ],
     "client": [
+        "PackSelectionScreenMixin"
     ],
     "server": [],
     "injectors": {
