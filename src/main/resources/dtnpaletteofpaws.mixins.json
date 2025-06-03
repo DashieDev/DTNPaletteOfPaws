@@ -9,7 +9,8 @@
         "Minecraft_UtilMixin",
         "FabricLivingEntityMixin"
     ],
-    "client": [
+    "client": [  
+      "PackSelectionScreenMixin",
       "FabricParticleEngineMixin"
     ],
     "server": [],
