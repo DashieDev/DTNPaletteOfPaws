@@ -1,0 +1,11 @@
+{
+  "biomes": "minecraft:mangrove_swamp",
+  "blocks": [
+    "minecraft:mud"
+  ],
+  "can_spawn_in_dark": true,
+  "spawn_chance": 0.25,
+  "variants": [
+    "dtnpaletteofpaws:pistachio"
+  ]
+}

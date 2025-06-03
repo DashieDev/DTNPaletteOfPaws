@@ -5,7 +5,7 @@
     "minecraft:ice"
   ],
   "max_count": 2,
-  "spawn_chance": 0.08,
+  "spawn_chance": 0.15,
   "variants": [
     "dtnpaletteofpaws:icy",
     "dtnpaletteofpaws:frosty"

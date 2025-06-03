@@ -1,0 +1,12 @@
+{
+  "biomes": "minecraft:basalt_deltas",
+  "blocks": [
+    "minecraft:basalt"
+  ],
+  "can_spawn_in_dark": true,
+  "max_count": 3,
+  "spawn_chance": 0.4,
+  "variants": [
+    "dtnpaletteofpaws:molten"
+  ]
+}

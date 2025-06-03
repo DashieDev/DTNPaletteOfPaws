@@ -2,7 +2,7 @@
   "biomes": "minecraft:savanna",
   "can_spawn_in_dark": true,
   "max_count": 4,
-  "spawn_chance": 0.1,
+  "spawn_chance": 0.2,
   "variants": [
     "dtnpaletteofpaws:root_beer",
     "dtnpaletteofpaws:sooty",

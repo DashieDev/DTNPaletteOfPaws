@@ -1,0 +1,10 @@
+{
+  "biomes": "minecraft:beach",
+  "blocks": [
+    "minecraft:sand"
+  ],
+  "spawn_chance": 0.05,
+  "variants": [
+    "dtnpaletteofpaws:lemony_lime"
+  ]
+}

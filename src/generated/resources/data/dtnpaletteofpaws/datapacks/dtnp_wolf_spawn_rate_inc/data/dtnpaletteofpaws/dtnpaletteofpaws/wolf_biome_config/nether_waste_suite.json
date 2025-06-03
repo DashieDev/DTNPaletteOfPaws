@@ -4,7 +4,7 @@
     "minecraft:netherrack"
   ],
   "can_spawn_in_dark": true,
-  "spawn_chance": 0.02,
+  "spawn_chance": 0.1,
   "variants": [
     "dtnpaletteofpaws:sanguine",
     "dtnpaletteofpaws:desiccated"

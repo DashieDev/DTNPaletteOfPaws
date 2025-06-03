@@ -1,0 +1,10 @@
+{
+  "biomes": "minecraft:wooded_badlands",
+  "blocks": [
+    "minecraft:red_sand"
+  ],
+  "spawn_chance": 0.2,
+  "variants": [
+    "dtnpaletteofpaws:bonito_flakes"
+  ]
+}

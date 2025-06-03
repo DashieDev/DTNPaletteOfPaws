@@ -1,0 +1,11 @@
+{
+  "biomes": "minecraft:warped_forest",
+  "blocks": [
+    "minecraft:warped_nylium"
+  ],
+  "can_spawn_in_dark": true,
+  "spawn_chance": 0.4,
+  "variants": [
+    "dtnpaletteofpaws:warped"
+  ]
+}

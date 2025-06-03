@@ -1,0 +1,7 @@
+{
+  "biomes": "minecraft:cherry_grove",
+  "spawn_chance": 0.3,
+  "variants": [
+    "dtnpaletteofpaws:cherry"
+  ]
+}

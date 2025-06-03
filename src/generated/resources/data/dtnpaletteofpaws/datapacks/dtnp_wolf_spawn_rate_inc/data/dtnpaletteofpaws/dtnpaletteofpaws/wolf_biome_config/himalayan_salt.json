@@ -1,0 +1,7 @@
+{
+  "biomes": "minecraft:jagged_peaks",
+  "spawn_chance": 0.25,
+  "variants": [
+    "dtnpaletteofpaws:himalayan_salt"
+  ]
+}
