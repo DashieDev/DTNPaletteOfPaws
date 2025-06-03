@@ -1020,6 +1020,21 @@ public class DTNWolf extends TamableAnimal {
         attrib.removeModifier(modifierLoc);
     }
 
+    @Override
+    public boolean isPersistenceRequired() {
+        return true;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distance) {
+        return false;
+    }
+
+    @Override
+    public void checkDespawn() {
+        this.noActionTime = 0;
+    }
+
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroup) {
