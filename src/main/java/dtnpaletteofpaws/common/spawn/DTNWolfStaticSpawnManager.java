@@ -13,6 +13,7 @@ import org.apache.commons.lang3.mutable.MutableObject;
 import com.google.common.collect.ImmutableMap;
 
 import dtnpaletteofpaws.DTNEntityTypes;
+import dtnpaletteofpaws.DTNPConfig;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import dtnpaletteofpaws.common.util.RandomUtil;
 import dtnpaletteofpaws.common.util.WolfVariantUtil;
@@ -52,6 +53,7 @@ public class DTNWolfStaticSpawnManager {
     private static final ThreadLocal<Holder<Biome>> currentSpawnBiome = new ThreadLocal<>();
 
     private static Map<ResourceKey<Biome>, List<WolfBiomeConfig>> configByBiome = ImmutableMap.of();
+    private static boolean disabled = false;
 
     public static DTNWolfStaticSpawnManager get() {
         return instance;
@@ -64,8 +66,8 @@ public class DTNWolfStaticSpawnManager {
     }
 
     public void onChunkGenerationMobSpawn(ServerLevelAccessor level_accessor, Holder<Biome> biome, ChunkPos chunk_pos, RandomSource random, float biome_chance) {
-        //do DTNP wolf spawn here to avoid getBioemAagain
-        //currentSpawnBiome.set(biome);
+        if (disabled)
+            return;
         List<WolfBiomeConfig> configs = null;
         while (random.nextFloat() < biome_chance) {
             if (configs == null) {
@@ -102,6 +104,8 @@ public class DTNWolfStaticSpawnManager {
     }
 
     public static void onSpawnOriginalMobsForChunk(WorldGenRegion region) {
+        if (disabled)
+            return;
         if (isTheEndSpawn(region)) {
             spawnDTNWOlfForChunkGeneration(region, 0.01f, region.getMaxBuildHeight() - 1);
         }
@@ -263,6 +267,7 @@ public class DTNWolfStaticSpawnManager {
 
     public static void onServerStarting(MinecraftServer server) {
         initConfigCache(server.registryAccess());
+        disabled = !DTNPConfig.SERVER.DTNP_STATIC_SPAWN.get();
     }
 
     public static void onServerStopped() {
