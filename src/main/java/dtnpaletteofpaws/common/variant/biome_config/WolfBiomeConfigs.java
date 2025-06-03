@@ -132,12 +132,12 @@ public class WolfBiomeConfigs {
             .biome(Biomes.SNOWY_PLAINS)
             .canSpawnInDark()
             .packSize(1, 3)
-            .spawnChance(0.2f)
+            .spawnChance(0.15f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.WALNUT)
             .biome(Biomes.OLD_GROWTH_SPRUCE_TAIGA)
             .packSize(1, 3)
-            .spawnChance(0.02f)
+            .spawnChance(0.2f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, Util.getResource("coral_pack"))
             .variant(
