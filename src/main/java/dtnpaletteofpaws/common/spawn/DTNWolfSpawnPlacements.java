@@ -70,42 +70,10 @@ public class DTNWolfSpawnPlacements {
     }
 
     public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, WolfBiomeConfig config) {
-        if (config.placementType() == WolfSpawnPlacementType.WATER) {
-            return checkPossibleWaterSpawn(world, pos, config);
-        }
-        return SpawnPlacementTypes.ON_GROUND.isSpawnPositionOk(world, pos, DTNEntityTypes.DTNWOLF.get());
+        var placement = config.placementType() == WolfSpawnPlacementType.WATER ?
+            SpawnPlacementTypes.IN_WATER : SpawnPlacementTypes.ON_GROUND;
+        return placement.isSpawnPositionOk(world, pos, DTNEntityTypes.DTNWOLF.get());
     }
-
-    private static boolean checkPossibleWaterSpawn(LevelReader world, BlockPos pos, WolfBiomeConfig config) {
-        var state = world.getBlockState(pos);
-        if (!state.isAir())
-            return false;
-        var pos_below = pos.below();
-        var water_spawnable_below = SpawnPlacementTypes.IN_WATER.isSpawnPositionOk(world, pos_below, DTNEntityTypes.DTNWOLF.get());
-        if (!water_spawnable_below)
-            return false;
-        if (checkWaterSpawnRestrictBlock(config, world, pos))
-            return false;
-
-        return true;
-    }
-
-    private static boolean checkWaterSpawnRestrictBlock(WolfBiomeConfig config, LevelReader world, BlockPos pos) {
-        var restricted_blocks = config.blocks();
-        if (restricted_blocks.isEmpty())
-            return false;
-        final int check_y_initial = world.getHeight(Types.OCEAN_FLOOR, pos.getX(), pos.getZ());
-        var check_pos = new BlockPos(pos.getX(), check_y_initial, pos.getZ());
-        var check_state = world.getBlockState(check_pos);
-        if (check_state.isPathfindable(world, check_pos, PathComputationType.WATER)) {
-            check_pos = check_pos.below();
-            check_state = world.getBlockState(check_pos);
-        }
-        if (!restricted_blocks.contains(check_state.getBlock()))
-            return true;
-        return false;
-    }
-
 
     /**
      * Seperated getTopNonCollidingPos for DTNWolf for two reason
@@ -118,8 +86,10 @@ public class DTNWolfSpawnPlacements {
      * This function override the check solely for getting the pos for DTNWolf and 
      * return the actual TopNonCollidingPos for hasCeiling dimensions.
      */
-    public static BlockPos getDTNWolfTopNonCollidingPos(EntityType<DTNWolf> type, LevelReader world, int x, int z) {
-        int inital_height = world.getHeight(SpawnPlacements.getHeightmapType(type), x, z);
+    public static BlockPos getDTNWolfTopNonCollidingPos(WolfSpawnPlacementType placementType, LevelReader world, int x, int z) {
+        var height_map_type = placementType == WolfSpawnPlacementType.WATER ?
+            Heightmap.Types.OCEAN_FLOOR : Heightmap.Types.MOTION_BLOCKING_NO_LEAVES;
+        int inital_height = world.getHeight(height_map_type, x, z);
         var check_pos = new BlockPos(x, inital_height, z);
         if (world.dimensionType().hasCeiling()) {
             do {
@@ -136,7 +106,11 @@ public class DTNWolfSpawnPlacements {
 
         var check_pos_below = check_pos.below();
         var below_state = world.getBlockState(check_pos_below);
-         if (below_state.isPathfindable(world, check_pos_below, PathComputationType.LAND) && below_state.getFluidState().isEmpty()) {
+        boolean below_state_pathfindable = below_state.isPathfindable(
+            placementType == WolfSpawnPlacementType.WATER ? 
+                PathComputationType.WATER : PathComputationType.LAND
+        );
+         if (below_state_pathfindable && below_state.getFluidState().isEmpty()) {
             return check_pos_below;
         }
 
