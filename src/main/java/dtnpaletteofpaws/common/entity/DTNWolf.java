@@ -20,6 +20,7 @@ import dtnpaletteofpaws.common.lib.Constants.EntityState;
 import dtnpaletteofpaws.common.network.WolfShakingPacket;
 import dtnpaletteofpaws.common.network.data.WolfShakingData;
 import dtnpaletteofpaws.common.spawn.DTNWolfStaticSpawnManager;
+import dtnpaletteofpaws.common.spawn.WolfSpawnPlacementType;
 import dtnpaletteofpaws.common.util.WolfSpawnUtil;
 import dtnpaletteofpaws.common.util.WolfVariantUtil;
 import dtnpaletteofpaws.common.variant.WolfVariant;
@@ -80,6 +81,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -1089,6 +1091,21 @@ public class DTNWolf extends TamableAnimal {
         //before this entity is created and there is no need to checkSpawnRules with respect 
         //to a DTNWOlf instance.
         return true;
+    }
+
+    @Override
+    public boolean checkSpawnObstruction(LevelReader levelReader) {
+        return levelReader.isUnobstructed(this);
+    }
+
+    public boolean DTNWolfCheckAdditionalSpawnObstruction(LevelReader levelReader, 
+        WolfBiomeConfig config) {
+        
+        boolean water_obstruction_check = 
+            config.placementType() == WolfSpawnPlacementType.WATER
+            || !levelReader.containsAnyLiquid(this.getBoundingBox());
+        
+        return water_obstruction_check;
     }
 
     public static class WolfPackData extends AgeableMob.AgeableMobGroupData {
