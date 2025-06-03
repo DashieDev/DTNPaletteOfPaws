@@ -74,7 +74,7 @@ public class DTNWolfSpawnPlacements {
     }
 
     public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, WolfBiomeConfig config) {
-        if (config.waterSpawn()) {
+        if (config.placementType() == WolfSpawnPlacementType.WATER) {
             return checkPossibleWaterSpawn(world, pos, config);
         }
         return SpawnPlacementTypes.ON_GROUND.isSpawnPositionOk(world, pos, DTNEntityTypes.DTNWOLF.get());

@@ -2,6 +2,7 @@ package dtnpaletteofpaws.common.variant.biome_config;
 
 import dtnpaletteofpaws.DTNRegistries;
 import dtnpaletteofpaws.WolfVariants;
+import dtnpaletteofpaws.common.spawn.WolfSpawnPlacementType;
 import dtnpaletteofpaws.common.util.Util;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -154,7 +155,7 @@ public class WolfBiomeConfigs {
                 Blocks.TUBE_CORAL_BLOCK,
                 Blocks.BUBBLE_CORAL_BLOCK
             )
-            .waterSpawn()
+            .placementType(WolfSpawnPlacementType.WATER)
             .canSpawnInDark()
             .packSize(1, 3)
             .spawnChance(0.9f)
