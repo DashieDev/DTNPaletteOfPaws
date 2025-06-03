@@ -836,6 +836,7 @@ public class DTNWolf extends TamableAnimal {
         this.wetSource = WetSource.NONE;
         this.finishShaking();
         super.die(p_30384_);
+        //ChopinLogger.l("A Wolf died at : " + this.blockPosition());
     }
 
     @Override
