@@ -4,9 +4,9 @@
   "max_count": 3,
   "spawn_chance": 0.15,
   "variants": [
-    "dtnpaletteofpaws:chocolate",
+    "dtnpaletteofpaws:vanilla",
     "dtnpaletteofpaws:strawberry",
-    "dtnpaletteofpaws:cake",
-    "dtnpaletteofpaws:vanilla"
+    "dtnpaletteofpaws:chocolate",
+    "dtnpaletteofpaws:cake"
   ]
 }

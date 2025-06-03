@@ -1,5 +1,6 @@
 {
   "biomes": "minecraft:cherry_grove",
+  "max_count": 3,
   "spawn_chance": 0.3,
   "variants": [
     "dtnpaletteofpaws:cherry"

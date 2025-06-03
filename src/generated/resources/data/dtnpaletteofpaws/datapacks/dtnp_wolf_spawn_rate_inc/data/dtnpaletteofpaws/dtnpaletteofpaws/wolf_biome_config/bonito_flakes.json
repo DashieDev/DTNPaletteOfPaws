@@ -3,6 +3,7 @@
   "blocks": [
     "minecraft:red_sand"
   ],
+  "max_count": 3,
   "spawn_chance": 0.2,
   "variants": [
     "dtnpaletteofpaws:bonito_flakes"

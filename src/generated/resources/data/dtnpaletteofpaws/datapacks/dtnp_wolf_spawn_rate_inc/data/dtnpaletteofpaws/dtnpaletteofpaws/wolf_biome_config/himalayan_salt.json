@@ -1,5 +1,6 @@
 {
   "biomes": "minecraft:jagged_peaks",
+  "max_count": 3,
   "spawn_chance": 0.25,
   "variants": [
     "dtnpaletteofpaws:himalayan_salt"

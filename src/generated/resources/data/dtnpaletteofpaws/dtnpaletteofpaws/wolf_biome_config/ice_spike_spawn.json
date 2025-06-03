@@ -1,13 +1,13 @@
 {
   "biomes": "minecraft:ice_spikes",
   "blocks": [
-    "minecraft:packed_ice",
-    "minecraft:ice"
+    "minecraft:ice",
+    "minecraft:packed_ice"
   ],
   "max_count": 2,
   "spawn_chance": 0.08,
   "variants": [
-    "dtnpaletteofpaws:icy",
-    "dtnpaletteofpaws:frosty"
+    "dtnpaletteofpaws:frosty",
+    "dtnpaletteofpaws:icy"
   ]
 }

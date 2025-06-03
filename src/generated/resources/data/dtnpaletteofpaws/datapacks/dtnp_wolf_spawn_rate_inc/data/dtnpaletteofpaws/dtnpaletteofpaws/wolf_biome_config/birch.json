@@ -1,6 +1,7 @@
 {
   "biomes": "minecraft:birch_forest",
-  "spawn_chance": 0.1,
+  "max_count": 3,
+  "spawn_chance": 0.25,
   "variants": [
     "dtnpaletteofpaws:birch"
   ]

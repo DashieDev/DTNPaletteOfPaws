@@ -4,9 +4,9 @@
   "max_count": 4,
   "spawn_chance": 0.15,
   "variants": [
-    "dtnpaletteofpaws:latte",
-    "dtnpaletteofpaws:espresso",
     "dtnpaletteofpaws:mocha",
-    "dtnpaletteofpaws:cappuccino"
+    "dtnpaletteofpaws:cappuccino",
+    "dtnpaletteofpaws:latte",
+    "dtnpaletteofpaws:espresso"
   ]
 }
