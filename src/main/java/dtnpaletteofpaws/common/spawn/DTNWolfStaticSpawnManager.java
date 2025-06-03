@@ -149,7 +149,7 @@ public class DTNWolfStaticSpawnManager {
             boolean spawned_individual = false;
 
             for (int attempt = 0; !spawned_individual && attempt < 4; attempt++) {
-                var spawnable_pos = DTNWolfSpawnPlacements.getDTNWolfTopNonCollidingPos(DTNEntityTypes.DTNWOLF.get(), level_accessor, check_x, check_z);
+                var spawnable_pos = DTNWolfSpawnPlacements.getDTNWolfTopNonCollidingPos(config.placementType(), level_accessor, check_x, check_z);
                 if (DTNWolfSpawnPlacements.spawnPlacementTypeCheck(level_accessor, spawnable_pos, config)) {
                     spawned_individual = doSpawnIndividual(level_accessor, config, min_x, min_z, spawnable_pos, spawngroupdata, rand);
                     // if (!spawned_individual)
@@ -213,7 +213,8 @@ public class DTNWolfStaticSpawnManager {
         wolf.moveTo(spawn_x, check_pos.getY(), spawn_z, rand.nextFloat() * 360.0F, 0.0F);
         
         boolean spawn_position_check =
-            net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(wolf, level_accessor, MobSpawnType.CHUNK_GENERATION);
+            net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(wolf, level_accessor, MobSpawnType.CHUNK_GENERATION)
+            && wolf.DTNWolfCheckAdditionalSpawnObstruction(level_accessor, config);
         if (!spawn_position_check) {
             //ChopinLogger.l("DTNP Spawn failed at (2)");
             return false;
