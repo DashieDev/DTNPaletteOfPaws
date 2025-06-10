@@ -4,9 +4,9 @@
   "max_count": 4,
   "spawn_chance": 0.2,
   "variants": [
+    "dtnpaletteofpaws:sooty",
     "dtnpaletteofpaws:brindle",
     "dtnpaletteofpaws:muddy",
-    "dtnpaletteofpaws:sooty",
     "dtnpaletteofpaws:root_beer"
   ]
 }
