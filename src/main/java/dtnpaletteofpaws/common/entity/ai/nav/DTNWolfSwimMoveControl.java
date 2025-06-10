@@ -66,7 +66,7 @@ public class DTNWolfSwimMoveControl extends MoveControl {
             this.dog.zza = f6 * speed;
             this.dog.yya = -f4 * speed;
 
-            mayCheckAndLeapUpObstacle();
+            mayCheckAndLeapUpOrDownObstacle(speed);
         } else {
             this.dog.setSpeed(0.0F);
             this.dog.setXxa(0.0F);
@@ -75,30 +75,32 @@ public class DTNWolfSwimMoveControl extends MoveControl {
         }
      }
 
-     private void mayCheckAndLeapUpObstacle() {
+     private void mayCheckAndLeapUpOrDownObstacle(float speed) {
         if (!this.dog.isInWater())
             return;
         double dy = this.getWantedY() - dog.getY();
-        if (dy <= 0.1)
+        if (Math.abs(dy) <= 0.1)
             return;
         double dx = this.getWantedX() - dog.getX();
         double dz = this.getWantedZ() - dog.getZ();
         double l_xz_sqr = dx * dx + dz * dz;
-        var min_lxz = dog.getBbWidth()/2 + 0.5 - 0.1; 
+        double min_lxz = dog.getBbWidth()/2 + 0.5 - 0.1; 
         if (l_xz_sqr < min_lxz * min_lxz)
             return;
 
-        var check_pos_offset = new Vec3(dx, 0, dz)
+        final boolean is_up = dy > 0;
+        var check_pos_offset = 
+            new Vec3(dx, 0, dz)
             .normalize()
-            .scale(dog.getBbWidth()/2 + 0.2);
+            .scale(dog.getBbWidth()/2 + 0.2)
+            .add(0, is_up ? 0 : dog.getBbHeight(), 0);
         var check_pos = BlockPos.containing(
             this.dog.position().add(check_pos_offset)   
         );
         var state = dog.level().getBlockState(check_pos);
         if (!state.getCollisionShape(dog.level(), check_pos).isEmpty()) {
-            final float upward_add = 0.05f;
-            var current_move = dog.getDeltaMovement();
-            dog.setDeltaMovement(current_move.add(0, upward_add, 0));
+            speed = Mth.clamp(speed, 0, 0.39f);
+            this.dog.yya = is_up ? speed : -speed;
         }
     }
 
