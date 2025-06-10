@@ -41,16 +41,21 @@ public class WolfBiomeConfig {
     private final int maxCount;
     private final float spawnChance;
 
-    private WolfBiomeConfig(Set<WolfVariant> variants, HolderSet<Biome> biomes, Set<Block> blocks, boolean canSpawnInDark, WolfSpawnPlacementType placementType, int minCount, int maxCount, float spawnChance) {
-        this.variants = variants;
-        this.biomes = biomes == null ? HolderSet.direct() : biomes;
-        this.extraSpawnableBlocks = blocks == null ? Set.of()
-            : Set.copyOf(blocks);
+    private final List<WolfVariant> variantsAsList;
+    private final List<Block> blocksAsList;
+
+    private WolfBiomeConfig(List<WolfVariant> variants, HolderSet<Biome> biomes, List<Block> blocks, boolean canSpawnInDark, WolfSpawnPlacementType placementType, int minCount, int maxCount, float spawnChance) {
+        this.variants = new HashSet<>(variants);
+        this.biomes = biomes;
+        this.extraSpawnableBlocks = new HashSet<>(blocks);
         this.canSpawnInDark = canSpawnInDark;
         this.placementType = placementType;
         this.minCount = minCount;
         this.maxCount = maxCount;
         this.spawnChance = Mth.clamp(spawnChance, 0, 1);
+
+        this.variantsAsList = variants;
+        this.blocksAsList = blocks;
     }
 
     public boolean doSpawn() {
@@ -90,15 +95,13 @@ public class WolfBiomeConfig {
     }
 
     public Optional<List<Block>> blocksAsList() {
-        if (this.extraSpawnableBlocks.isEmpty())
-            return Optional.empty();
-        return Optional.of(new ArrayList<>(this.extraSpawnableBlocks));
+        return Optional.of(this.blocksAsList)
+            .filter(x -> !x.isEmpty());
     }
 
     public Optional<List<WolfVariant>> variantsAsList() {
-        if (this.variants.isEmpty())
-            return Optional.empty();
-        return Optional.of(new ArrayList<>(this.variants));
+        return Optional.of(this.variantsAsList)
+            .filter(x -> !x.isEmpty());
     }
 
     public static float defaultSpawnChance() {
@@ -110,9 +113,9 @@ public class WolfBiomeConfig {
         private final BootstapContext<WolfBiomeConfig> ctx;
         
         private final ResourceKey<WolfBiomeConfig> id;
-        private Set<WolfVariant> variants = Set.of();
-        private HolderSet<Biome> biomes = HolderSet.direct(List.of());
-        private Set<Block> extraSpawnableBlocks = Set.of();
+        private List<WolfVariant> variants = List.of();
+        private HolderSet<Biome> biomes = HolderSet.empty();
+        private List<Block> extraSpawnableBlocks = List.of();
         private boolean canSpawnInDark = false;
         private WolfSpawnPlacementType placementType = WolfSpawnPlacementType.GROUND;
         private int minCount = 1;
@@ -127,7 +130,7 @@ public class WolfBiomeConfig {
         public Builder variant(WolfVariant... variants) {
             if (variants.length <= 0)
                 throw new IllegalArgumentException("variants cannot be empty!");
-            this.variants = new HashSet<>(Arrays.asList(variants));
+            this.variants = Arrays.asList(variants);
             return this;
         }
 
@@ -158,7 +161,7 @@ public class WolfBiomeConfig {
         }
 
         public Builder extraSpawnableBlock(Block... blocks) {
-            this.extraSpawnableBlocks = new HashSet<>(Arrays.asList(blocks));
+            this.extraSpawnableBlocks = Arrays.asList(blocks);
             return this;
         }
 
@@ -214,8 +217,8 @@ public class WolfBiomeConfig {
         boolean canSpawnInDark, WolfSpawnPlacementType placementType, int minCount, int maxCount, float spawnChance) {
         
         return new WolfBiomeConfig(
-            new HashSet<>(variants.orElse(List.of())), 
-            biomes, new HashSet<>(blocks.orElse(List.of())), 
+            variants.orElse(List.of()), 
+            biomes, blocks.orElse(List.of()), 
             canSpawnInDark, placementType, minCount, maxCount, spawnChance);
     }
 
