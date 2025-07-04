@@ -109,6 +109,7 @@ public class DTNWolfStaticSpawnManager {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private static boolean isTheEndSpawn(WorldGenRegion region) {
         var level = region.getLevel();
         if (level == null)
