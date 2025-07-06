@@ -121,4 +121,43 @@ public class DTNWolfSpawnPlacements {
         return check_pos;
     }
 
+    public static BlockPos getRandomUndergroundPos(RandomSource random, LevelReader world, int x, int z) {
+        final int max_spawn_y = -12;
+        final int min_spawn_y = -47; //Cap this one at minBuildHeight
+        boolean bound_check =  
+            world.getMinBuildHeight() < min_spawn_y && max_spawn_y < world.getMaxBuildHeight();
+        if (!bound_check)
+            return new BlockPos(x, world.getMinBuildHeight(), z);
+
+        int start_at = random.nextIntBetweenInclusive(min_spawn_y, max_spawn_y);
+
+        var check_pos = new BlockPos(x, start_at, z);
+        var check_state = world.getBlockState(check_pos);
+        while (!check_state.isAir() && check_pos.getY() >= min_spawn_y) {
+            check_pos = check_pos.below();
+            check_state = world.getBlockState(check_pos);
+        }
+
+        while (check_state.isAir() && check_pos.getY() >= min_spawn_y) {
+            check_pos = check_pos.below();
+            if (check_pos.getY() < min_spawn_y)
+                break;
+            check_state = world.getBlockState(check_pos);
+        }
+
+        check_pos = check_pos.above();
+
+        if (check_pos.getY() <= min_spawn_y)
+            return check_pos;
+        
+        var check_pos_below = check_pos.below();
+        var below_state = world.getBlockState(check_pos_below);
+        boolean below_state_pathfindable = below_state.isPathfindable(PathComputationType.LAND);
+         if (below_state_pathfindable && below_state.getFluidState().isEmpty()) {
+            return check_pos_below;
+        }
+        
+        return check_pos;
+    }
+
 }
