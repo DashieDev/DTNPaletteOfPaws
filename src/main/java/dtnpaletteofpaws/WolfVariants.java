@@ -66,6 +66,7 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> ROOT_BEER = register("root_beer");
     public static final Supplier<WolfVariant> CAKE = register("cake");
     public static final Supplier<WolfVariant> CHARCOAL = register("charcoal");
+    public static final Supplier<WolfVariant> SCULK = register("sculk");
 
     private static Supplier<WolfVariant> register(String name, Function<String, WolfVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);

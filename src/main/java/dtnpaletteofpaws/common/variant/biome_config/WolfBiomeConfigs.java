@@ -214,6 +214,16 @@ public class WolfBiomeConfigs {
             .packSize(1, 2)
             .spawnChance(0.1f)
             .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, WolfVariants.SCULK)
+            .biome(
+                Biomes.JAGGED_PEAKS, Biomes.FROZEN_PEAKS, 
+                Biomes.STONY_PEAKS, Biomes.MEADOW
+            )
+            .canSpawnInDark()
+            .placementType(WolfSpawnPlacementType.UNDERGROUND)
+            .extraSpawnableBlock(Blocks.DEEPSLATE, Blocks.SCULK)
+            .spawnChance(0.1f)
+            .buildAndRegister();
     }
     
     public static ResourceKey<Registry<WolfBiomeConfig>> regKey() {
