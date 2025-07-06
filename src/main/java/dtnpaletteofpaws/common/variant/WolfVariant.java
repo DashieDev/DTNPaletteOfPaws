@@ -18,6 +18,7 @@ public class WolfVariant {
     private boolean fireImmune;
     private boolean fallImmune;
     private boolean swimUnderwater;
+    private boolean dampensVibrations;
     
     public WolfVariant(Props props) {
         this.id = props.name;
@@ -29,6 +30,7 @@ public class WolfVariant {
         this.fireImmune = props.fireImmune;
         this.fallImmune = props.fallImmune;
         this.swimUnderwater = props.swimUnderwater;
+        this.dampensVibrations = props.dampensVibrations;
     }
 
     private static ResourceLocation createTextureLoc(ResourceLocation name) {
@@ -77,6 +79,10 @@ public class WolfVariant {
         return this.swimUnderwater;
     }
 
+    public boolean dampensVibrations() {
+        return this.dampensVibrations;
+    }
+
     public void tickWolf(DTNWolf wolf) {}
 
     public static Props props(String name) {
@@ -93,6 +99,7 @@ public class WolfVariant {
         private boolean fireImmune;
         private boolean fallImmune;
         private boolean swimUnderwater;
+        private boolean dampensVibrations;
         private Optional<ResourceLocation> glowingOverlay = Optional.empty();
         private Optional<ResourceLocation> glowingOverlay_wild = Optional.empty();
 
@@ -112,6 +119,11 @@ public class WolfVariant {
 
         public Props swimUnderwater() {
             this.swimUnderwater = true;
+            return this;
+        }
+
+        public Props dampensVibrations() {
+            this.dampensVibrations = true;
             return this;
         }
 
