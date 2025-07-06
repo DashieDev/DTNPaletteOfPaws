@@ -16,6 +16,7 @@ import dtnpaletteofpaws.common.variant.biome_config.WolfBiomeConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -121,9 +122,11 @@ public class DTNWolfSpawnPlacements {
         return check_pos;
     }
 
-    public static BlockPos getRandomUndergroundPos(RandomSource random, LevelReader world, int x, int z) {
+    public static BlockPos getRandomUndergroundPos(RandomSource random, LevelReader world, 
+        int x, int z, Holder<Biome> biome) {
+        
         final int max_spawn_y = -12;
-        final int min_spawn_y = -47; //Cap this one at minBuildHeight
+        final int min_spawn_y = (biome.is(BiomeTags.IS_MOUNTAIN)) ? -53 : -47;
         boolean bound_check =  
             world.getMinBuildHeight() < min_spawn_y && max_spawn_y < world.getMaxBuildHeight();
         if (!bound_check)

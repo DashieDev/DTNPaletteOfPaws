@@ -152,7 +152,7 @@ public class DTNWolfStaticSpawnManager {
             for (int attempt = 0; !spawned_individual && attempt < 4; attempt++) {
                 BlockPos spawnable_pos;
                 if (config.placementType() == WolfSpawnPlacementType.UNDERGROUND) {
-                    spawnable_pos = DTNWolfSpawnPlacements.getRandomUndergroundPos(rand, level_accessor, check_x, check_z);
+                    spawnable_pos = DTNWolfSpawnPlacements.getRandomUndergroundPos(rand, level_accessor, check_x, check_z, biome);
                 } else {
                     spawnable_pos = DTNWolfSpawnPlacements.getDTNWolfTopNonCollidingPos(config.placementType(), level_accessor, check_x, check_z);
                 }
