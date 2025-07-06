@@ -9,7 +9,8 @@ import com.mojang.serialization.Codec;
 
 public enum WolfSpawnPlacementType {
 
-    GROUND("ground"), WATER("water");
+    GROUND("ground"), WATER("water"),
+    UNDERGROUND("underground");
 
     private final String id;
 
