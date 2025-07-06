@@ -150,7 +150,12 @@ public class DTNWolfStaticSpawnManager {
             boolean spawned_individual = false;
 
             for (int attempt = 0; !spawned_individual && attempt < 4; attempt++) {
-                var spawnable_pos = DTNWolfSpawnPlacements.getDTNWolfTopNonCollidingPos(config.placementType(), level_accessor, check_x, check_z);
+                BlockPos spawnable_pos;
+                if (config.placementType() == WolfSpawnPlacementType.UNDERGROUND) {
+                    spawnable_pos = DTNWolfSpawnPlacements.getRandomUndergroundPos(rand, level_accessor, check_x, check_z);
+                } else {
+                    spawnable_pos = DTNWolfSpawnPlacements.getDTNWolfTopNonCollidingPos(config.placementType(), level_accessor, check_x, check_z);
+                }
                 if (DTNWolfSpawnPlacements.spawnPlacementTypeCheck(level_accessor, spawnable_pos, config)) {
                     spawned_individual = doSpawnIndividual(level_accessor, config, min_x, min_z, spawnable_pos, spawngroupdata, rand);
                     // if (!spawned_individual)

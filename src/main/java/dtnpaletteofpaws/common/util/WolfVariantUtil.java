@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
@@ -67,19 +68,22 @@ public class WolfVariantUtil {
         return below_state.is(Fluids.WATER);
     }
 
-    public static List<WolfBiomeConfig> getAllWolfBiomeConfigForBiome(RegistryAccess prov, Holder<Biome> biome) {
+    public static List<WolfBiomeConfig> getAllWolfBiomeConfigForBiome(RegistryAccess prov, Holder<Biome> biome, 
+        Predicate<WolfBiomeConfig> extra_conditions) {
         //Optimize this to use a Map
         var biome_config_reg = prov.registryOrThrow(WolfBiomeConfigs.regKey());
         var filtered_config = biome_config_reg.holders()
             .filter(filter_config -> filter_config
-                .biomes().contains(biome))
-            .map(x -> x)
+                .value().biomes().contains(biome))
+            .map(x -> x.value())
+            .filter(extra_conditions)
             .collect(Collectors.toList());
         return filtered_config;
     }
 
-    public static List<WolfVariant> getPossibleSpawnVariants(RandomSource random, RegistryAccess prov, Holder<Biome> biome) {
-        var filtered_config = getAllWolfBiomeConfigForBiome(prov, biome);
+    public static List<WolfVariant> getPossibleSpawnVariants(RandomSource random, RegistryAccess prov, 
+        Holder<Biome> biome, Predicate<WolfBiomeConfig> extra_conditions) {
+        var filtered_config = getAllWolfBiomeConfigForBiome(prov, biome, extra_conditions);
 
         if (filtered_config.isEmpty())
             return List.of();

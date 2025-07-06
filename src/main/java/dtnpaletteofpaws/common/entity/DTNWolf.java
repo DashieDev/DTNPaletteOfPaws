@@ -1058,9 +1058,16 @@ public class DTNWolf extends TamableAnimal {
     }   
 
     public WolfPackData initializeGroupData(ServerLevelAccessor levelAccessor, @Nullable Holder<Biome> biome) {
+        boolean underground_check = 
+            this.getY() <= -12;
         if (biome == null)
             biome = levelAccessor.getBiome(this.blockPosition());
-        var possible_variant = WolfVariantUtil.getPossibleSpawnVariants(this.getRandom(), levelAccessor.registryAccess(), biome);
+        var possible_variant = WolfVariantUtil.getPossibleSpawnVariants(this.getRandom(), 
+            levelAccessor.registryAccess(), biome, filter_config -> {
+                if (underground_check)
+                    return filter_config.placementType() == WolfSpawnPlacementType.UNDERGROUND;
+                return true;
+            });
         if (possible_variant.isEmpty())
             return null;
         return new WolfPackData(possible_variant);
