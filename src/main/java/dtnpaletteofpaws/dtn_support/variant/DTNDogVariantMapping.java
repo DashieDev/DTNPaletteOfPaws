@@ -60,6 +60,7 @@ public class DTNDogVariantMapping {
             .put(WolfVariants.ROOT_BEER.get(), DTNSupportDogVariants.ROOT_BEER.get())
             .put(WolfVariants.CAKE.get(), DTNSupportDogVariants.CAKE.get())
             .put(WolfVariants.CHARCOAL.get(), DTNSupportDogVariants.CHARCOAL.get())
+            .put(WolfVariants.SCULK.get(), DTNSupportDogVariants.SCULK.get())
             .build();
     }
 
