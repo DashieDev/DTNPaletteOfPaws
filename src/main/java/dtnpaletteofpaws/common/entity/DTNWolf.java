@@ -930,6 +930,13 @@ public class DTNWolf extends TamableAnimal {
         return super.causeFallDamage(distance, modifier, source);
     }
 
+    @Override
+    public boolean dampensVibrations() {
+        if (this.getVariant().dampensVibrations())
+            return true;
+        return super.dampensVibrations();
+    }
+
     public void setNavigation(PathNavigation p) {
         if (this.navigation == p) return;
         this.navigation.stop();
