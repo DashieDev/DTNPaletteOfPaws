@@ -206,6 +206,15 @@ public class WolfBiomeConfigs {
             .packSize(1, 4)
             .spawnChance(0.1f)
             .buildAndRegister();
+        WolfBiomeConfig.builder(ctx, Util.getResource("charcoal_spawn"))
+            .variant(WolfVariants.CHARCOAL)
+            .biome(Biomes.SAVANNA)
+            .canSpawnInDark()
+            .placementType(WolfSpawnPlacementType.UNDERGROUND)
+            .extraSpawnableBlock(Blocks.DEEPSLATE)
+            .packSize(1, 2)
+            .spawnChance(0.1f)
+            .buildAndRegister();
     }
     
     public static ResourceKey<Registry<WolfBiomeConfig>> regKey() {
