@@ -33,15 +33,15 @@ public class WolfVariant {
         this.dampensVibrations = props.dampensVibrations;
     }
 
-    private static ResourceLocation createTextureLoc(ResourceLocation name) {
+    public ResourceLocation createTextureLoc(ResourceLocation name) {
         return Util.modifyPath(name, x -> "textures/entity/dtnwolf/variants/wolf_" + x + ".png");
     }
 
-    private static ResourceLocation createWildTextureLoc(ResourceLocation name) {
+    public ResourceLocation createWildTextureLoc(ResourceLocation name) {
         return Util.modifyPath(name, x -> "textures/entity/dtnwolf/variants/wolf_" + x + "_wild.png");
     }
 
-    private static String createTranslationKey(ResourceLocation name) {
+    public String createTranslationKey(ResourceLocation name) {
         return Constants.MOD_ID + ".variant." + name.getPath();
     }
 
