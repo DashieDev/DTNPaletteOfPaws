@@ -38,7 +38,7 @@ public class DTNSupportDogVariants {
     public static final Supplier<DogVariant> CHORUS = register("chorus", 0xff562e56);
     public static final Supplier<DogVariant> WANDERING_SOUL = register("wandering_soul", WanderingSoulDogVariant::new);
     public static final Supplier<DogVariant> SANGUINE = register("sanguine", SanguineDogVariant::new);
-    public static final Supplier<DogVariant> DESICCATED = register("desiccated", 0xffccad8a);
+    public static final Supplier<DogVariant> DESICCATED = register("desiccated", DessicatedDogVariant::new);
     public static final Supplier<DogVariant> FROSTY = register("frosty", FrostyDogVariant::new);
     public static final Supplier<DogVariant> ICY = register("icy", 0xff6fa5fd);
     public static final Supplier<DogVariant> MUDDY = register("muddy", 0xff6b5a45);
