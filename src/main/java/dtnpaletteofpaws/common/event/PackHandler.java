@@ -35,6 +35,14 @@ public class PackHandler {
             Component.literal("DTNP Wolf Spawn Increase"), 
             PackSource.FEATURE, false, Position.TOP)
             .ifPresent(pack_consumer);
+
+        final boolean add_vanilla_spawn_pack = false; //Enable on 1.20 and under
+        if (add_vanilla_spawn_pack) {
+            findAndCreatePack(PackType.SERVER_DATA, "dtnp_vanilla_variants_spawn",
+                Component.literal("DTNP Armored Paws Spawn"), 
+                PackSource.FEATURE, false, Position.TOP)
+                .ifPresent(pack_consumer);
+        }
     }
 
     public static String getBuiltinPackLocationNamespace(String id) {

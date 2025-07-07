@@ -2,9 +2,14 @@ package dtnpaletteofpaws.common.data;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
+
+import dtnpaletteofpaws.DTNRegistries;
+import dtnpaletteofpaws.VanillaWolfVariants;
 import dtnpaletteofpaws.WolfVariants;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.Util;
+import dtnpaletteofpaws.common.variant.WolfVariant;
 import dtnpaletteofpaws.common.variant.biome_config.WolfBiomeConfig;
 import dtnpaletteofpaws.common.variant.biome_config.WolfBiomeConfigs;
 import net.minecraft.core.HolderLookup;
@@ -33,7 +38,15 @@ public class DTNWolfBiomeConfigPackProvider {
         });
         pack_gen.addProvider(wolfBiomeConfigDataProvFactory(
             prov, DTNWolfBiomeConfigPackProvider::createWolfSpawnRateIncContent));
-            
+
+        pack_gen = gen.getBuiltinDatapack(event.includeServer(), 
+            Constants.MOD_ID, "dtnp_vanilla_variants_spawn");
+        pack_gen.addProvider(pack_output -> {
+            return PackMetadataGenerator.forFeaturePack(pack_output, 
+                Component.literal("Add vanilla's Armored Paws variants as DTNP Wolf Spawn."));
+        });
+        pack_gen.addProvider(wolfBiomeConfigDataProvFactory(
+            prov, DTNWolfBiomeConfigPackProvider::createVanillaVariantSpawnContent));
     }
 
     public static void createWolfSpawnRateIncContent(BootstrapContext<WolfBiomeConfig> ctx) {
@@ -237,6 +250,65 @@ public class DTNWolfBiomeConfigPackProvider {
             .packSize(1, 4)
             .spawnChance(0.2f)
             .buildAndRegister();
+    }
+
+    public static void createVanillaVariantSpawnContent(BootstrapContext<WolfBiomeConfig> ctx) {
+        getVanillaBuilder(ctx, VanillaWolfVariants.WOOD)
+            .biome(Biomes.FOREST)
+            .spawnChance(0.11f)
+            .packSize(4, 4)
+            .buildAndRegister();
+        getVanillaBuilder(ctx, VanillaWolfVariants.ASHEN)
+            .biome(Biomes.SNOWY_TAIGA)
+            .spawnChance(0.13f)
+            .packSize(4, 4)
+            .buildAndRegister();
+        getVanillaBuilder(ctx, VanillaWolfVariants.RUSTY)
+            .biome(Biomes.SPARSE_JUNGLE)
+            .spawnChance(0.14f)
+            .packSize(2, 4)
+            .buildAndRegister();
+        getVanillaBuilder(ctx, VanillaWolfVariants.SNOWY)
+            .biome(Biomes.GROVE)
+            .spawnChance(0.08f)
+            .packSize(1, 1)
+            .buildAndRegister();
+        getVanillaBuilder(ctx, VanillaWolfVariants.SPOTTED)
+            .biome(Biomes.SAVANNA_PLATEAU)
+            .spawnChance(0.12f)
+            .packSize(4, 8)
+            .buildAndRegister();
+        getVanillaBuilder(ctx, VanillaWolfVariants.BLACK)
+            .biome(Biomes.OLD_GROWTH_PINE_TAIGA)
+            .spawnChance(0.13f)
+            .packSize(4, 4)
+            .buildAndRegister();
+        getVanillaBuilder(ctx, VanillaWolfVariants.PALE)
+            .biome(Biomes.TAIGA)
+            .spawnChance(0.13f)
+            .packSize(4, 4)
+            .buildAndRegister();
+        getVanillaBuilder(ctx, VanillaWolfVariants.CHESTNUT)
+            .biome(Biomes.OLD_GROWTH_SPRUCE_TAIGA)
+            .spawnChance(0.13f)
+            .packSize(4, 4)
+            .buildAndRegister();
+        getVanillaBuilder(ctx, VanillaWolfVariants.STRIPED)
+            .biome(Biomes.WOODED_BADLANDS)
+            .spawnChance(0.25f)
+            .packSize(4, 8)
+            .buildAndRegister();
+    }
+
+    private static WolfBiomeConfig.Builder getVanillaBuilder(BootstrapContext<WolfBiomeConfig> ctx, 
+        Supplier<WolfVariant> variant_sup) {
+        var variant = variant_sup.get();
+        var variant_reg = DTNRegistries.DTN_WOLF_VARIANT.get();
+        var wolf_variant_id = variant_reg.getKey(variant);
+        if (wolf_variant_id == null)
+            throw new IllegalStateException("unregistered wolf variant");
+        var register_id = Util.getResource("vanilla_" + wolf_variant_id.getPath());
+        return WolfBiomeConfig.builder(ctx, register_id).variant(variant);
     }
 
     public static DataProvider.Factory<DatapackBuiltinEntriesProvider> 
