@@ -57,7 +57,7 @@ public class WolfVariants {
     public static final Supplier<WolfVariant> CHORUS = register("chorus");
     public static final Supplier<WolfVariant> WANDERING_SOUL = register("wandering_soul", WanderingSoulWolfVariant::new);
     public static final Supplier<WolfVariant> SANGUINE = register("sanguine", p -> { p.fireImmune(); });
-    public static final Supplier<WolfVariant> DESICCATED = register("desiccated");
+    public static final Supplier<WolfVariant> DESICCATED = register("desiccated", p -> { p.fireImmune(); });
     public static final Supplier<WolfVariant> FROSTY = register("frosty", FrostyWolfVariant::new);
     public static final Supplier<WolfVariant> ICY = register("icy");
     public static final Supplier<WolfVariant> SOOTY = register("sooty");
