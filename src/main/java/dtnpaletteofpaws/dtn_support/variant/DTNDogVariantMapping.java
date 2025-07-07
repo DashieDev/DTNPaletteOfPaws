@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableMap;
 import doggytalents.DogVariants;
 import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.util.DogVariantUtil;
+import dtnpaletteofpaws.VanillaWolfVariants;
 import dtnpaletteofpaws.WolfVariants;
 import dtnpaletteofpaws.common.variant.WolfVariant;
 
@@ -61,6 +62,15 @@ public class DTNDogVariantMapping {
             .put(WolfVariants.CAKE.get(), DTNSupportDogVariants.CAKE.get())
             .put(WolfVariants.CHARCOAL.get(), DTNSupportDogVariants.CHARCOAL.get())
             .put(WolfVariants.SCULK.get(), DTNSupportDogVariants.SCULK.get())
+            .put(VanillaWolfVariants.PALE.get(), DogVariants.PALE.get())
+            .put(VanillaWolfVariants.CHESTNUT.get(), DogVariants.CHESTNUT.get())
+            .put(VanillaWolfVariants.STRIPED.get(), DogVariants.STRIPED.get())
+            .put(VanillaWolfVariants.WOOD.get(), DogVariants.WOOD.get())
+            .put(VanillaWolfVariants.RUSTY.get(), DogVariants.RUSTY.get())
+            .put(VanillaWolfVariants.BLACK.get(), DogVariants.BLACK.get())
+            .put(VanillaWolfVariants.SNOWY.get(), DogVariants.SNOWY.get())
+            .put(VanillaWolfVariants.ASHEN.get(), DogVariants.ASHEN.get())
+            .put(VanillaWolfVariants.SPOTTED.get(), DogVariants.SPOTTED.get())
             .build();
     }
 
