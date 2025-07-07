@@ -78,5 +78,6 @@ public class DTNPaletteOfPaws {
 
     //FABRIC TODO:
     //Add PackHandler entry
+    //Init VanillaWolfVariants.
 
 }
