@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:forest",
+  "max_count": 4,
+  "min_count": 4,
+  "spawn_chance": 0.11,
+  "variants": [
+    "minecraft:woods"
+  ]
+}

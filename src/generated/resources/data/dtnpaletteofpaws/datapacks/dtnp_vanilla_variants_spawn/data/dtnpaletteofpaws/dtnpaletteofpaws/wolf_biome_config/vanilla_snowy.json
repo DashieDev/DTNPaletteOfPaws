@@ -1,0 +1,7 @@
+{
+  "biomes": "minecraft:grove",
+  "spawn_chance": 0.08,
+  "variants": [
+    "minecraft:snowy"
+  ]
+}
