@@ -37,6 +37,7 @@ public class DTNPaletteOfPaws {
         mod_event_bus.addListener(DTNRegistries::onNewRegistry);
         mod_event_bus.addListener(DTNRegistries::onNewDataRegistry);
         WolfVariants.DTN_WOLF_VARIANT.register(mod_event_bus);
+        VanillaWolfVariants.VANILLA_WOLF_VARIANT.register(mod_event_bus);
         DTNEntityTypes.ENTITIES.register(mod_event_bus);
         DTNSerializers.SERIALIZERS.register(mod_event_bus);
         DTNParticles.PARTICLES.register(mod_event_bus);
