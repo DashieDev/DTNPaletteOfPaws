@@ -4,8 +4,9 @@
     "minecraft:end_stone"
   ],
   "can_spawn_in_dark": true,
+  "spawn_chance": 0.9,
   "variants": [
-    "dtnpaletteofpaws:chorus",
-    "dtnpaletteofpaws:ender"
+    "dtnpaletteofpaws:ender",
+    "dtnpaletteofpaws:chorus"
   ]
 }

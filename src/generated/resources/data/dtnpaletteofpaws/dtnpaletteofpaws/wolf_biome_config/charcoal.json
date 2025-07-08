@@ -1,0 +1,13 @@
+{
+  "biomes": "minecraft:savanna",
+  "blocks": [
+    "minecraft:deepslate"
+  ],
+  "can_spawn_in_dark": true,
+  "max_count": 2,
+  "placement_type": "underground",
+  "spawn_chance": 0.1,
+  "variants": [
+    "dtnpaletteofpaws:charcoal"
+  ]
+}

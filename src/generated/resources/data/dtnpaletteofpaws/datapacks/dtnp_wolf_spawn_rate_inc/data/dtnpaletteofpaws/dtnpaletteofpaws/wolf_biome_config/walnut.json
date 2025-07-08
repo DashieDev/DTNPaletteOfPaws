@@ -1,0 +1,8 @@
+{
+  "biomes": "minecraft:old_growth_spruce_taiga",
+  "max_count": 3,
+  "spawn_chance": 0.3,
+  "variants": [
+    "dtnpaletteofpaws:walnut"
+  ]
+}

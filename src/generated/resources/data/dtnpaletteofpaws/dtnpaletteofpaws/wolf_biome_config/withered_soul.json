@@ -1,10 +1,11 @@
 {
   "biomes": "minecraft:soul_sand_valley",
   "blocks": [
-    "minecraft:soul_soil",
-    "minecraft:soul_sand"
+    "minecraft:soul_sand",
+    "minecraft:soul_soil"
   ],
   "can_spawn_in_dark": true,
+  "spawn_chance": 0.1,
   "variants": [
     "dtnpaletteofpaws:withered_soul"
   ]
