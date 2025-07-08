@@ -1,7 +1,9 @@
 package dtnpaletteofpaws.common.event;
 
 import doggytalents.forge_imitate.event.EntityJoinLevelEvent;
+import doggytalents.forge_imitate.event.ServerStoppedEvent;
 import dtnpaletteofpaws.common.entity.DTNWolf;
+import dtnpaletteofpaws.common.forge_imitate.ServerAboutToStartEvent;
 import dtnpaletteofpaws.common.spawn.DTNWolfStaticSpawnManager;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -23,12 +25,12 @@ public class EventHandler {
         }
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onServerAboutToStart(final ServerAboutToStartEvent event) {
         DTNWolfStaticSpawnManager.onServerStarting(event.getServer());
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onServerStopped(final ServerStoppedEvent event) {
         DTNWolfStaticSpawnManager.onServerStopped();
     }

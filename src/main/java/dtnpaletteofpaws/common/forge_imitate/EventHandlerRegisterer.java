@@ -6,6 +6,7 @@ import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry.InstanceEventCallBack;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry.SingleEventCallBack;
 import doggytalents.forge_imitate.event.PlayerInteractEvent;
+import doggytalents.forge_imitate.event.ServerStoppedEvent;
 import dtnpaletteofpaws.DTNEntityTypes;
 import dtnpaletteofpaws.common.event.EventHandler;
 import dtnpaletteofpaws.dtn_support.DTNSupportEventHandler;
@@ -26,6 +27,18 @@ public class EventHandlerRegisterer {
             new InstanceEventCallBack<EventHandler, EntityJoinLevelEvent>
                 (handlerIst, EntityJoinLevelEvent.class,
                     (x, y) -> x.onEntitySpawn(y)
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, ServerAboutToStartEvent>
+                (handlerIst, ServerAboutToStartEvent.class,
+                    (x, y) -> x.onServerAboutToStart(y)
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, ServerStoppedEvent>
+                (handlerIst, ServerStoppedEvent.class,
+                    (x, y) -> x.onServerStopped(y)
                 )
         );
         EventCallbacksRegistry.registerCallback(
