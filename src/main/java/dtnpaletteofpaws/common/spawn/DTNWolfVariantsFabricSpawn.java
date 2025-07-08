@@ -59,28 +59,28 @@ public class DTNWolfVariantsFabricSpawn {
     }
 
     public static void init() {
-        registerCherryWolfModifier();
-        registerLemonyLimeWolfModifier();
-        registerHimalayanSaltWolfModifier();
-        registerBambooWolfModifier();
-        registerCrimsonWolfModifier();
-        registerWarpedWolfModifier();
-        registerMoltenWolfModifier();
-        registerBirchWolfModifier();
-        registerPistachioWolfModifier();
-        registerGuacamoleWolfModifier();
-        registerYuzuWolfModifier();
-        registerCaffeinePackModifier();
-        registerWitheredSoulWolfModifier();
-        registerMushroomPackModifier();
-        registerDesertSuiteModifier();
-        registerBonitoFlakesWolfModifier();
-        registerGelatoSuiteModifier();
-        registerWalnutWolfModifier();
-        registerCoralWolfWaterModifier();
-        registerNetherWasteWolfModifier();
-        registerIcyWolfModifier();
-        registerSavannaSpawnModifier();
+        // registerCherryWolfModifier();
+        // registerLemonyLimeWolfModifier();
+        // registerHimalayanSaltWolfModifier();
+        // registerBambooWolfModifier();
+        // registerCrimsonWolfModifier();
+        // registerWarpedWolfModifier();
+        // registerMoltenWolfModifier();
+        // registerBirchWolfModifier();
+        // registerPistachioWolfModifier();
+        // registerGuacamoleWolfModifier();
+        // registerYuzuWolfModifier();
+        // registerCaffeinePackModifier();
+        // registerWitheredSoulWolfModifier();
+        // registerMushroomPackModifier();
+        // registerDesertSuiteModifier();
+        // registerBonitoFlakesWolfModifier();
+        // registerGelatoSuiteModifier();
+        // registerWalnutWolfModifier();
+        // registerCoralWolfWaterModifier();
+        // registerNetherWasteWolfModifier();
+        // registerIcyWolfModifier();
+        // registerSavannaSpawnModifier();
     }
 
     private static void registerCherryWolfModifier() {
