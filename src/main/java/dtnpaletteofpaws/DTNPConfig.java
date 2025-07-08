@@ -21,6 +21,7 @@ public class DTNPConfig {
     public static class ServerConfig {
 
         public ModConfigSpec.BooleanValue DTNP_STATIC_SPAWN;
+        public ModConfigSpec.BooleanValue DTNP_STATIC_UNDERGROUND_SPAWN;
 
         public ServerConfig(ModConfigSpec.Builder builder) {
             DTNP_STATIC_SPAWN = builder
@@ -30,6 +31,12 @@ public class DTNPConfig {
                 .translation("dtnpaletteofpaws.config.dtnp_static_spawn")
                 .worldRestart()
                 .define("dtnp_static_spawn", true);
+            DTNP_STATIC_UNDERGROUND_SPAWN = builder
+                .comment("Set this to false to prevent DTNP Chunk Generation Spawn")
+                .comment("from doing any Underground Spawn (e.g Sculk, Charcoal).")
+                .translation("dtnpaletteofpaws.config.dtnp_static_underground_spawn")
+                .worldRestart()
+                .define("dtnp_static_underground_spawn", true);
         }
 
         public static<T> T getConfigOrDefault(ConfigValue<T> config, T defaultVal) {
