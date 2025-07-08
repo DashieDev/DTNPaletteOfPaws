@@ -1,6 +1,6 @@
 {
   "biomes": "minecraft:meadow",
-  "spawn_chance": 0.17,
+  "spawn_chance": 0.07,
   "variants": [
     "dtnpaletteofpaws:guacamole"
   ]
