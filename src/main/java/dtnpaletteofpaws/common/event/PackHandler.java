@@ -3,6 +3,7 @@ package dtnpaletteofpaws.common.event;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import dtnpaletteofpaws.common.fabric_helper.pack_handler.FabricPackHandler;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.lib.Resources;
 import dtnpaletteofpaws.common.util.Util;
@@ -83,7 +84,7 @@ public class PackHandler { // Reflect change in FabricPackHandler
     // }
 
     public static boolean isBuiltinPack(String id) {
-        return id != null && id.startsWith(BUILTIN_PREFIX);
+        return FabricPackHandler.isBuiltinPack(id);
     }
 
 }
