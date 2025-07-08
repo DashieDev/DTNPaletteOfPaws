@@ -33,6 +33,7 @@ public class DTNPaletteOfPawsEntry implements ModInitializer {
     private void initAllModRegistries() {
         DTNEntityTypes.ENTITIES.initAll();
         WolfVariants.DTN_WOLF_VARIANT.initAll();
+        VanillaWolfVariants.VANILLA_WOLF_VARIANT.initAll();
         DTNItems.ITEM.initAll();
         DTNParticles.PARTICLES.initAll();
     }

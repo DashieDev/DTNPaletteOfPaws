@@ -71,7 +71,7 @@ public class DTNWolfStaticSpawnManager {
         List<WolfBiomeConfig> configs = null;
         while (random.nextFloat() < biome_chance) {
             if (configs == null) {
-                configs = configByBiome.getOrDefault(biome.getKey(), List.of());
+                configs = configByBiome.getOrDefault(biome.unwrapKey().orElseThrow(), List.of());
                 if (configs.isEmpty())
                     break;
             }
@@ -221,7 +221,7 @@ public class DTNWolfStaticSpawnManager {
         wolf.moveTo(spawn_x, check_pos.getY(), spawn_z, rand.nextFloat() * 360.0F, 0.0F);
         
         boolean spawn_position_check =
-            net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(wolf, level_accessor, MobSpawnType.CHUNK_GENERATION)
+            /*net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(wolf, level_accessor, MobSpawnType.CHUNK_GENERATION)*/true
             && wolf.DTNWolfCheckAdditionalSpawnObstruction(level_accessor, config);
         if (!spawn_position_check) {
             //ChopinLogger.l("DTNP Spawn failed at (2)");
@@ -261,7 +261,7 @@ public class DTNWolfStaticSpawnManager {
                 return;
             
             for (var biome : config.biomes()) {
-                new_map.computeIfAbsent(biome.getKey(), key -> new ArrayList<>())
+                new_map.computeIfAbsent(biome.unwrapKey().orElseThrow(), key -> new ArrayList<>())
                     .add(config);
             }
         });

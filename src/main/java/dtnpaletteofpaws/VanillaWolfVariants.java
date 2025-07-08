@@ -2,15 +2,15 @@ package dtnpaletteofpaws;
 
 import java.util.function.Supplier;
 
+import doggytalents.forge_imitate.registry.DeferredRegister;
 import dtnpaletteofpaws.common.util.Util;
 import dtnpaletteofpaws.common.variant.WolfVariant;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 //To provide the ability to spawn the new wolf variants in 1.20.4 and under to be used with DTN.
 public class VanillaWolfVariants {
         
-    public static final DeferredRegister<WolfVariant> VANILLA_WOLF_VARIANT = DeferredRegister.create(DTNRegistries.Keys.DTN_WOLF_VARIANT, "minecraft");
+    public static final DeferredRegister<WolfVariant> VANILLA_WOLF_VARIANT = DeferredRegister.create(() -> DTNRegistries.DTN_WOLF_VARIANT.get(), "minecraft");
 
     //Minecraft's
     public static final Supplier<WolfVariant> PALE = registerVanilla("pale");
