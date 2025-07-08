@@ -249,10 +249,15 @@ public class DTNWolfStaticSpawnManager {
         var new_map = new HashMap
             <ResourceKey<Biome>, List<WolfBiomeConfig>>();
         var config_reg = prov.lookupOrThrow(WolfBiomeConfigs.regKey());
+        boolean underground_spawn = DTNPConfig.SERVER.DTNP_STATIC_UNDERGROUND_SPAWN.get();
         config_reg.listElements().forEach(config_holder -> {
             var config = config_holder.value();
             if (!config.doSpawn())
                 return;
+            if (!underground_spawn 
+                && config.placementType() == WolfSpawnPlacementType.UNDERGROUND)
+                return;
+            
             for (var biome : config.biomes()) {
                 new_map.computeIfAbsent(biome.getKey(), key -> new ArrayList<>())
                     .add(config);
