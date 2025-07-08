@@ -58,17 +58,17 @@ public class WolfBiomeConfigs {
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.BIRCH)
             .biome(Biomes.BIRCH_FOREST)
-            .spawnChance(0.02f)
+            .spawnChance(0.07f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.PISTACHIO)
             .biome(Biomes.MANGROVE_SWAMP)
             .extraSpawnableBlock(Blocks.MUD)
             .canSpawnInDark()
-            .spawnChance(0.09f)
+            .spawnChance(0.1f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.GUACAMOLE)
             .biome(Biomes.MEADOW)
-            .spawnChance(0.17f)
+            .spawnChance(0.07f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.YUZU)
             .biome(Biomes.SNOWY_BEACH)
