@@ -77,7 +77,17 @@ public class DTNWolfSpawnPlacements {
     public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, WolfBiomeConfig config) {
         var placement = config.placementType() == WolfSpawnPlacementType.WATER ?
             SpawnPlacementTypes.IN_WATER : SpawnPlacementTypes.ON_GROUND;
+        
+        boolean spawn_in_lava = configHasLavaSpawn(config)
+            && SpawnPlacementTypes.IN_LAVA
+                .isSpawnPositionOk(world, pos.below(), DTNEntityTypes.DTNWOLF.get());
+        if (spawn_in_lava)
+            return true;
         return placement.isSpawnPositionOk(world, pos, DTNEntityTypes.DTNWOLF.get());
+    }
+
+    private static boolean configHasLavaSpawn(WolfBiomeConfig config) {
+        return config.blocks().contains(Blocks.LAVA);
     }
 
     /**
