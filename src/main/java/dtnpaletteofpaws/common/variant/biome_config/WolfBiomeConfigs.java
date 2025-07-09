@@ -53,9 +53,12 @@ public class WolfBiomeConfigs {
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.MOLTEN)
             .biome(Biomes.BASALT_DELTAS)
-            .extraSpawnableBlock(Blocks.BASALT)
+            .extraSpawnableBlock(
+                Blocks.BASALT, Blocks.BLACKSTONE, 
+                Blocks.LAVA, Blocks.MAGMA_BLOCK
+            )
             .canSpawnInDark()
-            .spawnChance(0.25f)
+            .spawnChance(0.2f)
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.BIRCH)
             .biome(Biomes.BIRCH_FOREST)
