@@ -201,7 +201,8 @@ public class DTNWolfStaticSpawnManager {
         
         boolean spawn_rule_check = DTNWolfSpawnPlacements.DTNWolfSpawnableOn(config, level_accessor, MobSpawnType.CHUNK_GENERATION, check_pos, level_accessor.getRandom());
         if (!spawn_rule_check) {
-            //ChopinLogger.l("DTNP Spawn failed at check spawn rule : " + new Vec3(spawn_x, check_pos.getY(), spawn_z) );
+            // ChopinLogger.l("DTNP Spawn failed at check spawn rule : " + new Vec3(spawn_x, check_pos.getY(), spawn_z) 
+            //     + " variant : " + config.variants().stream().findAny().orElseThrow().id());
             return false;
         }
             
