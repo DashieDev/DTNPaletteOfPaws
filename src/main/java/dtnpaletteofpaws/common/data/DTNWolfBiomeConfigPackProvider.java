@@ -91,7 +91,10 @@ public class DTNWolfBiomeConfigPackProvider {
             .buildAndRegister();
         WolfBiomeConfig.builder(ctx, WolfVariants.MOLTEN)
             .biome(Biomes.BASALT_DELTAS)
-            .extraSpawnableBlock(Blocks.BASALT)
+            .extraSpawnableBlock(
+                Blocks.BASALT, Blocks.BLACKSTONE, 
+                Blocks.LAVA, Blocks.MAGMA_BLOCK
+            )
             .canSpawnInDark()
             .spawnChance(0.4f)
             .packSize(1, 3)
