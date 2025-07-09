@@ -73,3 +73,44 @@ Gelato Suite and Yuzu spawn is now rarer (Configurable)
 **1.2.8 - 20th April 2025**
 Happy Easter Sunday!
 New wolf variants: Cake 🍰
+
+**1.3.0 - 10th July 2025**
+===
+New Dedicated DTNP Wolf Static Spawn System for spawning DTNP Wolves upon Chunk Generation:
++ This system allow easier configuration of the static spawning of DTNP Wolves, including
+easier tuning of its rarity.
++ DTNP now chunk-generate-spawn DTNP wolf seperately from vanilla with respexct to the biome's creature probability.
++ WolfBiomeConfig now completely dictates how each variant will be spawned using the new system. 
++ Each Wolf Biome Config have a dedicated float spawn chance that is independent from other spawns 
+and can be easily tuned. This entry is optional and if ommitted or having a non positive value, the config
+will not be used to spawn DTNP wolf upon Chunk Generation.
++ Each WolfBiomeConfig will now also have optional minCount and maxCount and a float spawnChance 
+to facilitate spawning.
++ This also fix a questionable vanilla behaviour where the checking spawn pos being at the corner of the block
+rather than the middle.
++ This system can be entirely disabled in the Config. If this is disabled, DTNP Wolves will not
+spawn upon Chunk Generation.
+===
+Added Underground Spawning upon Chunk Generation for DTNP Wolves:
++ DTNP Wolves now can spawn underground in caves.
++ Can be disabled via config.
+===
+Underground Suite
++ Charcoal - Spawn randomly underground in Savanna Biomes
++ Sculk - Spawn randomly in Deep Dark Biomes located under Jagged/Frozen/Strony Peaks and Meadow.
+It dampens vibrations.
+===
+Added 2 DTNP Built-in Datapacks:
++ DTNP Wolf Spawn Increase: Make DTNP Wolves spawn more common.
++ (1.20 and under) DTNP Armored Paws Spawn: Added Vanilla's Armored Paws Variant in to be spawned as DTNP Wolves
+which can be trained into DTN Dogs.
++ You can access these Datapacks in the world creation screen or using the /datapack command. 
+===
+Water Suite Improvements
+# Refactor and improved Water Spawn.
+# Water Suite now rather stay at the bottom of the ocean than swim up towards the ocean surface.
+# Improve Water Suite Navigation.
+===
+# Tuned some variant spawn rate and allow Molten to spawn on more blocks and in lava.
+# Dessicated is now fireImmune.
+- Removed Obselete Feature and Config to make Gelato Suite and Yuzu spawn rarer. 
