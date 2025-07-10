@@ -17,6 +17,10 @@ public class Util {
         return new ResourceLocation(Constants.MOD_ID, name);
     }
 
+    public static ResourceLocation getVanillaResource(String name) {
+        return new ResourceLocation(name);
+    }
+
     public static <T> ResourceKey<Registry<T>> getRegistryKey(Class<T> type, String name) {
         return ResourceKey.<T>createRegistryKey(getResource(name));
     }

@@ -114,7 +114,7 @@ public class WolfBiomeConfig {
         
         private final ResourceKey<WolfBiomeConfig> id;
         private List<WolfVariant> variants = List.of();
-        private HolderSet<Biome> biomes = HolderSet.empty();
+        private HolderSet<Biome> biomes = HolderSet.direct(List.of());
         private List<Block> extraSpawnableBlocks = List.of();
         private boolean canSpawnInDark = false;
         private WolfSpawnPlacementType placementType = WolfSpawnPlacementType.GROUND;

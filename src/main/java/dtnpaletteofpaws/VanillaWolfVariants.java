@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import dtnpaletteofpaws.common.util.Util;
 import dtnpaletteofpaws.common.variant.WolfVariant;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
 
 //To provide the ability to spawn the new wolf variants in 1.20.4 and under to be used with DTN.
 public class VanillaWolfVariants {

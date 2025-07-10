@@ -34,12 +34,12 @@ import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 
 public class DTNWolfSpawnPlacements {
 
-    public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+    public static void onRegisterSpawnPlacements(SpawnPlacementRegisterEvent event) {
         event.register(
-            DTNEntityTypes.DTNWOLF.get(), SpawnPlacementTypes.ON_GROUND,
+            DTNEntityTypes.DTNWOLF.get(), SpawnPlacements.Type.ON_GROUND,
             Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
             DTNWolfSpawnPlacements::DTNWolfSpawnableOnDefault,
-            RegisterSpawnPlacementsEvent.Operation.OR
+            SpawnPlacementRegisterEvent.Operation.OR
         );
     }
 
@@ -72,14 +72,14 @@ public class DTNWolfSpawnPlacements {
 
     public static boolean spawnPlacementTypeCheck(LevelReader world, BlockPos pos, WolfBiomeConfig config) {
         var placement = config.placementType() == WolfSpawnPlacementType.WATER ?
-            SpawnPlacementTypes.IN_WATER : SpawnPlacementTypes.ON_GROUND;
+            SpawnPlacements.Type.IN_WATER : SpawnPlacements.Type.ON_GROUND;
         
         boolean spawn_in_lava = configHasLavaSpawn(config)
-            && SpawnPlacementTypes.IN_LAVA
-                .isSpawnPositionOk(world, pos.below(), DTNEntityTypes.DTNWOLF.get());
+            && NaturalSpawner.canSpawnAtBody(SpawnPlacements.Type.IN_LAVA,
+                world, pos.below(), DTNEntityTypes.DTNWOLF.get());
         if (spawn_in_lava)
             return true;
-        return placement.isSpawnPositionOk(world, pos, DTNEntityTypes.DTNWOLF.get());
+        return NaturalSpawner.canSpawnAtBody(placement, world, pos, DTNEntityTypes.DTNWOLF.get());
     }
 
     private static boolean configHasLavaSpawn(WolfBiomeConfig config) {
@@ -117,7 +117,7 @@ public class DTNWolfSpawnPlacements {
 
         var check_pos_below = check_pos.below();
         var below_state = world.getBlockState(check_pos_below);
-        boolean below_state_pathfindable = below_state.isPathfindable(
+        boolean below_state_pathfindable = below_state.isPathfindable(world, check_pos_below,
             placementType == WolfSpawnPlacementType.WATER ? 
                 PathComputationType.WATER : PathComputationType.LAND
         );
@@ -161,7 +161,7 @@ public class DTNWolfSpawnPlacements {
         
         var check_pos_below = check_pos.below();
         var below_state = world.getBlockState(check_pos_below);
-        boolean below_state_pathfindable = below_state.isPathfindable(PathComputationType.LAND);
+        boolean below_state_pathfindable = below_state.isPathfindable(world, check_pos_below, PathComputationType.LAND);
          if (below_state_pathfindable && below_state.getFluidState().isEmpty()) {
             return check_pos_below;
         }

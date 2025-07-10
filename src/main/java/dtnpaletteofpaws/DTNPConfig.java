@@ -20,10 +20,10 @@ public class DTNPConfig {
 
     public static class ServerConfig {
 
-        public ModConfigSpec.BooleanValue DTNP_STATIC_SPAWN;
-        public ModConfigSpec.BooleanValue DTNP_STATIC_UNDERGROUND_SPAWN;
+        public ForgeConfigSpec.BooleanValue DTNP_STATIC_SPAWN;
+        public ForgeConfigSpec.BooleanValue DTNP_STATIC_UNDERGROUND_SPAWN;
 
-        public ServerConfig(ModConfigSpec.Builder builder) {
+        public ServerConfig(ForgeConfigSpec.Builder builder) {
             DTNP_STATIC_SPAWN = builder
                 .comment("Set this to false to disable DTNP Chunk Generation Spawn.")
                 .comment("Notice that when this option is disabled DTNP Wolves will not")

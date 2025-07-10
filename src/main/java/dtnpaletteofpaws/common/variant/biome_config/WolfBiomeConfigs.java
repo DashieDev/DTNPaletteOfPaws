@@ -5,7 +5,7 @@ import dtnpaletteofpaws.WolfVariants;
 import dtnpaletteofpaws.common.spawn.WolfSpawnPlacementType;
 import dtnpaletteofpaws.common.util.Util;
 import net.minecraft.core.Registry;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;

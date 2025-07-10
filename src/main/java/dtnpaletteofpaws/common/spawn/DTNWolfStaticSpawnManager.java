@@ -71,7 +71,7 @@ public class DTNWolfStaticSpawnManager {
         List<WolfBiomeConfig> configs = null;
         while (random.nextFloat() < biome_chance) {
             if (configs == null) {
-                configs = configByBiome.getOrDefault(biome.getKey(), List.of());
+                configs = configByBiome.getOrDefault(biome.unwrapKey().orElse(null), List.of());
                 if (configs.isEmpty())
                     break;
             }
@@ -191,7 +191,7 @@ public class DTNWolfStaticSpawnManager {
         spawn_z = Mth.clamp(spawn_z, min_z + entity_width, min_z + 16.0 - entity_width);
         check_pos = BlockPos.containing(spawn_x, check_pos.getY(), spawn_z);
 
-        var spawn_aabb = wolfType().getSpawnAABB(spawn_x, (double)check_pos.getY(), spawn_z);
+        var spawn_aabb = wolfType().getAABB(spawn_x, (double)check_pos.getY(), spawn_z);
         boolean no_collision_at_pos = level_accessor.noCollision(spawn_aabb);
         if (!no_collision_at_pos) {
             
@@ -222,7 +222,7 @@ public class DTNWolfStaticSpawnManager {
         wolf.moveTo(spawn_x, check_pos.getY(), spawn_z, rand.nextFloat() * 360.0F, 0.0F);
         
         boolean spawn_position_check =
-            net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(wolf, level_accessor, MobSpawnType.CHUNK_GENERATION)
+            net.minecraftforge.event.ForgeEventFactory.checkSpawnPosition(wolf, level_accessor, MobSpawnType.CHUNK_GENERATION)
             && wolf.DTNWolfCheckAdditionalSpawnObstruction(level_accessor, config);
         if (!spawn_position_check) {
             //ChopinLogger.l("DTNP Spawn failed at (2)");
@@ -233,7 +233,7 @@ public class DTNWolfStaticSpawnManager {
         if (spawn_group0 == null)
             spawn_group0 = wolf.initializeGroupData(level_accessor, config);
         var spawngroupdata = wolf.finalizeSpawn(
-            level_accessor, level_accessor.getCurrentDifficultyAt(wolf.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawn_group0
+            level_accessor, level_accessor.getCurrentDifficultyAt(wolf.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawn_group0, null
         );
         spawn_group_mut.setValue(spawngroupdata);
         level_accessor.addFreshEntityWithPassengers(wolf);
@@ -262,7 +262,7 @@ public class DTNWolfStaticSpawnManager {
                 return;
             
             for (var biome : config.biomes()) {
-                new_map.computeIfAbsent(biome.getKey(), key -> new ArrayList<>())
+                new_map.computeIfAbsent(biome.unwrapKey().orElse(null), key -> new ArrayList<>())
                     .add(config);
             }
         });
