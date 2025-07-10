@@ -4,8 +4,10 @@
     "minecraft:mycelium"
   ],
   "can_spawn_in_dark": true,
+  "max_count": 4,
+  "spawn_chance": 0.38,
   "variants": [
-    "dtnpaletteofpaws:red_mushroom",
-    "dtnpaletteofpaws:brown_mushroom"
+    "dtnpaletteofpaws:brown_mushroom",
+    "dtnpaletteofpaws:red_mushroom"
   ]
 }

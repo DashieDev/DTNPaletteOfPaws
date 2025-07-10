@@ -1,5 +1,6 @@
 {
   "biomes": "minecraft:cherry_grove",
+  "spawn_chance": 0.17,
   "variants": [
     "dtnpaletteofpaws:cherry"
   ]

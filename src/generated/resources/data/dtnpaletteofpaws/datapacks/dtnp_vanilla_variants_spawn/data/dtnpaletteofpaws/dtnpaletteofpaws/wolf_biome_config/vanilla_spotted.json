@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:savanna_plateau",
+  "max_count": 8,
+  "min_count": 4,
+  "spawn_chance": 0.12,
+  "variants": [
+    "minecraft:spotted"
+  ]
+}

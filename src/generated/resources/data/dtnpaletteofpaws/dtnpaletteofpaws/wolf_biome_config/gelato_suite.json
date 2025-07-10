@@ -1,10 +1,12 @@
 {
   "biomes": "minecraft:snowy_plains",
   "can_spawn_in_dark": true,
+  "max_count": 3,
+  "spawn_chance": 0.15,
   "variants": [
-    "dtnpaletteofpaws:vanilla",
-    "dtnpaletteofpaws:cake",
+    "dtnpaletteofpaws:chocolate",
     "dtnpaletteofpaws:strawberry",
-    "dtnpaletteofpaws:chocolate"
+    "dtnpaletteofpaws:vanilla",
+    "dtnpaletteofpaws:cake"
   ]
 }

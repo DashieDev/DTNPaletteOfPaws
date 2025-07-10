@@ -3,6 +3,7 @@
   "blocks": [
     "minecraft:sand"
   ],
+  "spawn_chance": 0.3,
   "variants": [
     "dtnpaletteofpaws:yuzu"
   ]

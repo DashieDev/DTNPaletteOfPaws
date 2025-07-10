@@ -4,6 +4,7 @@
     "minecraft:crimson_nylium"
   ],
   "can_spawn_in_dark": true,
+  "spawn_chance": 0.25,
   "variants": [
     "dtnpaletteofpaws:crimson"
   ]

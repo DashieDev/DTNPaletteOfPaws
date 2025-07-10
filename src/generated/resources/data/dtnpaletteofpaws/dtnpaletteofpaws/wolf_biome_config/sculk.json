@@ -1,0 +1,18 @@
+{
+  "biomes": [
+    "minecraft:jagged_peaks",
+    "minecraft:frozen_peaks",
+    "minecraft:stony_peaks",
+    "minecraft:meadow"
+  ],
+  "blocks": [
+    "minecraft:deepslate",
+    "minecraft:sculk"
+  ],
+  "can_spawn_in_dark": true,
+  "placement_type": "underground",
+  "spawn_chance": 0.1,
+  "variants": [
+    "dtnpaletteofpaws:sculk"
+  ]
+}

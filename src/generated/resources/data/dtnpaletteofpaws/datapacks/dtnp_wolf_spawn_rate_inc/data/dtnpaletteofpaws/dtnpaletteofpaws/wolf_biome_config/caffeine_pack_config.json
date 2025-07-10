@@ -1,0 +1,12 @@
+{
+  "biomes": "minecraft:dark_forest",
+  "can_spawn_in_dark": true,
+  "max_count": 4,
+  "spawn_chance": 0.15,
+  "variants": [
+    "dtnpaletteofpaws:cappuccino",
+    "dtnpaletteofpaws:latte",
+    "dtnpaletteofpaws:mocha",
+    "dtnpaletteofpaws:espresso"
+  ]
+}

@@ -1,10 +1,12 @@
 {
   "biomes": "minecraft:savanna",
   "can_spawn_in_dark": true,
+  "max_count": 4,
+  "spawn_chance": 0.1,
   "variants": [
-    "dtnpaletteofpaws:muddy",
+    "dtnpaletteofpaws:sooty",
     "dtnpaletteofpaws:brindle",
-    "dtnpaletteofpaws:root_beer",
-    "dtnpaletteofpaws:sooty"
+    "dtnpaletteofpaws:muddy",
+    "dtnpaletteofpaws:root_beer"
   ]
 }
