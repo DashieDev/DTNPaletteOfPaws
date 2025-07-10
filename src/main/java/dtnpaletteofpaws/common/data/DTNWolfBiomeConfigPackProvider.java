@@ -49,7 +49,7 @@ public class DTNWolfBiomeConfigPackProvider {
             prov, DTNWolfBiomeConfigPackProvider::createVanillaVariantSpawnContent));
     }
 
-    public static void createWolfSpawnRateIncContent(BootstrapContext<WolfBiomeConfig> ctx) {
+    public static void createWolfSpawnRateIncContent(BootstapContext<WolfBiomeConfig> ctx) {
         WolfBiomeConfig.builder(ctx, WolfVariants.CHERRY)
             .biome(Biomes.CHERRY_GROVE)
             .spawnChance(0.3f)
@@ -255,7 +255,7 @@ public class DTNWolfBiomeConfigPackProvider {
             .buildAndRegister();
     }
 
-    public static void createVanillaVariantSpawnContent(BootstrapContext<WolfBiomeConfig> ctx) {
+    public static void createVanillaVariantSpawnContent(BootstapContext<WolfBiomeConfig> ctx) {
         getVanillaBuilder(ctx, VanillaWolfVariants.WOOD)
             .biome(Biomes.FOREST)
             .spawnChance(0.11f)
@@ -303,7 +303,7 @@ public class DTNWolfBiomeConfigPackProvider {
             .buildAndRegister();
     }
 
-    private static WolfBiomeConfig.Builder getVanillaBuilder(BootstrapContext<WolfBiomeConfig> ctx, 
+    private static WolfBiomeConfig.Builder getVanillaBuilder(BootstapContext<WolfBiomeConfig> ctx, 
         Supplier<WolfVariant> variant_sup) {
         var variant = variant_sup.get();
         var variant_reg = DTNRegistries.DTN_WOLF_VARIANT.get();

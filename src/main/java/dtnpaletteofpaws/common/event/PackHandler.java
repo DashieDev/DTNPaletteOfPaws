@@ -3,22 +3,23 @@ package dtnpaletteofpaws.common.event;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import dtnpaletteofpaws.common.forward_imitate.DatapackUtil_1_20_under;
+import dtnpaletteofpaws.common.forward_imitate.DatapackUtil_1_20_under.KnownPack;
+import dtnpaletteofpaws.common.forward_imitate.DatapackUtil_1_20_under.PackLocationInfo;
+import dtnpaletteofpaws.common.forward_imitate.DatapackUtil_1_20_under.PackSelectionConfig;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.lib.Resources;
 import dtnpaletteofpaws.common.util.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackLocationInfo;
-import net.minecraft.server.packs.PackSelectionConfig;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.BuiltInPackSource;
-import net.minecraft.server.packs.repository.KnownPack;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraft.server.packs.repository.Pack.Position;
-import net.neoforged.fml.ModList;
-import net.neoforged.neoforge.event.AddPackFindersEvent;
 
 public class PackHandler {
 
@@ -75,10 +76,10 @@ public class PackHandler {
             BUILTIN_PREFIX + "/" + id, display_name, 
             source, Optional.of(known_pack_info));
         
-        var pack = Pack.readMetaAndCreate(
+        var pack = DatapackUtil_1_20_under.readMetaAndCreate(
             pack_location_info,
-            BuiltInPackSource.fromName(
-                (pack_info) -> new PathPackResources(pack_info, res_path)),
+            DatapackUtil_1_20_under.BuiltInPackSource.fromName(
+                (pack_info) -> new PathPackResources(pack_info, res_path, true)),
             type,
             new PackSelectionConfig(always_active, position, false));
         return Optional.ofNullable(pack);
