@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import dtnpaletteofpaws.DTNRegistries;
 import dtnpaletteofpaws.VanillaWolfVariants;
 import dtnpaletteofpaws.WolfVariants;
+import dtnpaletteofpaws.common.data.forge_data.ForgeDatapackProviderUtil;
 import dtnpaletteofpaws.common.lib.Constants;
 import dtnpaletteofpaws.common.util.Util;
 import dtnpaletteofpaws.common.variant.WolfVariant;
@@ -17,12 +18,12 @@ import net.minecraft.core.RegistrySetBuilder.RegistryBootstrap;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.metadata.PackMetadataGenerator;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 public class DTNWolfBiomeConfigPackProvider {
 
@@ -30,7 +31,7 @@ public class DTNWolfBiomeConfigPackProvider {
         var gen = event.getGenerator();    
         var prov = event.getLookupProvider();
 
-        var pack_gen = gen.getBuiltinDatapack(event.includeServer(), 
+        var pack_gen = ForgeDatapackProviderUtil.getBuiltinDatapack(gen, event.includeServer(), 
             Constants.MOD_ID, "dtnp_wolf_spawn_rate_inc");
         pack_gen.addProvider(pack_output -> {
             return PackMetadataGenerator.forFeaturePack(pack_output, 
@@ -39,7 +40,7 @@ public class DTNWolfBiomeConfigPackProvider {
         pack_gen.addProvider(wolfBiomeConfigDataProvFactory(
             prov, DTNWolfBiomeConfigPackProvider::createWolfSpawnRateIncContent));
 
-        pack_gen = gen.getBuiltinDatapack(event.includeServer(), 
+        pack_gen = ForgeDatapackProviderUtil.getBuiltinDatapack(gen, event.includeServer(), 
             Constants.MOD_ID, "dtnp_vanilla_variants_spawn");
         pack_gen.addProvider(pack_output -> {
             return PackMetadataGenerator.forFeaturePack(pack_output, 
