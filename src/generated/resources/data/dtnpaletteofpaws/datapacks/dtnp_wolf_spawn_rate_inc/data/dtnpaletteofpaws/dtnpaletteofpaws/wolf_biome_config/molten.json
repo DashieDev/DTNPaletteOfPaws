@@ -1,7 +1,10 @@
 {
   "biomes": "minecraft:basalt_deltas",
   "blocks": [
-    "minecraft:basalt"
+    "minecraft:basalt",
+    "minecraft:blackstone",
+    "minecraft:lava",
+    "minecraft:magma_block"
   ],
   "can_spawn_in_dark": true,
   "max_count": 3,
