@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:taiga",
+  "max_count": 4,
+  "min_count": 4,
+  "spawn_chance": 0.13,
+  "variants": [
+    "minecraft:pale"
+  ]
+}

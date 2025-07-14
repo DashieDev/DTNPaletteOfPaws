@@ -1,0 +1,9 @@
+{
+  "biomes": "minecraft:wooded_badlands",
+  "max_count": 8,
+  "min_count": 4,
+  "spawn_chance": 0.25,
+  "variants": [
+    "minecraft:striped"
+  ]
+}

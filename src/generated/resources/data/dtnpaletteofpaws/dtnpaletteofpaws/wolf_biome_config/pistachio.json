@@ -4,6 +4,7 @@
     "minecraft:mud"
   ],
   "can_spawn_in_dark": true,
+  "spawn_chance": 0.1,
   "variants": [
     "dtnpaletteofpaws:pistachio"
   ]

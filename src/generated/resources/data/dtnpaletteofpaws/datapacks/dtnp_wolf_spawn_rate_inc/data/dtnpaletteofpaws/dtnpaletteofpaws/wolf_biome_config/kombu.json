@@ -1,0 +1,11 @@
+{
+  "biomes": "minecraft:desert",
+  "blocks": [
+    "minecraft:sand"
+  ],
+  "max_count": 3,
+  "spawn_chance": 0.1,
+  "variants": [
+    "dtnpaletteofpaws:kombu"
+  ]
+}
