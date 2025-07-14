@@ -30,7 +30,7 @@ public class DTNWolfBiomeConfigPackProvider {
         var gen = event.getGenerator();    
         var prov = event.getLookupProvider();
 
-        var pack_gen = gen.getBuiltinDatapack(event.includeServer(), 
+        var pack_gen = gen.getBuiltinDatapack(/*event.includeServer()*/true, 
             Constants.MOD_ID, "dtnp_wolf_spawn_rate_inc");
         pack_gen.addProvider(pack_output -> {
             return PackMetadataGenerator.forFeaturePack(pack_output, 
@@ -39,7 +39,7 @@ public class DTNWolfBiomeConfigPackProvider {
         pack_gen.addProvider(wolfBiomeConfigDataProvFactory(
             prov, DTNWolfBiomeConfigPackProvider::createWolfSpawnRateIncContent));
 
-        pack_gen = gen.getBuiltinDatapack(event.includeServer(), 
+        pack_gen = gen.getBuiltinDatapack(/*event.includeServer()*/true, 
             Constants.MOD_ID, "dtnp_vanilla_variants_spawn");
         pack_gen.addProvider(pack_output -> {
             return PackMetadataGenerator.forFeaturePack(pack_output, 

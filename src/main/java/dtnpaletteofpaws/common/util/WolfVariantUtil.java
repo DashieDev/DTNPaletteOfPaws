@@ -71,8 +71,8 @@ public class WolfVariantUtil {
     public static List<WolfBiomeConfig> getAllWolfBiomeConfigForBiome(RegistryAccess prov, Holder<Biome> biome, 
         Predicate<WolfBiomeConfig> extra_conditions) {
         //Optimize this to use a Map
-        var biome_config_reg = prov.registryOrThrow(WolfBiomeConfigs.regKey());
-        var filtered_config = biome_config_reg.holders()
+        var biome_config_reg = prov.lookupOrThrow(WolfBiomeConfigs.regKey());
+        var filtered_config = biome_config_reg.listElements()
             .filter(filter_config -> filter_config
                 .value().biomes().contains(biome))
             .map(x -> x.value())

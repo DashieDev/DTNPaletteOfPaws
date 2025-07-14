@@ -197,7 +197,7 @@ public class DTNWolfStaticSpawnManager {
             return false;
         }
         
-        boolean spawn_rule_check = DTNWolfSpawnPlacements.DTNWolfSpawnableOn(config, level_accessor, MobSpawnType.CHUNK_GENERATION, check_pos, level_accessor.getRandom());
+        boolean spawn_rule_check = DTNWolfSpawnPlacements.DTNWolfSpawnableOn(config, level_accessor, EntitySpawnReason.CHUNK_GENERATION, check_pos, level_accessor.getRandom());
         if (!spawn_rule_check) {
             // ChopinLogger.l("DTNP Spawn failed at check spawn rule : " + new Vec3(spawn_x, check_pos.getY(), spawn_z) 
             //     + " variant : " + config.variants().stream().findAny().orElseThrow().id());
@@ -207,7 +207,7 @@ public class DTNWolfStaticSpawnManager {
 
         DTNWolf wolf;
         try {
-            wolf = wolfType().create(level_accessor.getLevel());
+            wolf = wolfType().create(level_accessor.getLevel(), EntitySpawnReason.CHUNK_GENERATION);
         } catch (Exception exception) {
             //ChopinLogger.l("DTNP Spawn failed at (1)");
             return false;
@@ -217,10 +217,10 @@ public class DTNWolfStaticSpawnManager {
             return false;
         }
 
-        wolf.moveTo(spawn_x, check_pos.getY(), spawn_z, rand.nextFloat() * 360.0F, 0.0F);
+        wolf.snapTo(spawn_x, check_pos.getY(), spawn_z, rand.nextFloat() * 360.0F, 0.0F);
         
         boolean spawn_position_check =
-            net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(wolf, level_accessor, MobSpawnType.CHUNK_GENERATION)
+            net.neoforged.neoforge.event.EventHooks.checkSpawnPosition(wolf, level_accessor, EntitySpawnReason.CHUNK_GENERATION)
             && wolf.DTNWolfCheckAdditionalSpawnObstruction(level_accessor, config);
         if (!spawn_position_check) {
             //ChopinLogger.l("DTNP Spawn failed at (2)");
@@ -231,7 +231,7 @@ public class DTNWolfStaticSpawnManager {
         if (spawn_group0 == null)
             spawn_group0 = wolf.initializeGroupData(level_accessor, config);
         var spawngroupdata = wolf.finalizeSpawn(
-            level_accessor, level_accessor.getCurrentDifficultyAt(wolf.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawn_group0
+            level_accessor, level_accessor.getCurrentDifficultyAt(wolf.blockPosition()), EntitySpawnReason.CHUNK_GENERATION, spawn_group0
         );
         spawn_group_mut.setValue(spawngroupdata);
         level_accessor.addFreshEntityWithPassengers(wolf);

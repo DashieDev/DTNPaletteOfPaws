@@ -22,7 +22,7 @@ public class DTNWolfRandomStrollGoal extends RandomStrollGoal {
     @Override
     @Nullable
     protected Vec3 getPosition() {
-        if (this.wolf.getVariant().swimUnderwater() && this.wolf.isInWaterOrBubble()) {
+        if (this.wolf.getVariant().swimUnderwater() && this.wolf.isInWater()) {
             if (this.wolf.isTame())
                 return BehaviorUtils.getRandomSwimmablePos(this.wolf, 10, 7);
             return BehaviorUtils.getRandomSwimmablePos(this.wolf, 10, 3);

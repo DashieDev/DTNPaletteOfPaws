@@ -53,7 +53,7 @@ public class DTNWolfSpawnPlacements {
             && DTNWolf.checkWolfSpawnableLight(level, pos);
     }
 
-    public static boolean DTNWolfSpawnableOn(WolfBiomeConfig config, LevelAccessor level, MobSpawnType spawn_type, BlockPos pos, RandomSource random) {
+    public static boolean DTNWolfSpawnableOn(WolfBiomeConfig config, LevelAccessor level, EntitySpawnReason spawn_type, BlockPos pos, RandomSource random) {
         boolean block_is_spawnable =
             checkWolfSpawnableBlock(level, pos, config);
         if (!block_is_spawnable)
@@ -138,9 +138,9 @@ public class DTNWolfSpawnPlacements {
         final int max_spawn_y = -12;
         final int min_spawn_y = (biome.is(BiomeTags.IS_MOUNTAIN)) ? -53 : -47;
         boolean bound_check =  
-            world.getMinBuildHeight() < min_spawn_y && max_spawn_y < world.getMaxBuildHeight();
+            world.getMinY() < min_spawn_y && max_spawn_y < world.getMaxY();
         if (!bound_check)
-            return new BlockPos(x, world.getMinBuildHeight(), z);
+            return new BlockPos(x, world.getMinY(), z);
 
         int start_at = random.nextIntBetweenInclusive(min_spawn_y, max_spawn_y);
 
