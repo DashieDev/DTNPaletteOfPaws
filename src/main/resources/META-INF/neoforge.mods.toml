@@ -14,21 +14,21 @@ logoFile="dtn_icon.png"
     description="   Every Paws is a Note in the Grand Wolf Concerto!"
 [[dependencies.dtnpaletteofpaws]] #optional
     modId="neoforge"
-    mandatory=true
+    type="required"
     versionRange="${neoforge_version_range}" #mandatory
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.dtnpaletteofpaws]]
     modId="minecraft"
-    mandatory=true
+    type="required"
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.dtnpaletteofpaws]] #optional
     modId="doggytalents"
-    mandatory=false
+    type="optional"
     versionRange="[1.18.32,)" #mandatory
     ordering="NONE"
     side="BOTH"
