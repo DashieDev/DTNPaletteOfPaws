@@ -135,8 +135,8 @@ public class DTNWolfArmorRenderer extends DTNWolfRenderLayer_21_3 {
         return slot.getType() == EquipmentSlot.Type.ANIMAL_ARMOR;
     }
 
-    private static final ResourceLocation WOLF_ARMOR_MAIN_21_3 = Util.getVanillaResource("textures/entity/wolf/wolf_armor.png");
-    private static final ResourceLocation WOLF_ARMOR_DYE_21_3 = Util.getVanillaResource("textures/entity/wolf/wolf_armor_overlay.png");
+    private static final ResourceLocation WOLF_ARMOR_MAIN_21_3 = Util.getVanillaResource("textures/entity/equipment/wolf_body/armadillo_scute.png");
+    private static final ResourceLocation WOLF_ARMOR_DYE_21_3 = Util.getVanillaResource("textures/entity/equipment/wolf_body/armadillo_scute_overlay.png");
 
     
 }
