@@ -2,13 +2,14 @@ package dtnpaletteofpaws.client.backward_imitate;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import dtnpaletteofpaws.client.backward_imitate.LegacyRenderLayerUtil_1_21_9.DTNWolfRenderLayer_1_21_9;
 import dtnpaletteofpaws.client.entity.model.DTNWolfModel;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
-public abstract class DTNWolfRenderLayer_21_3 extends RenderLayer<DTNWolfRenderState_21_3, DTNWolfModel> {
+public abstract class DTNWolfRenderLayer_21_3 extends DTNWolfRenderLayer_1_21_9 {
 
     public DTNWolfRenderLayer_21_3(RenderLayerParent<DTNWolfRenderState_21_3, DTNWolfModel> p_117346_) {
         super(p_117346_);

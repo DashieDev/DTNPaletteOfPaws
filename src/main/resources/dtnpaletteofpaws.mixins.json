@@ -8,7 +8,11 @@
         "NoiseBasedChunkGeneratorMixin"
     ],
     "client": [
-        "PackSelectionScreenMixin"
+        "PackSelectionScreenMixin",
+
+
+        "ModelFeatureRendererMixin_1_21_9",
+        "FeatureRenderDispatcherMixin_1_21_9"
     ],
     "server": [],
     "injectors": {
