@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import doggytalents.client.backward_imitate.LegacyRenderLayerUtil_1_21_9;
+import dtnpaletteofpaws.client.backward_imitate.LegacyRenderLayerUtil_1_21_9;
 import net.minecraft.client.renderer.feature.FeatureRenderDispatcher;
 
 @Mixin(FeatureRenderDispatcher.class)
