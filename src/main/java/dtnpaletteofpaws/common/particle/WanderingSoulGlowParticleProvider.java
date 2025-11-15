@@ -6,6 +6,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 
 public class WanderingSoulGlowParticleProvider implements ParticleProvider<SimpleParticleType> {
     private final SpriteSet sprite;
@@ -22,7 +23,8 @@ public class WanderingSoulGlowParticleProvider implements ParticleProvider<Simpl
         double z,
         double dx,
         double dy,
-        double dz
+        double dz,
+        RandomSource random_1_21_10
     ) {
         var glowparticle = new WanderingSoulGlowParticle(
             level,

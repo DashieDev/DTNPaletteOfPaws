@@ -708,7 +708,7 @@ public class DTNWolf extends TamableAnimal {
 
         if (this.level().isClientSide)
             return WolfInteractionResult.SUCCESS;
-        stack.hurtAndBreak(1, player, getSlotForHand(hand));
+        stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
         this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
 
         var wolf_armor0 = this.getBodyArmorItem();

@@ -53,7 +53,7 @@ public class DTNPaletteOfPaws {
         forge_event_bus.register(new EventHandler());
         forge_event_bus.register(new DTNWolffSpawnEventHandler());
 
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             mod_event_bus.addListener(ClientSetup::setupEntityRenderers);
             mod_event_bus.addListener(ClientSetup::registerLayerDefinitions);
             mod_event_bus.addListener(DTNParticleProviders::onRegisterProv);
