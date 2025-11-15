@@ -78,7 +78,7 @@ jar {
 publishMods {
     file = jar.archiveFile
     changelog = "" //To be filled when running task dtnPrepareChangelogForModPublish
-    type = BETA
+    type = STABLE
     displayName = file.map { it.asFile.name }
     modLoaders.add("neoforge")
     final def dtnMcVersions = ["1.21.10"]
