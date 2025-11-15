@@ -7,9 +7,11 @@ import dtnpaletteofpaws.client.backward_imitate.DTNWolfRenderState_21_3;
 import dtnpaletteofpaws.client.entity.model.DTNWolfModel;
 import dtnpaletteofpaws.common.entity.DTNWolf;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.state.WolfRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
 
@@ -23,7 +25,7 @@ public class DTNWolfRenderer extends MobRenderer<DTNWolf, DTNWolfRenderState_21_
         this.addLayer(new DTNWolfArmorRenderer(this, ctx));
     }
 
-    public void render(DTNWolfRenderState_21_3 wolf_render_state_21_3, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+    public void submit(DTNWolfRenderState_21_3 wolf_render_state_21_3, PoseStack matrixStackIn, SubmitNodeCollector node_collector_1_21_9, CameraRenderState camera_state_1_21_9) {
         var wolf = wolf_render_state_21_3.wolf;
         
         if (wolf.isDogSoaked()) {
@@ -31,7 +33,7 @@ public class DTNWolfRenderer extends MobRenderer<DTNWolf, DTNWolfRenderState_21_
             //this.model.setColor(ARGB.colorFromFloat(1, f, f, f));
         }
 
-        super.render(wolf_render_state_21_3, matrixStackIn, bufferIn, packedLightIn);
+        super.submit(wolf_render_state_21_3, matrixStackIn, node_collector_1_21_9, camera_state_1_21_9);
         if (wolf.isDogSoaked()) {
             //this.model.setColor(0xffffffff);
         }
